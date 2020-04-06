@@ -22,7 +22,7 @@
  *
  */
 
-namespace OCA\DefaultGroup;
+namespace OCA\DefaultGroups;
 
 use OCP\IGroupManager;
 
@@ -65,8 +65,8 @@ class ListenerManager
             $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
 
             //Check if user belongs to any of the ignored groups
-            $groupNames = json_decode($this->config->getAppValue("DefaultGroup", "default_groups", '[]'));
-            $ignoreGroupNames = json_decode($this->config->getAppValue("DefaultGroup", "ignore_groups", '[]'));
+            $groupNames = json_decode($this->config->getAppValue("DefaultGroups", "default_groups", '[]'));
+            $ignoreGroupNames = json_decode($this->config->getAppValue("DefaultGroups", "ignore_groups", '[]'));
             $userInIgnoredGroups = array_intersect($ignoreGroupNames, $userGroupsNames);
 
             if (empty($userInIgnoredGroups)) {
@@ -82,7 +82,7 @@ class ListenerManager
                 }
             } else {
                 // User is in one of the ignore groups. Should we remove him from all default groups?
-                $modifyLater = $this->config->getAppValue("DefaultGroup", "modify_later", 'false');
+                $modifyLater = $this->config->getAppValue("DefaultGroups", "modify_later", 'false');
                 if (filter_var($modifyLater, FILTER_VALIDATE_BOOLEAN)) {
                     $this->logger->info('Modify Later');
                     foreach ($groupNames as $groupName) {
@@ -99,8 +99,8 @@ class ListenerManager
         };
 
         // Connect event listeners depending on settings
-        $loginHook = $this->config->getAppValue("DefaultGroup", "login_hook", 'false');
-        $modifyLater = $this->config->getAppValue("DefaultGroup", "modify_later", 'false');
+        $loginHook = $this->config->getAppValue("DefaultGroups", "login_hook", 'false');
+        $modifyLater = $this->config->getAppValue("DefaultGroups", "modify_later", 'false');
 
         // Always add user to default groups on creation
         $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveDefaultGroups);
