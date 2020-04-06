@@ -61,7 +61,7 @@ class ListenerManagerTest extends TestCase
 
     private function setConfig($login_hook, $modify_later)
     {
-        $this->config->expects($this->any())
+        $this->config->expects($this->exactly(2))
             ->method('getAppValue')
             ->withConsecutive(
                 ['DefaultGroups', 'login_hook', 'false'],
