@@ -23,5 +23,5 @@
 
 use OCA\DefaultGroups\AppInfo\Application;
 
-$app = new Application('nextcloud-defaultgroups');
+$app = new Application('nextcloud_defaultgroups');
 $app->registerListeners();

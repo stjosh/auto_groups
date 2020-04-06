@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>nextcloud-defaultgroups</id>
+    <id>nextcloud_defaultgroups</id>
     <name>Default Groups</name>
     <summary>Adds all users to one or multiple specified default groups.</summary>
     <description>Automatically add users to the specified default groups. Optionally, this can be triggered on every successful login, which is useful for external user backends.</description>
@@ -10,9 +10,9 @@
     <version>1.0.0</version>
     <namespace>DefaultGroups</namespace>
     <category>tools</category>
-    <repository type="git">https://github.com/stjosh/nextcloud-defaultgroups</repository>
-    <website>https://github.com/stjosh/nextcloud-defaultgroups</website>
-    <bugs>https://github.com/stjosh/nextcloud-defaultgroups/issues</bugs>
+    <repository type="git">https://github.com/stjosh/nextcloud_defaultgroups</repository>
+    <website>https://github.com/stjosh/nextcloud_defaultgroups</website>
+    <bugs>https://github.com/stjosh/nextcloud_defaultgroups/issues</bugs>
     <dependencies>
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>
