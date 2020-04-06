@@ -46,7 +46,6 @@ class ListenerManager
     private $modifyLater;
     private $groupNames;
     private $ignoreGroupNames;
-    private $userInIgnoredGroups;
 
     /**
      * Listener manager constructor.
