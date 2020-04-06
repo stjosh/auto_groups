@@ -8,7 +8,7 @@ Automatically add users to specified groups. It can add user to a groups on ever
 
 ## Issue Tracker / Contributions
 
-Contributions are welcome on [GitHub](https://github.com/stjosh/nextcloud_defaultgroups/issues).
+Contributions are welcome on [GitHub](https://github.com/stjosh/nextcloud-defaultgroups/issues).
 
 ## Acknowledgements
 
