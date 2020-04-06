@@ -21,7 +21,7 @@
  *
  */
 
-namespace OCA\DefaultGroup\Settings;
+namespace OCA\DefaultGroups\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
@@ -45,10 +45,10 @@ class AdminSettings implements ISettings {
          * @return TemplateResponse
          */
         public function getForm() {
-                $defaultGroups = json_decode( $this->config->getAppValue("DefaultGroup", "default_groups", '[]') );
-                $ignoreGroups = json_decode( $this->config->getAppValue("DefaultGroup", "ignore_groups", '[]') );
-                $modifyLater = $this->config->getAppValue("DefaultGroup", "modify_later", 'false');
-                $loginHook = $this->config->getAppValue("DefaultGroup", "login_hook", 'false');
+                $defaultGroups = json_decode( $this->config->getAppValue("DefaultGroups", "default_groups", '[]') );
+                $ignoreGroups = json_decode( $this->config->getAppValue("DefaultGroups", "ignore_groups", '[]') );
+                $modifyLater = $this->config->getAppValue("DefaultGroups", "modify_later", 'false');
+                $loginHook = $this->config->getAppValue("DefaultGroups", "login_hook", 'false');
 
                 $parameters = [
                         'default_groups' => implode('|', $defaultGroups),
@@ -57,7 +57,7 @@ class AdminSettings implements ISettings {
                         'login_hook' => $loginHook,
                 ];
 
-                return new TemplateResponse('defaultgroup', 'admin', $parameters);
+                return new TemplateResponse('nextcloud-defaultgroups', 'admin', $parameters);
         }
 
         /**

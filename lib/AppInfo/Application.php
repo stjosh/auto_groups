@@ -21,9 +21,9 @@
  *
  */
 
-namespace OCA\DefaultGroup\AppInfo;
+namespace OCA\DefaultGroups\AppInfo;
 
-use OCA\DefaultGroup\ListenerManager;
+use OCA\DefaultGroups\ListenerManager;
 use \OCP\AppFramework\App;
 
 class Application extends App {
@@ -32,13 +32,13 @@ class Application extends App {
 	 * Application constructor.
 	 */
 	public function __construct() {
-		parent::__construct('defaultgroup');
+		parent::__construct('nextcloud-defaultgroups');
 	}
 
     /**
-     *  Register hooks
+     *  Register Listeners
      */
-	public function registerHooks() {
+	public function registerListeners() {
 		$lm = $this->getContainer()->query(ListenerManager::class);
 		$lm->setup();
 	}
