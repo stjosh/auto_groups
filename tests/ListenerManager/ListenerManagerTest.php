@@ -81,6 +81,6 @@ class ListenerManagerTest extends TestCase
                 })
             );
 
-        $lm->setup();
+        $this->lm->setup();
     }
 }
