@@ -67,7 +67,7 @@ class ListenerManagerTest extends TestCase
             ->willReturn($value);
     }
 
-    public function assertOnlyCreateHookOnDefaultConfig()
+    public function testOnlyCreatedHookOnDefaultConfig()
     {
         $this->setConfig('login_hook', false);
         $this->setConfig('modify_later', false);
