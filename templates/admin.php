@@ -22,8 +22,8 @@
  *
  */
 
-script('nextcloud-defaultgroupss', 'admin');         // adds a Javascript file
-style('nextcloud-defaultgroupss', 'admin');
+script('nextcloud_defaultgroupss', 'admin');         // adds a Javascript file
+style('nextcloud_defaultgroupss', 'admin');
 
 $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'checked' : '';
 $modify_later_checked = filter_var($_['modify_later'], FILTER_VALIDATE_BOOLEAN) ? 'checked' : '';

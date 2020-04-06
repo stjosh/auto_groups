@@ -57,7 +57,7 @@ class AdminSettings implements ISettings {
                         'login_hook' => $loginHook,
                 ];
 
-                return new TemplateResponse('nextcloud-defaultgroups', 'admin', $parameters);
+                return new TemplateResponse('nextcloud_defaultgroups', 'admin', $parameters);
         }
 
         /**

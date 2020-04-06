@@ -24,23 +24,28 @@
 
 namespace OCA\DefaultGroups;
 
-use OCP\IGroupManager;
+
 
 use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
 
+use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use \OCP\ILogger;
+use OCP\ILogger;
 
 class ListenerManager
 {
-    private $config;
     private $groupManager;
     private $eventDispatcher;
     private $logger;
+
+    private $loginHook;
+    private $modifyLater;
+    private $groupNames;
+    private $ignoreGroupNames;
 
     /**
      * Listener manager constructor.
@@ -48,9 +53,13 @@ class ListenerManager
     public function __construct(IGroupManager $groupManager, IEventDispatcher $eventDispatcher, IConfig $config, ILogger $logger)
     {
         $this->groupManager = $groupManager;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->config = $config;
+        $this->eventDispatcher = $eventDispatcher;        
         $this->logger = $logger;
+
+        $this->loginHook = $config->getAppValue("DefaultGroups", "login_hook", 'false');
+        $this->modifyLater = $config->getAppValue("DefaultGroups", "modify_later", 'false');
+        $this->groupNames = json_decode($config->getAppValue("DefaultGroups", "default_groups", '[]'));
+        $this->ignoreGroupNames = json_decode($config->getAppValue("DefaultGroups", "ignore_groups", '[]'));
     }
 
     /**
@@ -58,20 +67,17 @@ class ListenerManager
      */
     public function setup()
     {
-
         $addAndRemoveDefaultGroups = function ($event) {
             // Get user information
             $user = $event->getUser();
             $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
 
             //Check if user belongs to any of the ignored groups
-            $groupNames = json_decode($this->config->getAppValue("DefaultGroups", "default_groups", '[]'));
-            $ignoreGroupNames = json_decode($this->config->getAppValue("DefaultGroups", "ignore_groups", '[]'));
-            $userInIgnoredGroups = array_intersect($ignoreGroupNames, $userGroupsNames);
+            $userInIgnoredGroups = array_intersect($this->ignoreGroupNames, $userGroupsNames);
 
             if (empty($userInIgnoredGroups)) {
                 // User is not in any of the ignore groups. Add to all default groups.
-                foreach ($groupNames as $groupName) {
+                foreach ($this->groupNames as $groupName) {
                     $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
                     foreach ($groups as $group) {
                         if ($group->getGID() === $groupName && !$group->inGroup($user)) {
@@ -82,10 +88,9 @@ class ListenerManager
                 }
             } else {
                 // User is in one of the ignore groups. Should we remove him from all default groups?
-                $modifyLater = $this->config->getAppValue("DefaultGroups", "modify_later", 'false');
-                if (filter_var($modifyLater, FILTER_VALIDATE_BOOLEAN)) {
+                if (filter_var($this->modifyLater, FILTER_VALIDATE_BOOLEAN)) {
                     $this->logger->info('Modify Later');
-                    foreach ($groupNames as $groupName) {
+                    foreach ($this->groupNames as $groupName) {
                         $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
                         foreach ($groups as $group) {
                             if ($group->getGID() === $groupName && $group->inGroup($user)) {
@@ -97,21 +102,17 @@ class ListenerManager
                 }
             }
         };
-
-        // Connect event listeners depending on settings
-        $loginHook = $this->config->getAppValue("DefaultGroups", "login_hook", 'false');
-        $modifyLater = $this->config->getAppValue("DefaultGroups", "modify_later", 'false');
-
+        
         // Always add user to default groups on creation
         $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveDefaultGroups);
 
         // If login hook is enabled, add user to default groups on every successful login
-        if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
+        if (filter_var($this->loginHook, FILTER_VALIDATE_BOOLEAN)) {
             $this->eventDispatcher->addListener(PostLoginEvent::class, $addAndRemoveDefaultGroups);
         }
 
         // If later modification is enabled, remove user from default groups on assignment of an ignore group
-        if (filter_var($modifyLater, FILTER_VALIDATE_BOOLEAN)) {
+        if (filter_var($this->modifyLater, FILTER_VALIDATE_BOOLEAN)) {
             $this->eventDispatcher->addListener(UserAddedEvent::class, $addAndRemoveDefaultGroups);
             $this->eventDispatcher->addListener(UserRemovedEvent::class, $addAndRemoveDefaultGroups);
         }
