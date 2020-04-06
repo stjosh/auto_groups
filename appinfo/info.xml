@@ -5,14 +5,14 @@
     <name>Default Groups</name>
     <summary>Adds all users to one or multiple specified default groups.</summary>
     <description>Automatically add users to the specified default groups. Optionally, this can be triggered on every successful login, which is useful for external user backends.</description>
+    <version>1.0.0</version>
     <licence>agpl</licence>
     <author mail="josua.hunziker@gmail.com" >Josua Hunziker</author>
-    <version>1.0.0</version>
     <namespace>DefaultGroups</namespace>
     <category>tools</category>
-    <repository type="git">https://github.com/stjosh/nextcloud_defaultgroups</repository>
     <website>https://github.com/stjosh/nextcloud_defaultgroups</website>
     <bugs>https://github.com/stjosh/nextcloud_defaultgroups/issues</bugs>
+    <repository type="git">https://github.com/stjosh/nextcloud_defaultgroups</repository>
     <dependencies>
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>
