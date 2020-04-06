@@ -11,6 +11,11 @@ env:
   matrix:
     - CORE_BRANCH=stable18
 
+branches:
+    only:
+      - master
+      - /^stable\d+(\.\d+)?$/
+
 before_install:
   - cd ../
   - git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b $CORE_BRANCH nextcloud
