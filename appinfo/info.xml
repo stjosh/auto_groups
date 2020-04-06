@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>defaultgroup</id>
+    <name>Default Group</name>
+    <summary>Adds all users to one or multiple specified default groups.</summary>
+    <description>Automatically add users to the specified default groups. Optionally, this can be triggered on every successful login, which is useful for external user backends.</description>
+    <licence>agpl</licence>
+    <author mail="der@digitalwerker.ch" >Josua Hunziker</author>
+    <version>1.0.0</version>
+    <namespace>DefaultGroup</namespace>
+    <category>tools</category>
+    <repository type="git">https://github.com/stjosh/defaultgroup</repository>
+    <website>https://github.com/stjosh/defaultgroup</website>
+    <bugs>https://github.com/stjosh/defaultgroup/issues</bugs>
+    <dependencies>
+        <nextcloud min-version="18" max-version="18"/>
+    </dependencies>
+    <settings>
+        <admin-section>OCA\DefaultGroup\Settings\AdminSection</admin-section>
+        <admin>OCA\DefaultGroup\Settings\AdminSettings</admin>
+    </settings>
+</info>
