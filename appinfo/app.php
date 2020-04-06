@@ -21,7 +21,7 @@
  *
  */
 
-use OCA\DefaultGroup\AppInfo\Application;
+use OCA\DefaultGroups\AppInfo\Application;
 
-$app = new Application('defaultgroup');
-$app->registerHooks();
+$app = new Application('nextcloud-defaultgroups');
+$app->registerListeners();
