@@ -24,16 +24,17 @@
 
 namespace OCA\DefaultGroups;
 
-use OCP\IGroupManager;
+
 
 use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
 
+use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use \OCP\ILogger;
+use OCP\ILogger;
 
 class ListenerManager
 {
