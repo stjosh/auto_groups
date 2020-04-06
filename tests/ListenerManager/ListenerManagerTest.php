@@ -65,8 +65,8 @@ class ListenerManagerTest extends TestCase
             ->withConsecutive(
                 ['DefaultGroups', 'login_hook', 'false'],
                 ['DefaultGroups', 'modify_later', 'false'],
-                ['DefaultGroups', 'default_groups', 'false'],
-                ['DefaultGroups', 'ignore_groups', 'false']
+                ['DefaultGroups', 'default_groups', '[]'],
+                ['DefaultGroups', 'ignore_groups', '[]']
             )
             ->willReturnOnConsecutiveCalls($login_hook, $modify_later, json_encode($default_groups), json_encode($ignore_groups));
 
