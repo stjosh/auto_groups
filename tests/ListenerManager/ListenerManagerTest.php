@@ -59,18 +59,20 @@ class ListenerManagerTest extends TestCase
         $this->lm = new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
 
-    private function setConfig($name, $value)
+    private function setConfig($login_hook, $modify_later)
     {
         $this->config->expects($this->any())
             ->method('getAppValue')
-            ->with('DefaultGroups', $name, 'false')
-            ->willReturn($value);
+            ->withConsecutive(
+                ['DefaultGroups', 'login_hook', 'false'],
+                ['DefaultGroups', 'modify_later', 'false']
+            )
+            ->willReturnOnConsecutiveCalls($login_hook, $modify_later);
     }
 
     public function testOnlyCreatedHookOnDefaultConfig()
     {
-        $this->setConfig('login_hook', false);
-        $this->setConfig('modify_later', false);
+        $this->setConfig(false, false);
 
         $this->eventDispatcher->expects($this->once())
             ->method('addListener')
