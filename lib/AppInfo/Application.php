@@ -32,7 +32,7 @@ class Application extends App {
 	 * Application constructor.
 	 */
 	public function __construct() {
-		parent::__construct('nextcloud-defaultgroups');
+		parent::__construct('nextcloud_defaultgroups');
 	}
 
     /**
