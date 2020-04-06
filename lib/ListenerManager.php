@@ -60,7 +60,7 @@ class ListenerManager
         $this->loginHook = $config->getAppValue("DefaultGroups", "login_hook", 'false');
         $this->modifyLater = $config->getAppValue("DefaultGroups", "modify_later", 'false');
         $this->groupNames = json_decode($config->getAppValue("DefaultGroups", "default_groups", '[]'));
-        $this->ignoreGroupNames = json_decode($this->config->getAppValue("DefaultGroups", "ignore_groups", '[]'));
+        $this->ignoreGroupNames = json_decode($config->getAppValue("DefaultGroups", "ignore_groups", '[]'));
     }
 
     /**
