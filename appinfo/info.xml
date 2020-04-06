@@ -17,7 +17,6 @@
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>
     <settings>
-        <admin-section>OCA\DefaultGroups\Settings\AdminSection</admin-section>
-        <admin>OCA\DefaultGroups\Settings\AdminSettings</admin>
+        <admin-section>OCA\DefaultGroups\Settings\AdminSettings</admin-section>
     </settings>
 </info>
