@@ -56,10 +56,9 @@ class ListenerManagerTest extends TestCase
         $this->config = $this->createMock(IConfig::class);
         $this->logger = $this->createMock(ILogger::class);
 
-        $this->lm = new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
 
-    private function setConfig($login_hook = false, $modify_later = false, $default_groups = [], $ignore_groups = [])
+    private function createListenerManager($login_hook = false, $modify_later = false, $default_groups = [], $ignore_groups = [])
     {
         $this->config->expects($this->exactly(4))
             ->method('getAppValue')
@@ -70,11 +69,13 @@ class ListenerManagerTest extends TestCase
                 ['DefaultGroups', 'ignore_groups', 'false']
             )
             ->willReturnOnConsecutiveCalls($login_hook, $modify_later, json_encode($default_groups), json_encode($ignore_groups));
+
+        return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
 
     public function testOnlyCreatedHookOnDefaultConfig()
     {
-        $this->setConfig();
+        $lm = $this->createListenerManager();
 
         $this->eventDispatcher->expects($this->once())
             ->method('addListener')
@@ -85,6 +86,6 @@ class ListenerManagerTest extends TestCase
                 })
             );
 
-        $this->lm->setup();
+        $lm->setup();
     }
 }
