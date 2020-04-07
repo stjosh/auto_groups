@@ -4,7 +4,7 @@
 		 timeoutForMediumTests="900"
 		 timeoutForLargeTests="900"
 >
-	<testsuite name='Nextcloud - Default Groups App Tests'>
+	<testsuite name='Nextcloud - Auto Groups App Tests'>
 		<directory suffix='.php'>.</directory>
 	</testsuite>
 	<filter>
