@@ -5,7 +5,7 @@
     <name>Auto Groups</name>
     <summary>Auomatically adds all users to one or multiple specified groups.</summary>
     <description>Automatically add users to the specified groups, except those users belonging to one of the specified override groups. Optionally, the group assignment can be triggered on every successful login, which is useful for external user backends.</description>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
     <licence>agpl</licence>
     <author mail="der@digitalwerker.ch" >Josua Hunziker</author>
     <namespace>AutoGroups</namespace>
@@ -17,6 +17,6 @@
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>
     <settings>
-        <admin-section>OCA\AutoGroups\Settings\AdminSettings</admin-section>
+        <admin>OCA\AutoGroups\Settings\Admin</admin>
     </settings>
 </info>
