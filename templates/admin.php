@@ -46,7 +46,7 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 	<p class="auto_groups_settings_section">
 		<label for="auto_groups_override"><?php p($l->t('Override Groups:')); ?></label>
 		</br />
-		<input name="auto_groups_override" id="auto_groups_override" value="<?php p($_['ignore_groups']) ?>" style="width: 400px">
+		<input name="auto_groups_override" id="auto_groups_override" value="<?php p($_['override_groups']) ?>" style="width: 400px">
 		<br />
 		<em><?php p($l->t('Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership to the override groups is checked after each group modification.')); ?></em>
 	</p>
