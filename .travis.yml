@@ -34,7 +34,11 @@ before_script:
 
 script:
   # check syntax
-  - vendor/bin/parallel-lint --exclude app --exclude vendor .
+  - vendor/bin/parallel-lint --exclude vendor .
   # Run phpunit tests
   - cd tests
   - ../vendor/bin/phpunit --configuration phpunit.xml
+
+after_success:
+  - cd ..
+  - travis_retry php vendor/bin/php-coveralls -v -x tests/clover.xml -o tests/coveralls_upload.json
