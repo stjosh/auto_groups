@@ -64,7 +64,7 @@ class ListenerManager
      */
     public function setup()
     {
-        $addAndRemoveDefaultGroups = function ($event) {
+        $addAndRemoveAutoGroups = function ($event) {
             // Get user information
             $user = $event->getUser();
             $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
@@ -90,14 +90,14 @@ class ListenerManager
             }
         };
 
-        // Always add user to / remove user from default groups on creation, group addition or group deletion
-        $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveDefaultGroups);
-        $this->eventDispatcher->addListener(UserAddedEvent::class, $addAndRemoveDefaultGroups);
-        $this->eventDispatcher->addListener(UserRemovedEvent::class, $addAndRemoveDefaultGroups);
+        // Always add user to / remove user from auto groups on creation, group addition or group deletion
+        $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveAutoGroups);
+        $this->eventDispatcher->addListener(UserAddedEvent::class, $addAndRemoveAutoGroups);
+        $this->eventDispatcher->addListener(UserRemovedEvent::class, $addAndRemoveAutoGroups);
 
-        // If login hook is enabled, add user to default / remove user from groups on every successful login
+        // If login hook is enabled, add user to / remove user from auto groups on every successful login
         if (filter_var($this->loginHook, FILTER_VALIDATE_BOOLEAN)) {
-            $this->eventDispatcher->addListener(PostLoginEvent::class, $addAndRemoveDefaultGroups);
+            $this->eventDispatcher->addListener(PostLoginEvent::class, $addAndRemoveAutoGroups);
         }
     }
 }
