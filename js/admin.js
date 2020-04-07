@@ -20,7 +20,7 @@ $(document).ready(function(){
   OC.Settings.setupGroupsSelect($autoGroups, null, {excludeAdmins : true});
   $autoGroups.change(function(ev) {
     var groups = ev.val || [];
-    OCP.AppConfig.setValue('auto_groups', 'auto_groups', JSON.stringify(groups));
+    OCP.AppConfig.setValue('AutoGroups', 'auto_groups', JSON.stringify(groups));
   });
 
   $('#auto_groups .icon-info').tooltip({placement: 'right'});
@@ -28,13 +28,13 @@ $(document).ready(function(){
   OC.Settings.setupGroupsSelect($overrideGroups, null, {excludeAdmins : false});
   $overrideGroups.change(function(ev) {
     var groups = ev.val || [];
-    OCP.AppConfig.setValue('auto_groups', 'override_groups', JSON.stringify(groups));
+    OCP.AppConfig.setValue('AutoGroups', 'override_groups', JSON.stringify(groups));
   });
 
   $('#auto_groups_override .icon-info').tooltip({placement: 'right'});
 
   $loginHook.change(function(ev) {
-    OCP.AppConfig.setValue('auto_groups', 'login_hook', this.checked);
+    OCP.AppConfig.setValue('AutoGroups', 'login_hook', this.checked);
   });
 
 });
