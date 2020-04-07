@@ -41,4 +41,4 @@ script:
 
 after_success:
   - cd ..
-  - travis_retry php vendor/bin/php-coveralls -v -x tests/clover.xml
+  - travis_retry php vendor/bin/php-coveralls -v -x tests/clover.xml -o tests/coveralls_upload.json
