@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/stjosh/auto_groups/badge.svg?branch=master)](https://coveralls.io/github/stjosh/auto_groups?branch=master)
 
 # Nextcloud Auto Groups
-Automatically add users to specified Auto Groups, except for those belonging to one of the specified Override Groups.
+Automatically add users to specified Auto Groups, except for those belonging to one of the specified Override Groups. 
 
 ## Usage
 
