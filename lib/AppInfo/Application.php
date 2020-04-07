@@ -1,9 +1,10 @@
 <?php
 /**
- * @copyright Copyright (c) 2017
+ * @copyright Copyright (c) 2020
  *
  * @author Josua Hunziker <der@digitalwerker.ch>
- * @author Ján Stibila <nextcloud@stibila.eu>
+ * 
+ * Based on the work of Ján Stibila <nextcloud@stibila.eu>
  *
  * @license AGPL-3.0
  *
@@ -21,10 +22,10 @@
  *
  */
 
-namespace OCA\DefaultGroups\AppInfo;
+namespace OCA\AutoGroups\AppInfo;
 
-use OCA\DefaultGroups\ListenerManager;
-use \OCP\AppFramework\App;
+use OCA\AutoGroups\ListenerManager;
+use OCP\AppFramework\App;
 
 class Application extends App {
 
@@ -32,7 +33,7 @@ class Application extends App {
 	 * Application constructor.
 	 */
 	public function __construct() {
-		parent::__construct('nextcloud_defaultgroups');
+		parent::__construct('auto_groups');
 	}
 
     /**

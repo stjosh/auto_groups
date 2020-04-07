@@ -1,10 +1,11 @@
 <?php
 
 /**
- * @copyright Copyright (c) 2017
+ * @copyright Copyright (c) 2020
  *
  * @author Josua Hunziker <der@digitalwerker.ch>
- * @author Ján Stibila <nextcloud@stibila.eu>
+ * 
+ * Based on the work of Ján Stibila <nextcloud@stibila.eu>
  *
  * @license AGPL-3.0
  *
@@ -22,50 +23,40 @@
  *
  */
 
-script('nextcloud_defaultgroupss', 'admin');         // adds a Javascript file
-style('nextcloud_defaultgroupss', 'admin');
+script('auto_groups', 'admin');
+style('auto_groups', 'admin');
 
 $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'checked' : '';
-$modify_later_checked = filter_var($_['modify_later'], FILTER_VALIDATE_BOOLEAN) ? 'checked' : '';
 
 ?>
 
-<div id="defaultgroups_options" class="section">
-	<h2><?php p($l->t('Default Groups')); ?></h2>
+<div id="auto_groups_options" class="section">
+	<h2><?php p($l->t('Auto Groups:')); ?></h2>
 	<p class="settings-hint">
-		<?php p($l->t('Add new users default groups.')); ?>
+		<?php p($l->t('Automatically all users to these groups.')); ?>
 	</p>
-	<p class="defaultgroups_settings_section">
-		<label for="defaultgroups_default_groups"><?php p($l->t('Default Groups:')); ?></label>
+	<p class="auto_groups_settings_section">
+		<label for="auto_groups"><?php p($l->t('Auto Groups:')); ?></label>
 		<br />
-		<input name="defaultgroups_default_groups" id="defaultgroups_default_groups" value="<?php p($_['default_groups']) ?>" style="width: 400px">
+		<input name="auto_groups" id="auto_groups" value="<?php p($_['auto_groups']) ?>" style="width: 400px">
 		<br />
 		<em><?php p($l->t('Automatically add all users to these groups.')); ?></em>
 	</p>
 
-	<p class="defaultgroups_settings_section">
-		<label for="defaultgroups_ignore_groups"><?php p($l->t('Do not add users in these groups to the default groups: ')); ?></label>
+	<p class="auto_groups_settings_section">
+		<label for="auto_groups_override"><?php p($l->t('Override Groups:')); ?></label>
 		</br />
-		<input name="defaultgroups_ignore_groups" id="defaultgroups_ignore_groups" value="<?php p($_['ignore_groups']) ?>" style="width: 400px">
+		<input name="auto_groups_override" id="auto_groups_override" value="<?php p($_['ignore_groups']) ?>" style="width: 400px">
 		<br />
-		<em><?php p($l->t('Users which are in at least one of this groups will not be added to the default groups.')); ?></em>
+		<em><?php p($l->t('Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership to the override groups is checked after each group modification.')); ?></em>
 	</p>
 
-	<p class="defaultgroups_settings_section">
-		<label for="defaultgroups_modify_later"><?php p($l->t('Modify Later:')); ?></label>
+	<p class="auto_groups_settings_section">
+		<label for="auto_groups_login_hook"><?php p($l->t('Enable Login Hook:')); ?></label>
 		</br />
-		<input name="defaultgroups_modify_later" id="defaultgroups_modify_later" type="checkbox" class="checkbox" <?= $modify_later_checked ?>>
-		<label for="defaultgroups_modify_later"><?php p($l->t('Delete from default groups when added to ignore groups and add default groups again if ignore group(s) are removed.')); ?></label>
+		<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" <?= $login_hook_checked ?>>
+		<label for="auto_groups_login_hook"><?php p($l->t('Check for correct Auto Group membership on every login.')); ?></label>
 		<br />
-		<em><?php p($l->t('Check this box if users shall be removed from default groups in case they are added to the ignore groups. Note that this is also the case when creating users, i.e., if this box is not checked, users will be added to the default group even though they are assigned one of the ignore groups upon creation.')); ?></em>
-	</p>
-
-	<p class="defaultgroups_settings_section">
-		<label for="defaultgroups_login_hook"><?php p($l->t('Login hook:')); ?></label>
-		</br />
-		<input name="defaultgroups_login_hook" id="defaultgroups_login_hook" type="checkbox" class="checkbox" <?= $login_hook_checked ?>>
-		<label for="defaultgroups_login_hook"><?php p($l->t('Add to default groups on every successful login.')); ?></label>
-		<br />
-		<em><?php p($l->t('In some cases, user create event is not triggered properly, for example when new user is created by user_external app on first login. Enable this to add users to default groups on every successful login.')); ?></em>
+		<em><?php p($l->t('In some cases, user create event is not triggered, e.g., if new user is created by the user_external app on first login. In this case, enable this setting to enforce proper Auto Group membership on every successful login.')); ?></em>
 	</p>
 </div>

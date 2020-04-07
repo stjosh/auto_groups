@@ -6,7 +6,7 @@ php:
 
 env:
   global:
-    - APP_NAME=nextcloud_defaultgroups
+    - APP_NAME=auto_groups
     - DB=sqlite
   matrix:
     - CORE_BRANCH=stable18

@@ -1,10 +1,11 @@
 <?php
 
 /**
- * @copyright Copyright (c) 2017
+ * @copyright Copyright (c) 2020
  *
  * @author Josua Hunziker <josua.hunziker@gmail.com>
- * @author Ján Stibila <nextcloud@stibila.eu>
+ * 
+ * Based on the work of Ján Stibila <nextcloud@stibila.eu>
  *
  * @license AGPL-3.0
  *
@@ -22,9 +23,7 @@
  *
  */
 
-namespace OCA\DefaultGroups;
-
-
+namespace OCA\AutoGroups;
 
 use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
@@ -43,9 +42,8 @@ class ListenerManager
     private $logger;
 
     private $loginHook;
-    private $modifyLater;
     private $groupNames;
-    private $ignoreGroupNames;
+    private $overrideGroupNames;
 
     /**
      * Listener manager constructor.
@@ -53,13 +51,12 @@ class ListenerManager
     public function __construct(IGroupManager $groupManager, IEventDispatcher $eventDispatcher, IConfig $config, ILogger $logger)
     {
         $this->groupManager = $groupManager;
-        $this->eventDispatcher = $eventDispatcher;        
+        $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
 
-        $this->loginHook = $config->getAppValue("DefaultGroups", "login_hook", 'false');
-        $this->modifyLater = $config->getAppValue("DefaultGroups", "modify_later", 'false');
-        $this->groupNames = json_decode($config->getAppValue("DefaultGroups", "default_groups", '[]'));
-        $this->ignoreGroupNames = json_decode($config->getAppValue("DefaultGroups", "ignore_groups", '[]'));
+        $this->groupNames = json_decode($config->getAppValue("AutoGroups", "auto_groups", '[]'));
+        $this->overrideGroupNames = json_decode($config->getAppValue("AutoGroups", "override_groups", '[]'));
+        $this->loginHook = $config->getAppValue("AutoGroups", "login_hook", 'false');
     }
 
     /**
@@ -73,48 +70,34 @@ class ListenerManager
             $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
 
             //Check if user belongs to any of the ignored groups
-            $userInIgnoredGroups = array_intersect($this->ignoreGroupNames, $userGroupsNames);
+            $userInIgnoredGroups = array_intersect($this->overrideGroupNames, $userGroupsNames);
+            $add = empty($userInIgnoredGroups);
 
-            if (empty($userInIgnoredGroups)) {
-                // User is not in any of the ignore groups. Add to all default groups.
-                foreach ($this->groupNames as $groupName) {
-                    $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
-                    foreach ($groups as $group) {
-                        if ($group->getGID() === $groupName && !$group->inGroup($user)) {
-                            $this->logger->notice('Add user ' . $user->getDisplayName() . ' to group ' . $groupName);
+            // Add to / remove from admin groups
+            foreach ($this->groupNames as $groupName) {
+                $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
+                foreach ($groups as $group) {
+                    if ($group->getGID() === $groupName) {
+                        if ($add && !$group->inGroup($user)) {
+                            $this->logger->notice('Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName);
                             $group->addUser($user);
-                        }
-                    }
-                }
-            } else {
-                // User is in one of the ignore groups. Should we remove him from all default groups?
-                if (filter_var($this->modifyLater, FILTER_VALIDATE_BOOLEAN)) {
-                    $this->logger->info('Modify Later');
-                    foreach ($this->groupNames as $groupName) {
-                        $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
-                        foreach ($groups as $group) {
-                            if ($group->getGID() === $groupName && $group->inGroup($user)) {
-                                $this->logger->notice('Remove user ' . $user->getDisplayName() . ' from group ' . $groupName);
-                                $group->removeUser($user);
-                            }
+                        } else if (!$add && $group->inGroup($user)) {
+                            $this->logger->notice('Remove user ' . $user->getDisplayName() . ' from auto group ' . $groupName);
+                            $group->removeUser($user);
                         }
                     }
                 }
             }
         };
-        
-        // Always add user to default groups on creation
-        $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveDefaultGroups);
 
-        // If login hook is enabled, add user to default groups on every successful login
+        // Always add user to / remove user from default groups on creation, group addition or group deletion
+        $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveDefaultGroups);
+        $this->eventDispatcher->addListener(UserAddedEvent::class, $addAndRemoveDefaultGroups);
+        $this->eventDispatcher->addListener(UserRemovedEvent::class, $addAndRemoveDefaultGroups);
+
+        // If login hook is enabled, add user to default / remove user from groups on every successful login
         if (filter_var($this->loginHook, FILTER_VALIDATE_BOOLEAN)) {
             $this->eventDispatcher->addListener(PostLoginEvent::class, $addAndRemoveDefaultGroups);
-        }
-
-        // If later modification is enabled, remove user from default groups on assignment of an ignore group
-        if (filter_var($this->modifyLater, FILTER_VALIDATE_BOOLEAN)) {
-            $this->eventDispatcher->addListener(UserAddedEvent::class, $addAndRemoveDefaultGroups);
-            $this->eventDispatcher->addListener(UserRemovedEvent::class, $addAndRemoveDefaultGroups);
         }
     }
 }
