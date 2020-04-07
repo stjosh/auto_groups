@@ -1,9 +1,10 @@
 <?php
 /**
- * @copyright Copyright (c) 2017
+ * @copyright Copyright (c) 2020
  * 
  * @author Josua Hunziker <der@digitalwerker.ch>
- * @author Ján Stibila <nextcloud@stibila.eu>
+ * 
+ * Based on the work of Ján Stibila <nextcloud@stibila.eu>
  *
  * @license AGPL-3.0
  *
@@ -21,7 +22,7 @@
  *
  */
 
-use OCA\DefaultGroups\AppInfo\Application;
+use OCA\AutoGroups\AppInfo\Application;
 
-$app = new Application('nextcloud_defaultgroups');
+$app = new Application('auto_groups');
 $app->registerListeners();

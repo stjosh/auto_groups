@@ -1,7 +1,9 @@
 <?php
 
 /**
- * @copyright Copyright (c) 2017 Robin Appelman <robin@icewind.nl>
+ * @copyright Copyright (c) 2020
+ *
+ * @author Josua Hunziker <der@digitalwerker.ch>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -20,7 +22,7 @@
  *
  */
 
-namespace OCA\DefaultGroups\Tests\ListenerManager;
+namespace OCA\AutoGroups\Tests\ListenerManager;
 
 use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
@@ -55,20 +57,18 @@ class ListenerManagerTest extends TestCase
         $this->eventDispatcher = $this->createMock(IEventDispatcher::class);
         $this->config = $this->createMock(IConfig::class);
         $this->logger = $this->createMock(ILogger::class);
-
     }
 
-    private function createListenerManager($login_hook = false, $modify_later = false, $default_groups = [], $ignore_groups = [])
+    private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false)
     {
         $this->config->expects($this->exactly(4))
             ->method('getAppValue')
             ->withConsecutive(
-                ['DefaultGroups', 'login_hook', 'false'],
-                ['DefaultGroups', 'modify_later', 'false'],
-                ['DefaultGroups', 'default_groups', '[]'],
-                ['DefaultGroups', 'ignore_groups', '[]']
+                ['AutoGroups', 'auto_groups', '[]'],
+                ['AutoGroups', 'override_groups', '[]'],
+                ['AutoGroups', 'login_hook', 'false'],
             )
-            ->willReturnOnConsecutiveCalls($login_hook, $modify_later, json_encode($default_groups), json_encode($ignore_groups));
+            ->willReturnOnConsecutiveCalls(json_encode($auto_groups), json_encode($override_groups), $login_hook);
 
         return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
@@ -77,13 +77,16 @@ class ListenerManagerTest extends TestCase
     {
         $lm = $this->createListenerManager();
 
-        $this->eventDispatcher->expects($this->once())
+        $isCallable = function ($subject) {
+            return is_callable($subject);
+        };
+
+        $this->eventDispatcher->expects($this->exactly(3))
             ->method('addListener')
-            ->with(
-                UserCreatedEvent::class,
-                $this->callback(function ($subject) {
-                    return is_callable($subject);
-                })
+            ->withConsecutive(
+                [UserCreatedEvent::class, $this->callback($isCallable)],
+                [UserAddedEvent::class, $this->callback($isCallable)],
+                [UserRemovedEvent::class, $this->callback($isCallable)]
             );
 
         $lm->setup();
