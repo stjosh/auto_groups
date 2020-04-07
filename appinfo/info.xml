@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>nextcloud_defaultgroups</id>
-    <name>Default Groups</name>
-    <summary>Adds all users to one or multiple specified default groups.</summary>
-    <description>Automatically add users to the specified default groups. Optionally, this can be triggered on every successful login, which is useful for external user backends.</description>
+    <id>auto_groups</id>
+    <name>Auto Groups</name>
+    <summary>Auomatically adds all users to one or multiple specified groups.</summary>
+    <description>Automatically add users to the specified groups, except those users belonging to one of the specified override groups. Optionally, the group assignment can be triggered on every successful login, which is useful for external user backends.</description>
     <version>1.0.0</version>
     <licence>agpl</licence>
     <author mail="josua.hunziker@gmail.com" >Josua Hunziker</author>
-    <namespace>DefaultGroups</namespace>
+    <namespace>AutoGroups</namespace>
     <category>tools</category>
-    <website>https://github.com/stjosh/nextcloud_defaultgroups</website>
-    <bugs>https://github.com/stjosh/nextcloud_defaultgroups/issues</bugs>
-    <repository type="git">https://github.com/stjosh/nextcloud_defaultgroups</repository>
+    <website>https://github.com/stjosh/auto_groups</website>
+    <bugs>https://github.com/stjosh/auto_groups/issues</bugs>
+    <repository type="git">https://github.com/stjosh/auto_groups</repository>
     <dependencies>
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>
     <settings>
-        <admin-section>OCA\DefaultGroups\Settings\AdminSettings</admin-section>
+        <admin-section>OCA\AutoGroups\Settings\AdminSettings</admin-section>
     </settings>
 </info>

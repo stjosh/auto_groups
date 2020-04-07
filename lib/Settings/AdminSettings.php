@@ -1,9 +1,10 @@
 <?php
 /**
- * @copyright Copyright (c) 2017
+ * @copyright Copyright (c) 2020
  *
  * @author Josua Hunziker <josua.hunziker@gmail.com>
- * @author Ján Stibila <nextcloud@stibila.eu>
+ * 
+ * Based on the work of Ján Stibila <nextcloud@stibila.eu>
  *
  * @license AGPL-3.0
  *
@@ -21,7 +22,7 @@
  *
  */
 
-namespace OCA\DefaultGroups\Settings;
+namespace OCA\AutoGroups\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
@@ -32,32 +33,22 @@ class AdminSettings implements ISettings {
         /** @var IConfig */
         private $config;
 
-        /**
-         * Admin constructor.
-         *
-         * @param IConfig $config
-         */
         public function __construct(IConfig $config) {
                 $this->config = $config;
         }
 
-        /**
-         * @return TemplateResponse
-         */
         public function getForm() {
-                $defaultGroups = json_decode( $this->config->getAppValue("DefaultGroups", "default_groups", '[]') );
-                $ignoreGroups = json_decode( $this->config->getAppValue("DefaultGroups", "ignore_groups", '[]') );
-                $modifyLater = $this->config->getAppValue("DefaultGroups", "modify_later", 'false');
-                $loginHook = $this->config->getAppValue("DefaultGroups", "login_hook", 'false');
+                $autoGroups = json_decode( $this->config->getAppValue("AutoGroups", "auto_groups", '[]') );
+                $overrideGroups = json_decode( $this->config->getAppValue("AutoGroups", "override_groups", '[]') );
+                $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
 
                 $parameters = [
-                        'default_groups' => implode('|', $defaultGroups),
-                        'ignore_groups' => implode('|', $ignoreGroups),
-                        'modify_later' => $modifyLater,
+                        'auto_groups' => implode('|', $autoGroups),
+                        'override_groups' => implode('|', $overrideGroups),
                         'login_hook' => $loginHook,
                 ];
 
-                return new TemplateResponse('nextcloud_defaultgroups', 'admin', $parameters);
+                return new TemplateResponse('auto_groups', 'admin', $parameters);
         }
 
         /**
