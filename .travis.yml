@@ -40,4 +40,5 @@ script:
   - ../vendor/bin/phpunit --configuration phpunit.xml
 
 after_success:
-  - travis_retry php ../vendor/bin/php-coveralls -v
+  - cd ..
+  - travis_retry php vendor/bin/php-coveralls -v -x tests/clover.xml
