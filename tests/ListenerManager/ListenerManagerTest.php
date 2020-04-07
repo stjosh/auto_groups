@@ -61,7 +61,7 @@ class ListenerManagerTest extends TestCase
 
     private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false)
     {
-        $this->config->expects($this->exactly(4))
+        $this->config->expects($this->exactly(3))
             ->method('getAppValue')
             ->withConsecutive(
                 ['AutoGroups', 'auto_groups', '[]'],
