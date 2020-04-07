@@ -28,7 +28,7 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\Settings\ISettings;
 
-class AdminSettings implements ISettings {
+class Admin implements ISettings {
 
         /** @var IConfig */
         private $config;
