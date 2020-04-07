@@ -34,7 +34,7 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\ILogger;
 
-use OCA\DefaultGroups\ListenerManager;
+use OCA\AutoGroups\ListenerManager;
 
 use Test\TestCase;
 
