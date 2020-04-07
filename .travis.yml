@@ -38,3 +38,6 @@ script:
   # Run phpunit tests
   - cd tests
   - ../vendor/bin/phpunit --configuration phpunit.xml
+
+after_success:
+  - travis_retry php ../vendor/bin/php-coveralls -v
