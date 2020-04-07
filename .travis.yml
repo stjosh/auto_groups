@@ -34,7 +34,7 @@ before_script:
 
 script:
   # check syntax
-  - vendor/bin/parallel-lint --exclude app --exclude vendor .
+  - vendor/bin/parallel-lint --exclude vendor .
   # Run phpunit tests
   - cd tests
   - ../vendor/bin/phpunit --configuration phpunit.xml
