@@ -70,8 +70,8 @@ class ListenerManager
             $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
 
             //Check if user belongs to any of the ignored groups
-            $userInIgnoredGroups = array_intersect($this->overrideGroupNames, $userGroupsNames);
-            $add = empty($userInIgnoredGroups);
+            $userInOverrideGroups = array_intersect($this->overrideGroupNames, $userGroupsNames);
+            $add = empty($userInOverrideGroups);
 
             // Add to / remove from admin groups
             foreach ($this->groupNames as $groupName) {
