@@ -162,7 +162,7 @@ class ListenerManagerTest extends TestCase
             ->willReturn($autogroup);
 
         $callback = $this->initAndReturnCallback(['autogroup']);
-        call_user_func($callback, $event);
+        $callback($event);
 
     }
 }
