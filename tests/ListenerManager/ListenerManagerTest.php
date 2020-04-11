@@ -154,7 +154,7 @@ class ListenerManagerTest extends TestCase
         $autogroup = $this->createMock(IGroup::class);
         $autogroup->expects($this->once())->method('getGID')->willReturn('autogroup');
         $autogroup->expects($this->once())->method('inGroup')->with($this->testUser)->willReturn(false);
-        $autogroup->expects($this->once())->method('addUser')->with($this->$testUser);
+        $autogroup->expects($this->once())->method('addUser')->with($this->testUser);
 
         $this->groupManager->expects($this->once())
             ->method('search')
