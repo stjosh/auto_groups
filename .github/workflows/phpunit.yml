@@ -51,7 +51,7 @@ jobs:
           extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite
           coverage: pcov
 
-      - name: Set up PHPUnit
+      - name: Set up Dependencies
         working-directory: apps/${{ env.APP_NAME }}
         run: composer i
 
@@ -62,8 +62,9 @@ jobs:
           ./occ app:enable ${{ env.APP_NAME }}
 
       - name: Check Syntax
+        working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/bin/parallel-lint --exclude vendor .
 
-      - name: PHPUnit
+      - name: Unit Tests
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
