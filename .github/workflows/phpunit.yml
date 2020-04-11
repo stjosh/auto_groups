@@ -18,7 +18,7 @@ jobs:
       # do not stop on another job's failure
       fail-fast: false
       matrix:
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.3', '7.4']
         databases: ['sqlite']
         server-versions: ['stable18', 'master']
   
@@ -62,5 +62,5 @@ jobs:
           ./occ app:enable ${{ env.APP_NAME }}
 
       - name: PHPUnit
-        working-directory: apps/${{ env.APP_NAME }}/tests
-        run: ./vendor/phpunit/phpunit/phpunit -c phpunit.xml
+        working-directory: apps/${{ env.APP_NAME }}
+        run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
