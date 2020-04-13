@@ -1,4 +1,5 @@
 ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg)
+[![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg)](https://codecov.io/gh/stjosh/auto_groups)
 
 # Nextcloud Auto Groups
 Automatically add users to specified Auto Groups, except for those belonging to one of the specified Override Groups. 
