@@ -34,6 +34,9 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\ILogger;
 
+use OCP\IUser;
+use OCP\IGroup;
+
 use OCA\AutoGroups\ListenerManager;
 
 use Test\TestCase;
@@ -57,6 +60,11 @@ class ListenerManagerTest extends TestCase
         $this->eventDispatcher = $this->createMock(IEventDispatcher::class);
         $this->config = $this->createMock(IConfig::class);
         $this->logger = $this->createMock(ILogger::class);
+
+        $this->testUser = $this->createMock(IUser::class);
+        $this->testUser->expects($this->any())
+            ->method('getDisplayName')
+            ->willReturn('Test User');
     }
 
     private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false)
@@ -73,22 +81,75 @@ class ListenerManagerTest extends TestCase
         return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
 
-    public function testOnlyCreatedHookOnDefaultConfig()
-    {
-        $lm = $this->createListenerManager();
+    private function initEventHandlerTests($auto_groups = [], $override_groups = []) {
+        $this->eventDispatcher->expects($this->exactly(3))
+            ->method('addListener')
+            ->withConsecutive(
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+            );
 
+        $lm = $this->createListenerManager($auto_groups, $override_groups);
+        $lm->setup();
+
+        return $lm;
+    }
+
+    public function testCreatedAddedRemovedHooksWithDefaultSettings()
+    {
+        $this->eventDispatcher->expects($this->exactly(3))
+            ->method('addListener')
+            ->withConsecutive(
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')]
+            );
+
+        $lm = $this->createListenerManager();
+        $lm->setup();
+    }
+
+    public function testAlsoLoginHookIfEnabled() {
         $isCallable = function ($subject) {
             return is_callable($subject);
         };
 
-        $this->eventDispatcher->expects($this->exactly(3))
+        $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
-                [UserCreatedEvent::class, $this->callback($isCallable)],
-                [UserAddedEvent::class, $this->callback($isCallable)],
-                [UserRemovedEvent::class, $this->callback($isCallable)]
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [PostLoginEvent::class, $this->callback('is_callable')]
             );
 
+        $lm = $this->createListenerManager([], [], true);
         $lm->setup();
+    }
+
+    public function testAddingToAutoGroups() {
+        $event = $this->createMock(UserCreatedEvent::class);
+        $event->expects($this->once())
+            ->method('getUser')
+            ->willReturn($this->testUser);
+
+        $this->groupManager->expects($this->once())
+            ->method('getUserGroups')
+            ->with($this->testUser)
+            ->willReturn([]);
+
+        $autogroup = $this->createMock(IGroup::class);
+        $autogroup->expects($this->once())->method('getGID')->willReturn('autogroup');
+        $autogroup->expects($this->once())->method('inGroup')->with($this->testUser)->willReturn(false);
+        $autogroup->expects($this->once())->method('addUser')->with($this->testUser);
+
+        $this->groupManager->expects($this->once())
+            ->method('search')
+            ->with('autogroup', null, null)
+            ->willReturn([$autogroup]);
+
+        $lm = $this->initEventHandlerTests(['autogroup']);
+        $lm->addAndRemoveAutoGroups($event);
     }
 }
