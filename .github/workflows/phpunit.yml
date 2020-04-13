@@ -68,3 +68,6 @@ jobs:
       - name: Unit Tests
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
+
+      - name: Codecov.io Upload
+        uses: codecov/codecov-action@v1
