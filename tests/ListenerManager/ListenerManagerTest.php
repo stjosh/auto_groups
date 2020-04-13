@@ -144,7 +144,7 @@ class ListenerManagerTest extends TestCase
         $autogroup->expects($this->once())->method('inGroup')->with($this->testUser)->willReturn(false);
         $autogroup->expects($this->once())->method('addUser')->with($this->testUser);
 
-        $this->groupManager->expects($this->twice())
+        $this->groupManager->expects($this->exactly(2))
             ->method('search')
             ->with('autogroup', null, null)
             ->willReturn($autogroup);
