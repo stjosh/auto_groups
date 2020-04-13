@@ -77,3 +77,5 @@ jobs:
 
       - name: Codecov.io Upload
         uses: codecov/codecov-action@v1
+        with: 
+          file: apps/${{ env.APP_NAME }}/test/coverage.xml
