@@ -1,0 +1,79 @@
+name: Unit and Integration Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - stable*
+
+env:
+  APP_NAME: auto_groups
+
+jobs:
+  php:
+    runs-on: ubuntu-latest
+
+    strategy:
+      # do not stop on another job's failure
+      fail-fast: false
+      matrix:
+        php-versions: ['7.3', '7.4']
+        databases: ['sqlite']
+        server-versions: ['stable18']
+  
+    name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
+
+    steps:
+      - name: Checkout Nextcloud Server
+        uses: actions/checkout@v2
+        with:
+          repository: nextcloud/server
+          ref: ${{ matrix.server-versions }}
+
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+          git submodule sync --recursive
+          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
+      - name: Checkout app
+        uses: actions/checkout@v2
+        with:
+          path: apps/${{ env.APP_NAME }}
+
+      - name: Set up php ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: phpunit
+          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite
+          coverage: none
+
+      - name: Cache Dependencies
+        uses: actions/cache@v1
+        with:
+          path: apps/${{ env.APP_NAME }}/vendor
+          key: cache-${{ hashFiles('**/composer.json') }}
+
+      - name: Set up Dependencies
+        working-directory: apps/${{ env.APP_NAME }}
+        run: composer i
+
+      - name: Set up Nextcloud
+        run: |
+          mkdir data
+          ./occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password 
+          ./occ app:enable ${{ env.APP_NAME }}
+
+      - name: Check Syntax
+        working-directory: apps/${{ env.APP_NAME }}
+        run: ./vendor/bin/parallel-lint --exclude vendor .
+
+      - name: Unit Tests
+        working-directory: apps/${{ env.APP_NAME }}
+        run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
+
+      - name: Codecov.io Upload
+        uses: codecov/codecov-action@v1
