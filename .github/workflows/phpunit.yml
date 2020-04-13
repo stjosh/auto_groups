@@ -74,17 +74,7 @@ jobs:
       - name: Unit Tests
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
-        
-      - name: Upload raw coverage report
-        uses: actions/upload-artifact@v1
-        with:
-          name: coverage.xml
-          path: apps/${{ env.APP_NAME }}/tests/coverage.xml
-
-      - name: Copy codecov.yml configuration
-        run: cp apps/${{ env.APP_NAME }}/codecov.yml .
 
       - name: Codecov.io Upload
-        uses: codecov/codecov-action@v1
-        with: 
-          file: apps/${{ env.APP_NAME }}/tests/coverage.xml
+        working-directory: apps/${{ env.APP_NAME }}
+        run: bash <(curl -s https://codecov.io/bash) -f tests/coverage.xml 
