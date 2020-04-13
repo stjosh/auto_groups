@@ -140,14 +140,14 @@ class ListenerManagerTest extends TestCase
             ->willReturn([]);
 
         $autogroup = $this->createMock(IGroup::class);
-        //$autogroup->expects($this->once())->method('getGID')->willReturn('autogroup');
+        $autogroup->expects($this->once())->method('getGID')->willReturn('autogroup');
         $autogroup->expects($this->once())->method('inGroup')->with($this->testUser)->willReturn(false);
         $autogroup->expects($this->once())->method('addUser')->with($this->testUser);
 
         $this->groupManager->expects($this->once())
             ->method('search')
             ->with('autogroup', null, null)
-            ->willReturn($autogroup);
+            ->willReturn([$autogroup]);
 
         $lm = $this->initEventHandlerTests(['autogroup']);
         $lm->addAndRemoveAutoGroups($event);
