@@ -81,39 +81,29 @@ class ListenerManagerTest extends TestCase
         return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
 
-    private function initAndReturnCallback($auto_groups = [], $override_groups = []) {
-        $callback = null;
-        $setupCallback = function ($subject) {
-            $callback = $subject;
-            return is_callable($subject);
-        };
-
+    private function initEventHandlerTests($auto_groups = [], $override_groups = []) {
         $this->eventDispatcher->expects($this->exactly(3))
             ->method('addListener')
             ->withConsecutive(
-                [UserCreatedEvent::class, $this->callback($setupCallback)],
-                [UserAddedEvent::class, $this->callback($setupCallback)],
-                [UserRemovedEvent::class, $this->callback($setupCallback)],
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')],
             );
 
         $lm = $this->createListenerManager($auto_groups, $override_groups);
         $lm->setup();
 
-        return $callback;
+        return $lm;
     }
 
     public function testCreatedAddedRemovedHooksWithDefaultSettings()
     {
-        $isCallable = function ($subject) {
-            return is_callable($subject);
-        };
-
         $this->eventDispatcher->expects($this->exactly(3))
             ->method('addListener')
             ->withConsecutive(
-                [UserCreatedEvent::class, $this->callback($isCallable)],
-                [UserAddedEvent::class, $this->callback($isCallable)],
-                [UserRemovedEvent::class, $this->callback($isCallable)]
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')]
             );
 
         $lm = $this->createListenerManager();
@@ -128,10 +118,10 @@ class ListenerManagerTest extends TestCase
         $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
-                [UserCreatedEvent::class, $this->callback($isCallable)],
-                [UserAddedEvent::class, $this->callback($isCallable)],
-                [UserRemovedEvent::class, $this->callback($isCallable)],
-                [PostLoginEvent::class, $this->callback($isCallable)]
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [PostLoginEvent::class, $this->callback('is_callable')]
             );
 
         $lm = $this->createListenerManager([], [], true);
@@ -139,8 +129,6 @@ class ListenerManagerTest extends TestCase
     }
 
     public function testAddingToAutoGroups() {
-        $user = $this->createMock(IUser::class);
-        
         $event = $this->createMock(UserCreatedEvent::class);
         $event->expects($this->once())
             ->method('getUser')
@@ -161,8 +149,7 @@ class ListenerManagerTest extends TestCase
             ->with('autogroup', null, null)
             ->willReturn($autogroup);
 
-        $callback = $this->initAndReturnCallback(['autogroup']);
-        $callback($event);
-
+        $lm = $this->initEventHandlerTests(['autogroup']);
+        $lm->addAndRemoveAutoGroups($event);
     }
 }

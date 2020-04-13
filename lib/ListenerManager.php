@@ -64,40 +64,46 @@ class ListenerManager
      */
     public function setup()
     {
-        $addAndRemoveAutoGroups = function ($event) {
-            // Get user information
-            $user = $event->getUser();
-            $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
-
-            //Check if user belongs to any of the ignored groups
-            $userInOverrideGroups = array_intersect($this->overrideGroupNames, $userGroupsNames);
-            $add = empty($userInOverrideGroups);
-
-            // Add to / remove from admin groups
-            foreach ($this->groupNames as $groupName) {
-                $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
-                foreach ($groups as $group) {
-                    if ($group->getGID() === $groupName) {
-                        if ($add && !$group->inGroup($user)) {
-                            $this->logger->notice('Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName);
-                            $group->addUser($user);
-                        } else if (!$add && $group->inGroup($user)) {
-                            $this->logger->notice('Remove user ' . $user->getDisplayName() . ' from auto group ' . $groupName);
-                            $group->removeUser($user);
-                        }
-                    }
-                }
-            }
-        };
+        // The callback as a PHP callable
+        $callback = [ $this, 'addAndRemoveAutoGroups' ]; 
 
         // Always add user to / remove user from auto groups on creation, group addition or group deletion
-        $this->eventDispatcher->addListener(UserCreatedEvent::class, $addAndRemoveAutoGroups);
-        $this->eventDispatcher->addListener(UserAddedEvent::class, $addAndRemoveAutoGroups);
-        $this->eventDispatcher->addListener(UserRemovedEvent::class, $addAndRemoveAutoGroups);
+        $this->eventDispatcher->addListener(UserCreatedEvent::class, $callback);
+        $this->eventDispatcher->addListener(UserAddedEvent::class, $callback);
+        $this->eventDispatcher->addListener(UserRemovedEvent::class, $callback);
 
         // If login hook is enabled, add user to / remove user from auto groups on every successful login
         if (filter_var($this->loginHook, FILTER_VALIDATE_BOOLEAN)) {
-            $this->eventDispatcher->addListener(PostLoginEvent::class, $addAndRemoveAutoGroups);
+            $this->eventDispatcher->addListener(PostLoginEvent::class, $callback);
+        }
+    }
+
+    /**
+     * The actual event handler
+     */
+     public function addAndRemoveAutoGroups($event) {
+        // Get user information
+        $user = $event->getUser();
+        $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
+
+        //Check if user belongs to any of the ignored groups
+        $userInOverrideGroups = array_intersect($this->overrideGroupNames, $userGroupsNames);
+        $add = empty($userInOverrideGroups);
+
+        // Add to / remove from admin groups
+        foreach ($this->groupNames as $groupName) {
+            $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
+            foreach ($groups as $group) {
+                if ($group->getGID() === $groupName) {
+                    if ($add && !$group->inGroup($user)) {
+                        $this->logger->notice('Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName);
+                        $group->addUser($user);
+                    } else if (!$add && $group->inGroup($user)) {
+                        $this->logger->notice('Remove user ' . $user->getDisplayName() . ' from auto group ' . $groupName);
+                        $group->removeUser($user);
+                    }
+                }
+            }
         }
     }
 }
