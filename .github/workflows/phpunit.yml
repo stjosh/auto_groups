@@ -74,6 +74,15 @@ jobs:
       - name: Unit Tests
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
+        
+      - name: List Directory Structure
+        run: ls -la
+      
+      - name: List App Directory Structure
+        run: ls -la apps/${{ env.APP_NAME }}
+      
+      - name: List Tests Directory Structure
+        run: ls -la apps/${{ env.APP_NAME }}/tests
 
       - name: Codecov.io Upload
         uses: codecov/codecov-action@v1
