@@ -79,7 +79,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: coverage.xml
-          path: papps/${{ env.APP_NAME }}/tests/coverage.xml
+          path: apps/${{ env.APP_NAME }}/tests/coverage.xml
 
       - name: Codecov.io Upload
         uses: codecov/codecov-action@v1
