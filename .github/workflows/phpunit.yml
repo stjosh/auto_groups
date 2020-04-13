@@ -25,7 +25,7 @@ jobs:
     name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     steps:
-      - name: Checkout server
+      - name: Checkout Nextcloud Server
         uses: actions/checkout@v2
         with:
           repository: nextcloud/server
@@ -50,6 +50,12 @@ jobs:
           tools: phpunit
           extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite
           coverage: pcov
+
+      - name: Cache Dependencies
+        uses: actions/cache@v1
+        with:
+          path: apps/${{ env.APP_NAME }}/vendor
+          key: cache-${{ hashFiles('**/composer.json') }}
 
       - name: Set up Dependencies
         working-directory: apps/${{ env.APP_NAME }}
