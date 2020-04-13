@@ -81,6 +81,9 @@ jobs:
           name: coverage.xml
           path: apps/${{ env.APP_NAME }}/tests/coverage.xml
 
+      - name: Copy codecov.yml configuration
+        run: cp apps/${{ env.APP_NAME }}/codecov.yml .
+
       - name: Codecov.io Upload
         uses: codecov/codecov-action@v1
         with: 
