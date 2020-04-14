@@ -166,7 +166,7 @@ class ListenerManagerTest extends TestCase
         $this->groupManager->expects($this->once())
             ->method('getUserGroups')
             ->with($this->testUser)
-            ->willReturn(['autogroup']);
+            ->willReturn(['autogroup' => []]);
 
         $autogroup = $this->createMock(IGroup::class);
         $autogroup->expects($this->once())->method('getGID')->willReturn('autogroup');
@@ -192,7 +192,7 @@ class ListenerManagerTest extends TestCase
         $this->groupManager->expects($this->once())
             ->method('getUserGroups')
             ->with($this->testUser)
-            ->willReturn(['autogroup1', 'overridegroup1', 'autogroup2']);
+            ->willReturn(['autogroup1' => [], 'overridegroup1' => [], 'autogroup2' => []]);
 
         $groupMock = $this->createMock(IGroup::class);
         $groupMock->expects($this->exactly(2))->method('getGID')->willReturnOnConsecutiveCalls('autogroup1', 'autogroup2');
@@ -218,7 +218,7 @@ class ListenerManagerTest extends TestCase
         $this->groupManager->expects($this->once())
             ->method('getUserGroups')
             ->with($this->testUser)
-            ->willReturn(['overridegroup1']);
+            ->willReturn(['overridegroup1' => []]);
 
         $groupMock = $this->createMock(IGroup::class);
         $groupMock->expects($this->exactly(2))->method('getGID')->willReturnOnConsecutiveCalls('autogroup1', 'autogroup2');
