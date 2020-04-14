@@ -84,10 +84,10 @@ class ListenerManager
      public function addAndRemoveAutoGroups($event) {
         // Get user information
         $user = $event->getUser();
-        $userGroupsNames = array_keys($this->groupManager->getUserGroups($user));
+        $userGroupNames = array_keys($this->groupManager->getUserGroups($user));
 
         //Check if user belongs to any of the ignored groups
-        $userInOverrideGroups = array_intersect($this->overrideGroupNames, $userGroupsNames);
+        $userInOverrideGroups = array_intersect($this->overrideGroupNames, $userGroupNames);
         $add = empty($userInOverrideGroups);
 
         // Add to / remove from admin groups
