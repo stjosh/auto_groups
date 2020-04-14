@@ -152,4 +152,71 @@ class ListenerManagerTest extends TestCase
         $lm = $this->initEventHandlerTests(['autogroup']);
         $lm->addAndRemoveAutoGroups($event);
     }
+
+    public function testAddingNotRequired() {
+        $event = $this->createMock(UserCreatedEvent::class);
+        $event->expects($this->once())
+            ->method('getUser')
+            ->willReturn($this->testUser);
+
+        $this->groupManager->expects($this->once())
+            ->method('getUserGroups')
+            ->with($this->testUser)
+            ->willReturn(['autogroup']);
+
+        $autogroup = $this->createMock(IGroup::class);
+        $autogroup->expects($this->once())->method('getGID')->willReturn('autogroup');
+        $autogroup->expects($this->once())->method('inGroup')->with($this->testUser)->willReturn(true);
+        $autogroup->expects($this->never())->method('addUser');
+
+        $this->groupManager->expects($this->once())
+            ->method('search')
+            ->with('autogroup', null, null)
+            ->willReturn([$autogroup]);
+
+        $lm = $this->initEventHandlerTests(['autogroup']);
+        $lm->addAndRemoveAutoGroups($event);
+    }
+
+    public function testRemoveUserFromAutoGroups() {
+        $event = $this->createMock(UserCreatedEvent::class);
+        $event->expects($this->once())
+            ->method('getUser')
+            ->willReturn($this->testUser);
+
+        $this->groupManager->expects($this->once())
+            ->method('getUserGroups')
+            ->with($this->testUser)
+            ->willReturn(['autogroup1'], ['normalgroup'],['autogroup2']);
+
+        $groupMock = $this->createMock(IGroup::class);
+        $groupMock->expects($this->exactly(2))->method('getGID')->willReturnOnConsecutiveCalls('autogroup1', 'autogroup2');
+        $groupMock->expects($this->exactly(2))->method('inGroup')->with($this->testUser)->willReturn(true);
+        $groupMock->expects($this->exactly(2))->method('removeUser')->with($this->testUser);
+
+        $this->groupManager->expects($this->exactly(2))
+            ->method('search')
+            ->withConsecutive(['autogroup1', null, null], ['autogroup2', null, null])
+            ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
+
+        $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2']);
+        $lm->addAndRemoveAutoGroups($event);
+    }
+
+    public function testRemoveNotRequired() {
+        $event = $this->createMock(UserCreatedEvent::class);
+        $event->expects($this->once())
+            ->method('getUser')
+            ->willReturn($this->testUser);
+
+        $this->groupManager->expects($this->once())
+            ->method('getUserGroups')
+            ->with($this->testUser)
+            ->willReturn(['normalgroup']);
+
+        $this->groupManager->expects($this->never())->method('search');
+
+        $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2']);
+        $lm->addAndRemoveAutoGroups($event);
+    }
 }
