@@ -67,20 +67,14 @@ class ListenerManagerTest extends TestCase
 
     private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false)
     {
-        $this->config->expects($this->any())
+        $this->config->expects($this->exactly(3))
             ->method('getAppValue')
-            ->with('AutoGroups', 'login_hook', 'false')
-            ->willReturn($login_hook);
-        
-        $this->config->expects($this->any())
-            ->method('getAppValue')
-            ->with('AutoGroups', 'auto_groups', '[]')
-            ->willReturn(json_encode($auto_groups));
-
-        $this->config->expects($this->any())
-            ->method('getAppValue')
-            ->with('AutoGroups', 'override_groups', '[]')
-            ->willReturn(json_encode($override_groups));
+            ->withConsecutive(
+                ['AutoGroups', 'login_hook', 'false'],
+                ['AutoGroups', 'auto_groups', '[]'],
+                ['AutoGroups', 'override_groups', '[]'],
+            )
+            ->willReturnOnConsecutiveCalls($login_hook, json_encode($auto_groups), json_encode($override_groups));
 
         return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
