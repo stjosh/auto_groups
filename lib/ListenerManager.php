@@ -87,6 +87,7 @@ class ListenerManager
         // Get configuration
         $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
         $overrideGroupNames = json_decode($this->config->getAppValue("AutoGroups", "override_groups", '[]'));
+        fwrite(STDERR, print_r($groupNames, TRUE)."\n");
 
         // Get user information
         $user = $event->getUser();
@@ -103,6 +104,7 @@ class ListenerManager
             foreach ($groups as $group) {
                 if ($group->getGID() === $groupName) {
                     if ($add && !$group->inGroup($user)) {
+                        fwrite(STDERR, 'Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName ."\n");
                         $this->logger->notice('Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName);
                         $group->addUser($user);
                     } else if (!$add && $group->inGroup($user)) {
