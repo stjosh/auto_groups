@@ -52,7 +52,7 @@ class Admin implements ISettings {
         }
 
         /**
-         * @return string the section ID, e.g. 'sharing'
+         * @return string the section ID
          */ 
         public function getSection() {
                 return 'additional';
