@@ -40,10 +40,7 @@ class ListenerManager
     private $groupManager;
     private $eventDispatcher;
     private $logger;
-
-    private $loginHook;
-    private $groupNames;
-    private $overrideGroupNames;
+    private $config;
 
     /**
      * Listener manager constructor.
@@ -53,10 +50,7 @@ class ListenerManager
         $this->groupManager = $groupManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
-
-        $this->groupNames = json_decode($config->getAppValue("AutoGroups", "auto_groups", '[]'));
-        $this->overrideGroupNames = json_decode($config->getAppValue("AutoGroups", "override_groups", '[]'));
-        $this->loginHook = $config->getAppValue("AutoGroups", "login_hook", 'false');
+        $this->config = $config;
     }
 
     /**
@@ -67,13 +61,16 @@ class ListenerManager
         // The callback as a PHP callable
         $callback = [ $this, 'addAndRemoveAutoGroups' ]; 
 
+        // Get the loginHook config
+        $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
+
         // Always add user to / remove user from auto groups on creation, group addition or group deletion
         $this->eventDispatcher->addListener(UserCreatedEvent::class, $callback);
         $this->eventDispatcher->addListener(UserAddedEvent::class, $callback);
         $this->eventDispatcher->addListener(UserRemovedEvent::class, $callback);
 
         // If login hook is enabled, add user to / remove user from auto groups on every successful login
-        if (filter_var($this->loginHook, FILTER_VALIDATE_BOOLEAN)) {
+        if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
             $this->eventDispatcher->addListener(PostLoginEvent::class, $callback);
         }
     }
@@ -82,16 +79,20 @@ class ListenerManager
      * The actual event handler
      */
      public function addAndRemoveAutoGroups($event) {
+        // Get configuration
+        $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
+        $overrideGroupNames = json_decode($this->config->getAppValue("AutoGroups", "override_groups", '[]'));
+
         // Get user information
         $user = $event->getUser();
         $userGroupNames = array_keys($this->groupManager->getUserGroups($user));
 
         //Check if user belongs to any of the ignored groups
-        $userInOverrideGroups = array_intersect($this->overrideGroupNames, $userGroupNames);
+        $userInOverrideGroups = array_intersect($overrideGroupNames, $userGroupNames);
         $add = empty($userInOverrideGroups);
 
         // Add to / remove from admin groups
-        foreach ($this->groupNames as $groupName) {
+        foreach ($groupNames as $groupName) {
             $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
             foreach ($groups as $group) {
                 if ($group->getGID() === $groupName) {
