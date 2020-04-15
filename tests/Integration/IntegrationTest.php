@@ -28,6 +28,7 @@ namespace OCA\AutoGroups\Tests\Integration;
 use OCP\IUserManager;
 use OCP\IGroupManager;
 use OCP\IConfig;
+use OCP\IUserSession;
 
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
@@ -40,6 +41,7 @@ class IntegrationTest extends TestCase
     private $userManager;
     private $groupManager;
     private $config;
+    private $userSession;
 
     protected function setUp(): void
     {
@@ -52,6 +54,7 @@ class IntegrationTest extends TestCase
         $this->groupManager = $this->container->query(IGroupManager::class);
         $this->userManager = $this->container->query(IUserManager::class);
         $this->config = $this->container->query(IConfig::class);
+        $this->userSession = $this->container->query(IUserSession::class);
 
         // Create the groups
         $this->groupManager->createGroup('autogroup1');
@@ -91,6 +94,32 @@ class IntegrationTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->removeUser($testUser);
 
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertContains('autogroup1', $groups);
+        $this->assertContains('autogroup2', $groups);
+    }
+
+    public function testLoginHook()
+    {
+        // Remove user from autogroup2 first
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
+
+        $testUser = $this->userManager->get('testuser');
+        $autogroup2 = $this->groupManager->search('autogroup2')[0];
+        $autogroup2->removeUser($testUser);
+
+        // Ensure that autogroup2 is removed
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertContains('autogroup1', $groups);
+        $this->assertNotContains('autogroup2', $groups);
+
+        // Add autogroup2 to autogroups again
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+
+        // Login
+        $this->userSession->login('testuser', 'testPassword');
+
+        // Check that both autogroups are here again
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
         $this->assertContains('autogroup2', $groups);
