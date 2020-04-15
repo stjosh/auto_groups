@@ -58,8 +58,6 @@ class ListenerManager
      */
     public function setup()
     {
-        fwrite(STDERR, "setup()\n");
-
         // The callback as a PHP callable
         $callback = [ $this, 'addAndRemoveAutoGroups' ]; 
 
@@ -81,36 +79,24 @@ class ListenerManager
      * The actual event handler
      */
      public function addAndRemoveAutoGroups($event) {
-        fwrite(STDERR, "addAndRemoveAutoGroups() for:\n");
-        fwrite(STDERR, $event->getUser()->getUID()."\n");
-
         // Get configuration
         $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
         $overrideGroupNames = json_decode($this->config->getAppValue("AutoGroups", "override_groups", '[]'));
-        fwrite(STDERR, "groupNames:\n");
-        fwrite(STDERR, print_r($groupNames, TRUE)."\n");
 
         // Get user information
         $user = $event->getUser();
         $userGroupNames = array_keys($this->groupManager->getUserGroups($user));
-        fwrite(STDERR, "userGroupNames:\n");
-        fwrite(STDERR, print_r($userGroupNames, TRUE)."\n");
 
         //Check if user belongs to any of the ignored groups
         $userInOverrideGroups = array_intersect($overrideGroupNames, $userGroupNames);
         $add = empty($userInOverrideGroups);
-        fwrite(STDERR, "Add:\n");
-        fwrite(STDERR, print_r($add, TRUE)."\n");
 
         // Add to / remove from admin groups
         foreach ($groupNames as $groupName) {
             $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
-            fwrite(STDERR, "groups returned by groupManager->search:\n");
-            fwrite(STDERR, print_r($groups, TRUE)."\n");
             foreach ($groups as $group) {
                 if ($group->getGID() === $groupName) {
                     if ($add && !$group->inGroup($user)) {
-                        fwrite(STDERR, 'Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName ."\n");
                         $this->logger->notice('Add user ' . $user->getDisplayName() . ' to auto group ' . $groupName);
                         $group->addUser($user);
                     } else if (!$add && $group->inGroup($user)) {
