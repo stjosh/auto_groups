@@ -24,5 +24,5 @@
 
 use OCA\AutoGroups\AppInfo\Application;
 
-$app = new Application('auto_groups');
+$app = new Application();
 $app->registerListeners();
