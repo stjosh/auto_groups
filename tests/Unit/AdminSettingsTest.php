@@ -66,7 +66,7 @@ class AdminSettingsTest extends TestCase
         $response = $this->adminSettings->getForm();
 
         $this->assertInstanceOf(TemplateResponse::class, $response);
-        $this->assertEquals('admin', $response->getTempateName());
+        $this->assertEquals('admin', $response->getTemplateName());
 
         $params = $response->getParams();
         $this->assertIsArray($params);
