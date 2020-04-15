@@ -44,13 +44,10 @@ use Test\TestCase;
 
 class ListenerManagerTest extends TestCase
 {
-
     private $groupManager;
     private $eventDispatcher;
     private $config;
     private $logger;
-
-    private $lm;
 
     protected function setUp(): void
     {
@@ -67,16 +64,16 @@ class ListenerManagerTest extends TestCase
             ->willReturn('Test User');
     }
 
-    private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false)
+    private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false, $expectedNumberOfConfigCalls = 3)
     {
-        $this->config->expects($this->exactly(3))
+        $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
             ->method('getAppValue')
             ->withConsecutive(
+                ['AutoGroups', 'login_hook', 'false'],
                 ['AutoGroups', 'auto_groups', '[]'],
                 ['AutoGroups', 'override_groups', '[]'],
-                ['AutoGroups', 'login_hook', 'false'],
             )
-            ->willReturnOnConsecutiveCalls(json_encode($auto_groups), json_encode($override_groups), $login_hook);
+            ->willReturnOnConsecutiveCalls($login_hook, json_encode($auto_groups), json_encode($override_groups));
 
         return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
@@ -107,16 +104,12 @@ class ListenerManagerTest extends TestCase
                 [UserRemovedEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager();
+        $lm = $this->createListenerManager([], [], false, 1);
         $lm->setup();
     }
 
     public function testAlsoLoginHookIfEnabled()
     {
-        $isCallable = function ($subject) {
-            return is_callable($subject);
-        };
-
         $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
@@ -126,7 +119,7 @@ class ListenerManagerTest extends TestCase
                 [PostLoginEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager([], [], true);
+        $lm = $this->createListenerManager([], [], true, 1);
         $lm->setup();
     }
 
@@ -149,7 +142,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->once())
             ->method('search')
-            ->with('autogroup', null, null)
+            ->with('autogroup')
             ->willReturn([$autogroup]);
 
         $lm = $this->initEventHandlerTests(['autogroup']);
@@ -175,7 +168,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->once())
             ->method('search')
-            ->with('autogroup', null, null)
+            ->with('autogroup')
             ->willReturn([$autogroup]);
 
         $lm = $this->initEventHandlerTests(['autogroup']);
@@ -201,7 +194,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->exactly(2))
             ->method('search')
-            ->withConsecutive(['autogroup1', null, null], ['autogroup2', null, null])
+            ->withConsecutive(['autogroup1'], ['autogroup2'])
             ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
 
         $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
@@ -227,7 +220,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->exactly(2))
             ->method('search')
-            ->withConsecutive(['autogroup1', null, null], ['autogroup2', null, null])
+            ->withConsecutive(['autogroup1'], ['autogroup2'])
             ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
 
         $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
