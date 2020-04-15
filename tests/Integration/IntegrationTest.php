@@ -63,7 +63,6 @@ class IntegrationTest extends TestCase
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
         $this->assertEquals('testuser', $testUser->getUID());
-        fwrite(STDERR, print_r($testUser, TRUE));
         fwrite(STDERR, print_r($testUser->getBackendClassName(), TRUE));
 
 
