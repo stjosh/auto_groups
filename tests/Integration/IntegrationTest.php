@@ -25,6 +25,10 @@
 
 namespace OCA\AutoGroups\Tests\Integration;
 
+use OCP\IUserManager;
+use OCP\IGroupManager;
+use OCP\IConfig;
+
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
 
@@ -45,9 +49,9 @@ class IntegrationTest extends TestCase
         $this->app->registerListeners();
 
         $this->container = $this->app->getContainer();
-        $this->groupManager = $this->container->query('OCP\IGroupManager');
-        $this->userManager = $this->container->query('OCP\IUserManager');
-        $this->config = $this->container->query('OCP\IConfig');
+        $this->groupManager = $this->container->query(IGroupManager::class);
+        $this->userManager = $this->container->query(IUserManager::class);
+        $this->config = $this->container->query(IConfig::class);
     }
 
     public function testAddedToAutoGroupOnCreate()
