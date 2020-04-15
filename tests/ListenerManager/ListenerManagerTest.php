@@ -65,9 +65,9 @@ class ListenerManagerTest extends TestCase
             ->willReturn('Test User');
     }
 
-    private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false)
+    private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false, $expectedNumberOfConfigCalls = 3)
     {
-        $this->config->expects($this->exactly(3))
+        $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
             ->method('getAppValue')
             ->withConsecutive(
                 ['AutoGroups', 'login_hook', 'false'],
@@ -105,16 +105,12 @@ class ListenerManagerTest extends TestCase
                 [UserRemovedEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager();
+        $lm = $this->createListenerManager([], [], false, 1);
         $lm->setup();
     }
 
     public function testAlsoLoginHookIfEnabled()
     {
-        $isCallable = function ($subject) {
-            return is_callable($subject);
-        };
-
         $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
@@ -124,7 +120,7 @@ class ListenerManagerTest extends TestCase
                 [PostLoginEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager([], [], true);
+        $lm = $this->createListenerManager([], [], true, 1);
         $lm->setup();
     }
 
