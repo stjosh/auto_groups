@@ -63,12 +63,9 @@ class IntegrationTest extends TestCase
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
         $this->assertEquals('testuser', $testUser->getUID());
-    }
+        fwrite(STDERR, print_r($testUser, TRUE));
+        fwrite(STDERR, print_r($testUser->getBackendClassName(), TRUE));
 
-    public function testToAutoGroupOnCreate() 
-    {
-        $testUser = $this->userManager->get('testuser');
-        $this->assertEquals('testuser', $testUser->getUID());
 
         $groups = $this->groupManager->getUserGroups($testUser);
         fwrite(STDERR, print_r($groups, TRUE));
