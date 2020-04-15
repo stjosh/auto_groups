@@ -65,7 +65,7 @@ class IntegrationTest extends TestCase
         $this->assertEquals('testuser', $testUser->getUID());
 
 
-        $groups = $this->groupManager->getUserGroups($testUser);
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup', $groups);
     }
 }
