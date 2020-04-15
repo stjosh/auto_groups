@@ -29,6 +29,8 @@ use OCP\IUserManager;
 use OCP\IGroupManager;
 use OCP\IConfig;
 
+use Test\TestCase;
+
 class IntegrationTest extends TestCase
 {
 

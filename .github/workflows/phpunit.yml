@@ -9,6 +9,8 @@ on:
 
 env:
   APP_NAME: auto_groups
+  PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, pcov
+  CACHE_KEY: cache-v1 # can be any string, change to clear the extension cache.
 
 jobs:
   php:
@@ -43,23 +45,43 @@ jobs:
         with:
           path: apps/${{ env.APP_NAME }}
 
+      - name: Setup cache environment
+        id: cache-env
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          key: ${{ env.CACHE_KEY }}
+
+      - name: Cache extensions
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.cache-env.outputs.dir }}
+          key: ${{ steps.cache-env.outputs.key }}
+          restore-keys: ${{ steps.cache-env.outputs.key }}
+
       - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
           tools: phpunit
-          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite
+          extensions: ${{ env.PHP_EXTENSIONS }}
           coverage: pcov
 
-      - name: Cache Dependencies
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
         uses: actions/cache@v1
         with:
-          path: apps/${{ env.APP_NAME }}/vendor
-          key: cache-${{ hashFiles('**/composer.json') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Set up Dependencies
         working-directory: apps/${{ env.APP_NAME }}
-        run: composer i
+        run: composer install --prefer-dist
 
       - name: Set up Nextcloud
         run: |
@@ -71,7 +93,7 @@ jobs:
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/bin/parallel-lint --exclude vendor .
 
-      - name: Unit Tests
+      - name: Unit and Integration Tests
         working-directory: apps/${{ env.APP_NAME }}
         run: ./vendor/phpunit/phpunit/phpunit -c tests/phpunit.xml
 
