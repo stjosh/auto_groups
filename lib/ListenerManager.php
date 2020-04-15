@@ -81,7 +81,8 @@ class ListenerManager
      * The actual event handler
      */
      public function addAndRemoveAutoGroups($event) {
-        fwrite(STDERR, "addAndRemoveAutoGroups()\n");
+        fwrite(STDERR, "addAndRemoveAutoGroups() for:\n");
+        fwrite(STDERR, $event->getUser()->getUID()."\n");
 
         // Get configuration
         $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
