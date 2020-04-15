@@ -76,7 +76,7 @@ class IntegrationTest extends TestCase
         $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
 
         $testUser = $this->userManager->get('testuser');
-        $overridegroup = $this->groupManager->search('overridegroup1', $limit = null, $offset = null);
+        $overridegroup = $this->groupManager->search('overridegroup1', $limit = null, $offset = null)[0];
         $overridegroup->addUser($testUser);
 
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
@@ -88,7 +88,7 @@ class IntegrationTest extends TestCase
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
 
         $testUser = $this->userManager->get('testuser');
-        $overridegroup = $this->groupManager->search('overridegroup1', $limit = null, $offset = null);
+        $overridegroup = $this->groupManager->search('overridegroup1', $limit = null, $offset = null)[0];
         $overridegroup->removeUser($testUser);
 
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
