@@ -58,6 +58,8 @@ class ListenerManager
      */
     public function setup()
     {
+        fwrite(STDERR, 'setup()\n');
+
         // The callback as a PHP callable
         $callback = [ $this, 'addAndRemoveAutoGroups' ]; 
 
@@ -79,6 +81,8 @@ class ListenerManager
      * The actual event handler
      */
      public function addAndRemoveAutoGroups($event) {
+        fwrite(STDERR, 'addAndRemoveAutoGroups()\n');
+
         // Get configuration
         $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
         $overrideGroupNames = json_decode($this->config->getAppValue("AutoGroups", "override_groups", '[]'));
