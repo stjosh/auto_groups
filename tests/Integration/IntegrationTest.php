@@ -60,7 +60,7 @@ class IntegrationTest extends TestCase
         $this->groupManager->createGroup('overridegroup2');
     }
 
-    public function testAddedToAutoGroupOnCreate()
+    public function testCreateHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
 
@@ -71,7 +71,7 @@ class IntegrationTest extends TestCase
         $this->assertContains('autogroup1', $groups);
     }
 
-    public function testRemovedFromAutoGroupIfAddedToOverrideGroup()
+    public function testAddHook()
     {
         $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
 
@@ -83,7 +83,7 @@ class IntegrationTest extends TestCase
         $this->assertNotContains('autogroup1', $groups);
     }
 
-    public function testAddedToAutoGroupsOnRemoveFromOverrideGroup()
+    public function testRemoveHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
 
