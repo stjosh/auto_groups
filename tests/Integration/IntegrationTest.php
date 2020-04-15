@@ -57,9 +57,12 @@ class IntegrationTest extends TestCase
     public function testAddedToAutoGroupOnCreate()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup"]');
+        $autoGroups = $this->config->getAppValue("AutoGroups", "auto_groups", '[]');
+        $this->assertEquals('["autogroup"]', $autoGroups);
 
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
+        $this->assertEquals('testuser', $testUser->getUID());
 
         $groups = $this->groupManager->getUserGroups($testUser);
         $this->assertContains('autogroup', $groups);
