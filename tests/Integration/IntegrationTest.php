@@ -63,14 +63,36 @@ class IntegrationTest extends TestCase
     public function testAddedToAutoGroupOnCreate()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
-        $autoGroups = $this->config->getAppValue("AutoGroups", "auto_groups", '[]');
-        $this->assertEquals('["autogroup1"]', $autoGroups);
 
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
-        $this->assertEquals('testuser', $testUser->getUID());
 
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
+    }
+
+    public function testRemovedFromAutoGroupIfAddedToOverrideGroup()
+    {
+        $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
+
+        $testUser = $this->userManager->get('testuser');
+        $overridegroup = $this->groupManager->search('overridegroup1', $limit = null, $offset = null);
+        $overridegroup->addUser($testUser);
+
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertNotContains('autogroup1', $groups);
+    }
+
+    public function testAddedToAutoGroupsOnRemoveFromOverrideGroup()
+    {
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+
+        $testUser = $this->userManager->get('testuser');
+        $overridegroup = $this->groupManager->search('overridegroup1', $limit = null, $offset = null);
+        $overridegroup->removeUser($testUser);
+
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertContains('autogroup1', $groups);
+        $this->assertContains('autogroup2', $groups);
     }
 }
