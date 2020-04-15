@@ -36,7 +36,7 @@ class IntegrationTest extends TestCase
     private $groupManager;
     private $config;
 
-    public function __construct(IUserManager $userManager, IGroupManager $groupManager, $IConfig $config)
+    public function __construct(IUserManager $userManager, IGroupManager $groupManager, IConfig $config)
     {
         parent::__construct();
         $this->userManager = $userManager;
