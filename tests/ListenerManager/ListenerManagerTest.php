@@ -70,9 +70,9 @@ class ListenerManagerTest extends TestCase
         $this->config->expects($this->exactly(3))
             ->method('getAppValue')
             ->withConsecutive(
+                ['AutoGroups', 'login_hook', 'false'],
                 ['AutoGroups', 'auto_groups', '[]'],
                 ['AutoGroups', 'override_groups', '[]'],
-                ['AutoGroups', 'login_hook', 'false'],
             )
             ->willReturnOnConsecutiveCalls(json_encode($auto_groups), json_encode($override_groups), $login_hook);
 
