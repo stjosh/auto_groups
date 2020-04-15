@@ -142,7 +142,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->once())
             ->method('search')
-            ->with('autogroup', null, null)
+            ->with('autogroup')
             ->willReturn([$autogroup]);
 
         $lm = $this->initEventHandlerTests(['autogroup']);
@@ -168,7 +168,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->once())
             ->method('search')
-            ->with('autogroup', null, null)
+            ->with('autogroup')
             ->willReturn([$autogroup]);
 
         $lm = $this->initEventHandlerTests(['autogroup']);
@@ -194,7 +194,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->exactly(2))
             ->method('search')
-            ->withConsecutive(['autogroup1', null, null], ['autogroup2', null, null])
+            ->withConsecutive(['autogroup1'], ['autogroup2'])
             ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
 
         $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
@@ -220,7 +220,7 @@ class ListenerManagerTest extends TestCase
 
         $this->groupManager->expects($this->exactly(2))
             ->method('search')
-            ->withConsecutive(['autogroup1', null, null], ['autogroup2', null, null])
+            ->withConsecutive(['autogroup1'], ['autogroup2'])
             ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
 
         $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);

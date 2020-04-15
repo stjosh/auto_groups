@@ -93,7 +93,7 @@ class ListenerManager
 
         // Add to / remove from admin groups
         foreach ($groupNames as $groupName) {
-            $groups = $this->groupManager->search($groupName, $limit = null, $offset = null);
+            $groups = $this->groupManager->search($groupName);
             foreach ($groups as $group) {
                 if ($group->getGID() === $groupName) {
                     if ($add && !$group->inGroup($user)) {
