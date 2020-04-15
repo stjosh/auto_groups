@@ -91,6 +91,7 @@ class ListenerManager
         // Get user information
         $user = $event->getUser();
         $userGroupNames = array_keys($this->groupManager->getUserGroups($user));
+        fwrite(STDERR, print_r($userGroupNames, TRUE)."\n");
 
         //Check if user belongs to any of the ignored groups
         $userInOverrideGroups = array_intersect($overrideGroupNames, $userGroupNames);
