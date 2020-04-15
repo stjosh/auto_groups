@@ -51,8 +51,8 @@ jobs:
         uses: shivammathur/cache-extensions@v1
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: ${{ env.extensions }}
-          key: ${{ env.key }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          key: ${{ env.CACHE_KEY }}
         
       - name: Cache extensions
         uses: actions/cache@v1
