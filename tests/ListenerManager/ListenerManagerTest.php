@@ -50,8 +50,6 @@ class ListenerManagerTest extends TestCase
     private $config;
     private $logger;
 
-    private $lm;
-
     protected function setUp(): void
     {
         parent::setUp();
