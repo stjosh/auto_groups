@@ -52,19 +52,25 @@ class IntegrationTest extends TestCase
         $this->groupManager = $this->container->query(IGroupManager::class);
         $this->userManager = $this->container->query(IUserManager::class);
         $this->config = $this->container->query(IConfig::class);
+
+        // Create the groups
+        $this->groupManager->createGroup('autogroup1');
+        $this->groupManager->createGroup('autogroup2');
+        $this->groupManager->createGroup('overridegroup1');
+        $this->groupManager->createGroup('overridegroup2');
     }
 
     public function testAddedToAutoGroupOnCreate()
     {
-        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup"]');
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
         $autoGroups = $this->config->getAppValue("AutoGroups", "auto_groups", '[]');
-        $this->assertEquals('["autogroup"]', $autoGroups);
+        $this->assertEquals('["autogroup1"]', $autoGroups);
 
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
         $this->assertEquals('testuser', $testUser->getUID());
 
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
-        $this->assertContains('autogroup', $groups);
+        $this->assertContains('autogroup1', $groups);
     }
 }
