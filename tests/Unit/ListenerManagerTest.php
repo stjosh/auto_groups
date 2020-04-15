@@ -22,7 +22,7 @@
  *
  */
 
-namespace OCA\AutoGroups\Tests\ListenerManager;
+namespace OCA\AutoGroups\Tests\Unit;
 
 use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
@@ -71,7 +71,7 @@ class ListenerManagerTest extends TestCase
             ->withConsecutive(
                 ['AutoGroups', 'login_hook', 'false'],
                 ['AutoGroups', 'auto_groups', '[]'],
-                ['AutoGroups', 'override_groups', '[]'],
+                ['AutoGroups', 'override_groups', '[]']
             )
             ->willReturnOnConsecutiveCalls($login_hook, json_encode($auto_groups), json_encode($override_groups));
 
