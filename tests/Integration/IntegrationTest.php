@@ -99,7 +99,7 @@ class IntegrationTest extends TestCase
         $this->assertContains('autogroup2', $groups);
     }
 
-    public function testLoginHook()
+    public function testLoginHookDisabled()
     {
         // Remove user from autogroup2 first
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
@@ -115,6 +115,20 @@ class IntegrationTest extends TestCase
 
         // Add autogroup2 to autogroups again
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+
+        // Login
+        $this->userSession->login('testuser', 'testPassword');
+
+        // Check that both autogroups are here again
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertContains('autogroup1', $groups);
+        $this->assertNotContains('autogroup2', $groups);
+    }
+
+    public function testLoginHook()
+    {
+        // Enabled the login hook
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
 
         // Login
         $this->userSession->login('testuser', 'testPassword');
