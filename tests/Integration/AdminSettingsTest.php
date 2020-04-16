@@ -53,10 +53,13 @@ class AdminSettingsTest extends TestCase
         $settings = $this->settingsManager->getAdminSettings('additional');
 
         foreach($settings as $key => $setting) {
-            fwrite(STDERR, $key);
+            fwrite(STDERR, "KEY\n");
+            fwrite(STDERR, $key)."\n";
             foreach($setting as $skey => $value) {
-                fwrite(STDERR, $skey);
-                fwrite(STDERR, get_class($value));
+                fwrite(STDERR, "SKEY\n");
+                fwrite(STDERR, $skey."\n");
+                fwrite(STDERR, "CLASS\n");
+                fwrite(STDERR, get_class($value)."\n");
             }
             
         }
