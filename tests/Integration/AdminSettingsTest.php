@@ -45,7 +45,7 @@ class AdminSettingsTest extends TestCase
         $this->app = new Application();
         $this->container = $this->app->getContainer();
 
-        $this->settingsManager = $this->container->query(IManager::class);
+        $this->settingsManager = $this->container->getServer()->getSettingsManager();
     }
 
     public function testAppSettingsExist()
