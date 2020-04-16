@@ -52,17 +52,9 @@ class AdminSettingsTest extends TestCase
     {
         $settings = $this->settingsManager->getAdminSettings('additional');
 
-        foreach($settings as $key => $setting) {
-            fwrite(STDERR, "KEY\n");
-            fwrite(STDERR, $key)."\n";
-            foreach($setting as $skey => $value) {
-                fwrite(STDERR, "SKEY\n");
-                fwrite(STDERR, $skey."\n");
-                fwrite(STDERR, "CLASS\n");
-                fwrite(STDERR, get_class($value)."\n");
-            }
-            
-        }
-        //$this->assertInstanceOf(Admin::class, $lastSetting);
+        $this->assertArrayHasKey(100, $settings);
+        $this->assertIsArray($settings[100]);
+        $adminSetting = $settings[100][0];
+        $this->assertInstanceOf(Admin::class, $adminSettings);
     }
 }
