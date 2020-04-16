@@ -53,6 +53,6 @@ class AdminSettingsTest extends TestCase
         $settings = $this->settingsManager->getAdminSettings('additional');
 
         $lastSetting = array_pop($settings);
-        $this->assertInstanceOf(Admin::class);
+        $this->assertInstanceOf(Admin::class, $lastSetting);
     }
 }
