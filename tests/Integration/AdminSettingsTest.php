@@ -54,7 +54,7 @@ class AdminSettingsTest extends TestCase
 
         $this->assertArrayHasKey(100, $settings);
         $this->assertIsArray($settings[100]);
-        $adminSetting = $settings[100][0];
+        $adminSettings = $settings[100][0];
         $this->assertInstanceOf(Admin::class, $adminSettings);
     }
 }
