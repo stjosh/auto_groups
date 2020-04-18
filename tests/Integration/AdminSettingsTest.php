@@ -63,7 +63,7 @@ class AdminSettingsTest extends TestCase
     {
         $appSettings = $this->settingsManager->getAdminSettings('additional')[100][0];
 
-        $templateResponse = $adminSettings->getForm();
+        $templateResponse = $appSettings->getForm();
         $this->assertInstanceOf(TemplateResponse::class, $templateResponse);
 
         $html = $templateResponse->render();
