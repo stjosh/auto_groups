@@ -33,7 +33,7 @@ use OCP\IUserSession;
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
 
-class IntegrationTest extends TestCase
+class EventsTest extends TestCase
 {
     private $app;
     private $container;
