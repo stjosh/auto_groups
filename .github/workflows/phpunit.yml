@@ -9,8 +9,8 @@ on:
 
 env:
   APP_NAME: auto_groups
-  PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, pcov
-  CACHE_KEY: cache-v1 # can be any string, change to clear the extension cache.
+  PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, xdebug
+  CACHE_KEY: cache-v3 # can be any string, change to clear the extension cache.
   TRAVIS: true
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           tools: phpunit
           extensions: ${{ env.PHP_EXTENSIONS }}
-          coverage: pcov
+          coverage: xdebug
       
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
