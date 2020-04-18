@@ -25,6 +25,7 @@
 namespace OCA\AutoGroups\Tests\Integration;
 
 use OCP\Settings\IManager;
+use OCP\AppFramework\Http\TemplateResponse;
 
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
@@ -56,5 +57,20 @@ class AdminSettingsTest extends TestCase
         $this->assertIsArray($settings[100]);
         $adminSettings = $settings[100][0];
         $this->assertInstanceOf(Admin::class, $adminSettings);
+    }
+
+    public function testFormRender()
+    {
+        $appSettings = $this->settingsManager->getAdminSettings('additional')[100][0];
+
+        $templateResponse = $adminSettings->getForm();
+        $this->assertInstanceOf(TemplateResponse::class, $templateResponse);
+
+        $html = $templateResponse->render();
+        $this->assertIsString($html);
+        $this->assertStringContainsString('<div id="auto_groups_options" class="section">', $html);
+        $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
+        $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
+        $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
     }
 }
