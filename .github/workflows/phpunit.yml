@@ -10,7 +10,7 @@ on:
 env:
   APP_NAME: auto_groups
   PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, pcov
-  CACHE_KEY: cache-v1 # can be any string, change to clear the extension cache.
+  CACHE_KEY: cache-v2 # can be any string, change to clear the extension cache.
   TRAVIS: true
 
 jobs:
