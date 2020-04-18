@@ -99,7 +99,7 @@ class AdminSettingsTest extends TestCase
         // We're basically mocking https://github.com/nextcloud/server/blob/master/lib/private/Template/Base.php here
 
         $l = new Language();
-        $_ = array('auto_groups' => 'autogroup1|autogroup2', 'override_groups' => 'override1|override2', 'login_hook' => 'false');
+        $_ = array('auto_groups' => 'autogroup1|autogroup2', 'override_groups' => 'override1|override2', 'login_hook' => 'true');
 
 		ob_start();
 	    include 'templates/admin.php';
