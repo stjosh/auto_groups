@@ -107,8 +107,6 @@ class AdminSettingsTest extends TestCase
         @ob_end_clean();
         
         $this->assertIsString($html);
-        $this->assertStringContainsString('<SCRIPT>auto_groups</SCRIPT><SCOPE>admin</SCOPE>', $html);
-        $this->assertStringContainsString('<STYLE>auto_groups</STYLE><SCOPE>admin</SCOPE>', $html);
         $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
         $this->assertStringContainsString('<input name="auto_groups" id="auto_groups" value="autogroup1|autogroup2"', $html);
         $this->assertStringContainsString('<input name="auto_groups_override" id="auto_groups_override" value="override1|override2"', $html);
