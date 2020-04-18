@@ -31,7 +31,27 @@ use OCA\AutoGroups\Settings\Admin;
 
 use Test\TestCase;
 
+// Mock Functions
+function script($script, $scope) {
+    print('<SCRIPT>'.$script.'</SCRIPT><SCOPE>'.$scope.'</SCOPE>');
+}
 
+function style($style, $scope) {
+    print('<STYLE>'.$script.'</STYLE><SCOPE>'.$scope.'</SCOPE>');
+}
+
+function p($string) {
+    print($string);
+}
+
+class Language
+{
+    public function t($string) {
+        return $string;
+    }
+}
+
+// The actual test class
 class AdminSettingsTest extends TestCase
 {
     private $config;
@@ -73,6 +93,24 @@ class AdminSettingsTest extends TestCase
         $this->assertEquals(true, $params['login_hook']);
         $this->assertEquals('auto1|auto2', $params['auto_groups']);
         $this->assertEquals('override1|override2', $params['override_groups']);
+    }
+
+    public function testTemplate() {
+        $l = new Language();
+        $_ = array('auto_groups' => 'autogroup1|autogroup2', 'override_groups' => 'override1|override2', 'login_hook' => 'false');
+
+		ob_start();
+	    include '../../templates/admin.php';
+		$data = ob_get_contents();
+        @ob_end_clean();
+        
+        $this->assertIsString($html);
+        $this->assertStringContainsString('<SCRIPT>auto_groups</SCRIPT><SCOPE>admin</SCOPE>', $html);
+        $this->assertStringContainsString('<STYLE>auto_groups</STYLE><SCOPE>admin</SCOPE>', $html);
+        $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
+        $this->assertStringContainsString('<input name="auto_groups" id="auto_groups" value="autogroup1|autogroup2"', $html);
+        $this->assertStringContainsString('<input name="auto_groups_override" id="auto_groups_override" value="override1|override2"', $html);
+        $this->assertStringContainsString('<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" checked', $html);
     }
 
 
