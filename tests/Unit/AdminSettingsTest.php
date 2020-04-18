@@ -101,7 +101,7 @@ class AdminSettingsTest extends TestCase
         $l = new Language();
         $_ = array('auto_groups' => 'autogroup1|autogroup2', 'override_groups' => 'override1|override2', 'login_hook' => 'false');
 
-        fwrite(STDERR, getcwd()."\n);
+        fwrite(STDERR, getcwd()."\n");
 
 		ob_start();
 	    include 'templates/admin.php';
