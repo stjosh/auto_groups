@@ -24,6 +24,7 @@
 
 namespace OCA\AutoGroups\Tests\Integration;
 
+use OCA\AutoGroups\AppInfo\Application;
 use Test\TestCase;
 
 class AppTest extends TestCase
