@@ -25,4 +25,3 @@
 use OCA\AutoGroups\AppInfo\Application;
 
 $app = new Application();
-$app->registerListeners();
