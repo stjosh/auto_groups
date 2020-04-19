@@ -62,6 +62,12 @@ class EventsTest extends TestCase
         $this->groupManager->createGroup('overridegroup2');
     }
 
+    protected function tearDown(): void
+    {
+        unset($this->app);
+        parent::tearDown();
+    }
+
     public function testCreateHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
@@ -100,6 +106,8 @@ class EventsTest extends TestCase
 
     public function testLoginHook()
     {
+        fwrite(STDERR, 'testLoginHook');
+
         // Remove user from autogroup2 first
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
 
@@ -129,6 +137,8 @@ class EventsTest extends TestCase
 
     public function testLoginHookAgain()
     {
+        fwrite(STDERR, 'testLoginHookAgain');
+
         // Login
         $this->userSession->login('testuser', 'testPassword');
 

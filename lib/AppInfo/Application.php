@@ -37,5 +37,6 @@ class Application extends App {
 	public function __construct() {
 		parent::__construct('auto_groups');
 		$this->autoGroupsManager = $this->getContainer()->query(AutoGroupsManager::class);
+		fwrite(STDERR, 'App Constructor');
 	}
 }
