@@ -125,6 +125,7 @@ class EventsTest extends TestCase
 
         // Enable the login hook
         $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        unset($this->app);
         $this->app = new Application();
 
         // Login
