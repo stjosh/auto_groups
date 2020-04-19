@@ -37,12 +37,12 @@ use OCP\ILogger;
 use OCP\IUser;
 use OCP\IGroup;
 
-use OCA\AutoGroups\ListenerManager;
+use OCA\AutoGroups\AutoGroupsManager;
 
 use Test\TestCase;
 
 
-class ListenerManagerTest extends TestCase
+class AutoGroupsManagerTest extends TestCase
 {
     private $groupManager;
     private $eventDispatcher;
@@ -64,7 +64,7 @@ class ListenerManagerTest extends TestCase
             ->willReturn('Test User');
     }
 
-    private function createListenerManager($auto_groups = [], $override_groups = [], $login_hook = false, $expectedNumberOfConfigCalls = 3)
+    private function createAutoGroupsManager($auto_groups = [], $override_groups = [], $login_hook = false, $expectedNumberOfConfigCalls = 3)
     {
         $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
             ->method('getAppValue')
@@ -75,7 +75,7 @@ class ListenerManagerTest extends TestCase
             )
             ->willReturnOnConsecutiveCalls($login_hook, json_encode($auto_groups), json_encode($override_groups));
 
-        return new ListenerManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
+        return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
     }
 
     private function initEventHandlerTests($auto_groups = [], $override_groups = [])
@@ -85,13 +85,11 @@ class ListenerManagerTest extends TestCase
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
-                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager($auto_groups, $override_groups);
-        $lm->setup();
-
-        return $lm;
+        $agm = $this->createAutoGroupsManager($auto_groups, $override_groups);
+        return $agm;
     }
 
     public function testCreatedAddedRemovedHooksWithDefaultSettings()
@@ -104,8 +102,7 @@ class ListenerManagerTest extends TestCase
                 [UserRemovedEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager([], [], false, 1);
-        $lm->setup();
+        $agm = $this->createAutoGroupsManager([], [], false, 1);
     }
 
     public function testAlsoLoginHookIfEnabled()
@@ -119,8 +116,7 @@ class ListenerManagerTest extends TestCase
                 [PostLoginEvent::class, $this->callback('is_callable')]
             );
 
-        $lm = $this->createListenerManager([], [], true, 1);
-        $lm->setup();
+        $agm = $this->createAutoGroupsManager([], [], true, 1);
     }
 
     public function testAddingToAutoGroups()
@@ -145,8 +141,8 @@ class ListenerManagerTest extends TestCase
             ->with('autogroup')
             ->willReturn([$autogroup]);
 
-        $lm = $this->initEventHandlerTests(['autogroup']);
-        $lm->addAndRemoveAutoGroups($event);
+        $agm = $this->initEventHandlerTests(['autogroup']);
+        $agm->addAndRemoveAutoGroups($event);
     }
 
     public function testAddingNotRequired()
@@ -171,8 +167,8 @@ class ListenerManagerTest extends TestCase
             ->with('autogroup')
             ->willReturn([$autogroup]);
 
-        $lm = $this->initEventHandlerTests(['autogroup']);
-        $lm->addAndRemoveAutoGroups($event);
+        $agm = $this->initEventHandlerTests(['autogroup']);
+        $agm->addAndRemoveAutoGroups($event);
     }
 
     public function testRemoveUserFromAutoGroups()
@@ -197,8 +193,8 @@ class ListenerManagerTest extends TestCase
             ->withConsecutive(['autogroup1'], ['autogroup2'])
             ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
 
-        $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
-        $lm->addAndRemoveAutoGroups($event);
+        $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
+        $agm->addAndRemoveAutoGroups($event);
     }
 
     public function testRemoveNotRequired()
@@ -223,7 +219,7 @@ class ListenerManagerTest extends TestCase
             ->withConsecutive(['autogroup1'], ['autogroup2'])
             ->willReturnOnConsecutiveCalls([$groupMock], [$groupMock]);
 
-        $lm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
-        $lm->addAndRemoveAutoGroups($event);
+        $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
+        $agm->addAndRemoveAutoGroups($event);
     }
 }

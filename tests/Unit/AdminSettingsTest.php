@@ -112,10 +112,4 @@ class AdminSettingsTest extends TestCase
         $this->assertStringContainsString('<input name="auto_groups_override" id="auto_groups_override" value="override1|override2"', $html);
         $this->assertStringContainsString('<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" checked', $html);
     }
-
-
-
-
-
-
 }
