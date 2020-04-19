@@ -60,12 +60,9 @@ class EventsTest extends TestCase
         $this->groupManager->createGroup('autogroup2');
         $this->groupManager->createGroup('overridegroup1');
         $this->groupManager->createGroup('overridegroup2');
-    }
 
-    protected function tearDown(): void
-    {
-        unset($this->app);
-        parent::tearDown();
+        // Enable the login hook
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
     }
 
     public function testCreateHook()
@@ -106,46 +103,13 @@ class EventsTest extends TestCase
 
     public function testLoginHook()
     {
-        fwrite(STDERR, 'testLoginHook');
-
-        // Remove user from autogroup2 first
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
 
+        $this->userSession->login('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
-        $autogroup2 = $this->groupManager->search('autogroup2')[0];
-        $autogroup2->removeUser($testUser);
 
-        // Ensure that autogroup2 is removed
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
-
-        // Add autogroup2 to autogroups again
-        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
-
-        // Login
-        $this->userSession->login('testuser', 'testPassword');
-
-        // Check that autogroup2 is not enabled yet
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
-        $this->assertContains('autogroup1', $groups);
-        $this->assertNotContains('autogroup2', $groups);
-
-        // Enable the login hook (prepare for the next test)
-        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
-    }
-
-    public function testLoginHookAgain()
-    {
-        fwrite(STDERR, 'testLoginHookAgain');
-
-        // Login
-        $this->userSession->login('testuser', 'testPassword');
-
-        // Check that both autogroups are here again
-        $testUser = $this->userManager->get('testuser');
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
-        $this->assertContains('autogroup1', $groups);
-        $this->assertContains('autogroup2', $groups);
     }
 }
