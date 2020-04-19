@@ -123,15 +123,17 @@ class EventsTest extends TestCase
         $this->assertContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
 
-        // Enable the login hook
+        // Enable the login hook (prepare for the next test)
         $this->config->setAppValue("AutoGroups", "login_hook", 'true');
-        unset($this->app);
-        $this->app = new Application();
+    }
 
+    public function testLoginHookAgain()
+    {
         // Login
         $this->userSession->login('testuser', 'testPassword');
 
         // Check that both autogroups are here again
+        $testUser = $this->userManager->get('testuser');
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
         $this->assertContains('autogroup2', $groups);

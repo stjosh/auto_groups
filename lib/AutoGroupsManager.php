@@ -64,7 +64,7 @@ class AutoGroupsManager
         // If login hook is enabled, add user to / remove user from auto groups on every successful login
         if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
             $eventDispatcher->addListener(PostLoginEvent::class, $callback);
-        }
+        } 
     }
 
     /**
