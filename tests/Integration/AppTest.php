@@ -28,7 +28,7 @@ include('appinfo/app.php');
 
 use Test\TestCase;
 
-class AdminSettingsTest extends TestCase
+class AppTest extends TestCase
 {
     public function testAppSetup()
     {
