@@ -24,14 +24,14 @@
 
 namespace OCA\AutoGroups\Tests\Integration;
 
-include('appinfo/app.php');
-
 use Test\TestCase;
 
 class AppTest extends TestCase
 {
     public function testAppSetup()
     {
+        include('appinfo/app.php');
+
         $this->assertInstanceOf(Application::class, $app);
     }
 }
