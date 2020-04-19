@@ -24,23 +24,18 @@
 
 namespace OCA\AutoGroups\AppInfo;
 
-use OCA\AutoGroups\ListenerManager;
 use OCP\AppFramework\App;
+use OCA\AutoGroups\AutoGroupsManager;
 
 class Application extends App {
+
+	private $autoGroupsManager;
 
 	/**
 	 * Application constructor.
 	 */
 	public function __construct() {
 		parent::__construct('auto_groups');
-	}
-
-    /**
-     *  Register Listeners
-     */
-	public function registerListeners() {
-		$lm = $this->getContainer()->query(ListenerManager::class);
-		$lm->setup();
+		$this->autoGroupsManager = $this->getContainer()->query(AutoGroupsManager::class);
 	}
 }

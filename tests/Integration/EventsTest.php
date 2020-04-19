@@ -48,7 +48,6 @@ class EventsTest extends TestCase
         parent::setUp();
 
         $this->app = new Application();
-        $this->app->registerListeners();
 
         $this->container = $this->app->getContainer();
         $this->groupManager = $this->container->query(IGroupManager::class);
@@ -126,7 +125,7 @@ class EventsTest extends TestCase
 
         // Enable the login hook
         $this->config->setAppValue("AutoGroups", "login_hook", 'true');
-        $this->app->registerListeners();
+        $this->app = new Application();
 
         // Login
         $this->userSession->login('testuser', 'testPassword');

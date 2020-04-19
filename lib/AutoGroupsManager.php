@@ -35,10 +35,9 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\ILogger;
 
-class ListenerManager
+class AutoGroupsManager
 {
     private $groupManager;
-    private $eventDispatcher;
     private $logger;
     private $config;
 
@@ -48,30 +47,23 @@ class ListenerManager
     public function __construct(IGroupManager $groupManager, IEventDispatcher $eventDispatcher, IConfig $config, ILogger $logger)
     {
         $this->groupManager = $groupManager;
-        $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
         $this->config = $config;
-    }
 
-    /**
-     * Connect Event Listeners
-     */
-    public function setup()
-    {
         // The callback as a PHP callable
         $callback = [ $this, 'addAndRemoveAutoGroups' ]; 
 
         // Get the loginHook config
         $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
-
+        
         // Always add user to / remove user from auto groups on creation, group addition or group deletion
-        $this->eventDispatcher->addListener(UserCreatedEvent::class, $callback);
-        $this->eventDispatcher->addListener(UserAddedEvent::class, $callback);
-        $this->eventDispatcher->addListener(UserRemovedEvent::class, $callback);
-
+        $eventDispatcher->addListener(UserCreatedEvent::class, $callback);
+        $eventDispatcher->addListener(UserAddedEvent::class, $callback);
+        $eventDispatcher->addListener(UserRemovedEvent::class, $callback);
+        
         // If login hook is enabled, add user to / remove user from auto groups on every successful login
         if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
-            $this->eventDispatcher->addListener(PostLoginEvent::class, $callback);
+            $eventDispatcher->addListener(PostLoginEvent::class, $callback);
         }
     }
 
