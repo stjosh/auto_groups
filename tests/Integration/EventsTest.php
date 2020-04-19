@@ -103,6 +103,7 @@ class EventsTest extends TestCase
 
     public function testLoginHook()
     {
+        fwrite(STDERR, 'testLoginHook');
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
 
         $this->userSession->login('testuser', 'testPassword');
