@@ -75,8 +75,6 @@ class AutoGroupsManager
         $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
         $overrideGroupNames = json_decode($this->config->getAppValue("AutoGroups", "override_groups", '[]'));
 
-        fwrite(STDERR, print_r($groupNames, 1));
-
         // Get user information
         $user = $event->getUser();
         $userGroupNames = array_keys($this->groupManager->getUserGroups($user));
