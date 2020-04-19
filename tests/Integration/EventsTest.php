@@ -103,14 +103,13 @@ class EventsTest extends TestCase
 
     public function testLoginHook()
     {
-        fwrite(STDERR, 'testLoginHook');
-        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
-
-        $this->userSession->login('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
+        $overridegroup = $this->groupManager->search('overridegroup1')[0];
+        $overridegroup->addUser($testUser);
+        $this->userSession->login('testuser', 'testPassword');
 
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
-        $this->assertContains('autogroup1', $groups);
+        $this->assertNotContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
     }
 }
