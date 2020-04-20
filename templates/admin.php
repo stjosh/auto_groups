@@ -33,7 +33,7 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 <div id="auto_groups_options" class="section">
 	<h2><?php p($l->t('Auto Groups:')); ?></h2>
 	<p class="settings-hint">
-		<?php p($l->t('Automatically all users to these groups.')); ?>
+		<?php p($l->t('Automatically add all users to these groups.')); ?>
 	</p>
 	<p class="auto_groups_settings_section">
 		<label for="auto_groups"><?php p($l->t('Auto Groups:')); ?></label>
@@ -48,7 +48,7 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 		</br />
 		<input name="auto_groups_override" id="auto_groups_override" value="<?php p($_['override_groups']) ?>" style="width: 400px">
 		<br />
-		<em><?php p($l->t('Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership to the override groups is checked after each group modification.')); ?></em>
+		<em><?php p($l->t('Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership in the override groups is checked after each group modification.')); ?></em>
 	</p>
 
 	<p class="auto_groups_settings_section">
@@ -57,6 +57,6 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 		<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" <?= $login_hook_checked ?>>
 		<label for="auto_groups_login_hook"><?php p($l->t('Check for correct Auto Group membership on every login.')); ?></label>
 		<br />
-		<em><?php p($l->t('In some cases, user create event is not triggered, e.g., if new user is created by the user_external app on first login. In this case, enable this setting to enforce proper Auto Group membership on every successful login.')); ?></em>
+		<em><?php p($l->t('Enable this setting to enforce proper Auto Group membership on every successful login. This is useful if either users are not created in Nextcloud (e.g., with external user backends) or to enforce correct group membership for all users when the Auto Groups / Override Groups have changed.')); ?></em>
 	</p>
 </div>
