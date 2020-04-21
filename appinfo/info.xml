@@ -4,7 +4,17 @@
     <id>auto_groups</id>
     <name>Auto Groups</name>
     <summary>Auomatically adds all users to one or multiple specified groups.</summary>
-    <description>Automatically add users to the specified groups, except those users belonging to one of the specified override groups. Optionally, the group assignment can be triggered on every successful login, which is useful for external user backends.</description>
+    <description>
+Automatically add users to the specified Auto Groups, except those users belonging to one of the specified Override Groups. 
+Optionally, the group assignment can be triggered on every successful login, which is useful for external user backends.
+
+## Configuration
+
+- Go to "Admin Settings > Additional Settings"
+- Configure the Auto Groups
+- If required, configure the Override Groups (e.g., for Service Accounts)
+- Optionally, enable the Login Hook, which will enforce correct group membership on every successful login
+    </description>
     <version>0.1.0</version>
     <licence>agpl</licence>
     <author mail="der@digitalwerker.ch" >Josua Hunziker</author>
@@ -12,7 +22,7 @@
     <category>tools</category>
     <website>https://github.com/stjosh/auto_groups</website>
     <bugs>https://github.com/stjosh/auto_groups/issues</bugs>
-    <repository type="git">https://github.com/stjosh/auto_groups</repository>
+    <repository type="git">https://github.com/stjosh/auto_groups.git</repository>
     <dependencies>
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>
