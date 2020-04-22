@@ -49,8 +49,6 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 	</p>
 
 	<p class="auto_groups_settings_section">
-		<label for="auto_groups_login_hook"><?php p($l->t('Enable Login Hook:')); ?></label>
-		</br />
 		<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" <?= $login_hook_checked ?>>
 		<label for="auto_groups_login_hook"><?php p($l->t('Check for correct Auto Group membership on every login.')); ?></label>
 		<br />
