@@ -23,6 +23,7 @@ Optionally, the group assignment can be triggered on every successful login, whi
     <website>https://github.com/stjosh/auto_groups</website>
     <bugs>https://github.com/stjosh/auto_groups/issues</bugs>
     <repository type="git">https://github.com/stjosh/auto_groups.git</repository>
+    <screenshot>https://raw.githubusercontent.com/stjosh/auto_groups/master/screenshots/settings.jpg</screenshot>
     <dependencies>
         <nextcloud min-version="18" max-version="19"/>
     </dependencies>
