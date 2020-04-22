@@ -1,7 +1,7 @@
 # Nextcloud Auto Groups
 Automatically add users to specified Auto Groups, except for those belonging to one of the specified Override Groups. 
 
-## Build and Test Status
+## Test Status
 
 | Nextcloud Server Branch | Unit & Integration Tests | Code Coverage | 
 | ----------------------- |:------------------------:|:-------------:|
