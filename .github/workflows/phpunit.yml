@@ -6,6 +6,8 @@ on:
     branches:
       - master
       - stable*
+  schedule:
+    - cron: '0 2 * * *'
 
 env:
   APP_NAME: auto_groups
@@ -16,14 +18,20 @@ env:
 jobs:
   php:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
-      # do not stop on another job's failure
       fail-fast: false
       matrix:
         php-versions: ['7.3', '7.4']
         databases: ['sqlite']
         server-versions: ['stable18']
+        experimental: [false]
+        include:
+          - php-versions: '7.4'
+            databases: sqlite
+            server-versions: master
+            experimental: true
   
     name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
