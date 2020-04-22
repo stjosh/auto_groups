@@ -6,6 +6,8 @@ on:
     branches:
       - master
       - stable*
+  schedule:
+    - cron: '0 2 * * *'
 
 env:
   APP_NAME: auto_groups
