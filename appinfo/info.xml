@@ -20,7 +20,7 @@ Optionally, the group assignment can be triggered on every successful login, whi
 * [Everyone Group](https://apps.nextcloud.com/apps/group_everyone): The "Everyone Group" app adds a virtual Group Backend, always returning all users. This approach, however, has some drawbacks, e.g., that [newly added users can't see files shared with the Everyone group before the user was created](https://github.com/icewind1991/group_everyone/issues/16). In contrast to "Everyone Group", the "Auto Groups" app operates on real groups in your normal Group Backend. Additionally, it is possible to specify Override Groups which will prevent users from being added to the Auto Group(s).
 * [Default Group](https://github.com/bodangren/defaultgroup): The "Default Group" app has actually been the base for "Auto Groups". However, there are a few distinctions, most notably that "Auto Groups" removes users from the Auto Groups in case they are added to one of the Override Groups later on. Futhermore, "Default Groups" has not been updated for some time and is officially not supporting NC15 and above. In contrast, "Auto Groups" features community-powered translations, automated tests and is available on the Nextcloud App Store. It is compatible with Nextcloud 18 and I'll try my best to make sure it will keep up to date with new Nextcloud releases.
     </description>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <licence>agpl</licence>
     <author mail="der@digitalwerker.ch" >Josua Hunziker</author>
     <namespace>AutoGroups</namespace>
