@@ -1,7 +1,6 @@
 { "translations": {
     "Auto Groups" : "Automatické skupiny",
     "Automatically adds all users to one or multiple specified groups." : "Automaticky přidá všechny uživatele do jedné či více zadaných skupin.",
-    "Automatically add users to the specified Auto Groups, except those users belonging to one of the specified Override Groups. \nOptionally, the group assignment can be triggered on every successful login, which is useful for external user backends.\n\n## Configuration\n\n- Go to \"Admin Settings > Additional Settings\"\n- Configure the Auto Groups\n- If required, configure the Override Groups (e.g., for Service Accounts)\n- Optionally, enable the Login Hook, which will enforce correct group membership on every successful login" : "Uživatele automaticky přidat do zadaných skupin, s výjimkou těch uživatelů, kteří jsou členy jedné nebo více zadaných přepisujících skupin.\nVolitelně, přiřazení skupiny je možné spouštět po každém úspěšném přihlášení, což se hodí pro uživatele z externích systémů.\n\n## Nastavení\n\n- Jděte do „Nastavení správy > Další nastavení“\n- Nastavení Automatických skupin\n- Pokud je požadováno, nastavte Přepisující skupiny (např., pro Servisní účty)\n- Volitelně, zapněte Přihlašovací háčky, které vynutí správné členství ve skupinách při každém úspěšném přihlášení",
     "Auto Groups:" : "Automatické skupiny:",
     "Automatically add all users to these groups." : "Automaticky přidat všechny uživatele do těchto skupin.",
     "Override Groups:" : "Přepsat skupiny:",

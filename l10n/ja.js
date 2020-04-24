@@ -2,6 +2,7 @@ OC.L10N.register(
     "auto_groups",
     {
     "Auto Groups" : "オートグループ",
+    "Automatically adds all users to one or multiple specified groups." : "すべてのユーザーを1つまたは複数の指定されたグループに自動的に追加します。",
     "Auto Groups:" : "オートグループ：",
     "Automatically add all users to these groups." : "全ユーザーを自動的にこれらのグループに追加します。",
     "Override Groups:" : "オーバーライドグループ：",

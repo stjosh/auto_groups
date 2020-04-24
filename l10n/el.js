@@ -2,6 +2,7 @@ OC.L10N.register(
     "auto_groups",
     {
     "Auto Groups" : "Αυτόματες Ομάδες",
+    "Automatically adds all users to one or multiple specified groups." : "Αυτόματη προσθήκη όλων των χρηστών σε μία ή περισσότερες ομάδες.",
     "Auto Groups:" : "Αυτόματες Ομάδες:",
     "Automatically add all users to these groups." : "Αυτόματη προσθήκη όλων των χρηστών στις ομάδες.",
     "Override Groups:" : "Εξαιρούμενες ομάδες:",

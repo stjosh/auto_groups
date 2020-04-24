@@ -1,7 +1,6 @@
 { "translations": {
     "Auto Groups" : "Grupy automatyczne",
     "Automatically adds all users to one or multiple specified groups." : "Automatycznie dodaje wszystkich użytkowników do jednej lub wielu określonych grup.",
-    "Automatically add users to the specified Auto Groups, except those users belonging to one of the specified Override Groups. \nOptionally, the group assignment can be triggered on every successful login, which is useful for external user backends.\n\n## Configuration\n\n- Go to \"Admin Settings > Additional Settings\"\n- Configure the Auto Groups\n- If required, configure the Override Groups (e.g., for Service Accounts)\n- Optionally, enable the Login Hook, which will enforce correct group membership on every successful login" : "Automatycznie dodawaj użytkowników do określonych Grup automatycznych, z wyjątkiem użytkowników należących do jednej z określonych Grup przypisanych.\nOpcjonalnie przypisanie grupy można uruchomić przy każdym udanym logowaniu, co jest przydatne w przypadku zewnętrznych użytkowników.\n\n## Konfiguracja\n\n- Wybierz „Ustawienia administratora> Ustawienia dodatkowe”\n- Skonfiguruj Grupy automatyczne\n- W razie potrzeby skonfiguruj Grupy przypisane (np. dla kont usług)\n- Opcjonalnie włącz logowanie Hook, który wymusi prawidłowe członkostwo w grupie przy każdym udanym logowaniu",
     "Auto Groups:" : "Grupy automatyczne:",
     "Automatically add all users to these groups." : "Automatycznie dodaj wszystkich użytkowników do tych grup.",
     "Override Groups:" : "Grupy przypisane:",

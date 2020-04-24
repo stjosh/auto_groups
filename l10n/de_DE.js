@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Auto Groups" : "Autogruppen",
     "Automatically adds all users to one or multiple specified groups." : "Fügt alle Benutzer automatisch einer oder mehreren konfigurierbaren Gruppen hinzu.",
-    "Automatically add users to the specified Auto Groups, except those users belonging to one of the specified Override Groups. \nOptionally, the group assignment can be triggered on every successful login, which is useful for external user backends.\n\n## Configuration\n\n- Go to \"Admin Settings > Additional Settings\"\n- Configure the Auto Groups\n- If required, configure the Override Groups (e.g., for Service Accounts)\n- Optionally, enable the Login Hook, which will enforce correct group membership on every successful login" : "Fügt alle Benutzer automatisch zu den ausgewählten Autogruppen hinzu, es sei denn, der Benutzer gehört zu einer der konfigurierten Übersteuerungsgruppen.\nOptional kann die korrekte Gruppenzugehörigkeit bei jeder erfolgreichen Anmeldung sichergestellt werden..\n\n## Konfiguration\n\n- Navigiere zu  \"Admin Einstellungen > Zusätzliche Einstellungen\"\n- Autogruppen konfigurieren\n- Falls gewünscht Übersteuerungsgruppen konfigurieren (z.B. für Maschinenkonten)\n- Optional die Sicherstellung der korrekten Gruppenzugehörigkeit bei jedem Login aktivieren",
     "Auto Groups:" : "Autogruppen:",
     "Automatically add all users to these groups." : "Alle Benutzer werden automatisch zu diesen Gruppen hinzugefügt.",
     "Override Groups:" : "Übersteuerungsgruppen:",
