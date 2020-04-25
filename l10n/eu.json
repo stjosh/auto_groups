@@ -1,4 +1,5 @@
 { "translations": {
-    "Auto Groups" : "Talde automatikoak"
+    "Auto Groups" : "Talde automatikoak",
+    "Auto Groups:" : "Auto taldeak:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

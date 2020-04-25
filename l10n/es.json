@@ -1,5 +1,6 @@
 { "translations": {
     "Auto Groups" : "Grupos Automáticos",
+    "Automatically adds all users to one or multiple specified groups." : "Añade automáticamente todos los usuarios a uno o varios grupos especificados.",
     "Auto Groups:" : "Grupos automáticos:",
     "Automatically add all users to these groups." : "Añade automáticamente todos los usuarios a estos grupos.",
     "Override Groups:" : "Grupos exentos:",
