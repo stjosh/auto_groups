@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Changelog
+- A Changelog [#27](https://github.com/stjosh/auto_groups/issues/27)
 
 ## [1.0.2] - 2020-04-23
 
