@@ -11,20 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A Changelog [#27](https://github.com/stjosh/auto_groups/issues/27)
 
-## [1.0.2] - 2020-04-23
+## 1.0.2 - 2020-04-23
 
 ### Fixed
 
 - Broken release 1.0.1 which could not be installed [#26](https://github.com/stjosh/auto_groups/issues/26)
 
-## [1.0.1] - 2020-04-23
+## 1.0.1 - 2020-04-23
 
 ### Changed
 
 - Documentation update to point out differences to similar apps
 - Translation Updates
 
-## [1.0.0] - 2020-04-23
+## 1.0.0 - 2020-04-23
 
 ### Added
 
