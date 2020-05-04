@@ -17,10 +17,22 @@ Unit and Integration Tests are executed with PHP v7.3 and v7.4.
 
 Note that this app requires Nextcloud 18 or later.
 
+## Manual Testing
+
+To manually test the app, a . You need to have Docker installed and running to execute it. Simply go for
+
+```bash
+$ ./tests/Docker/run-docker-test-instance.sh
+```
+
+and then access your test instance on http://localhost:8080. The `auto_groups` app is automatically available, but not activated - this need to be done manually.
+
 ## Comparison to similar Apps
 
-* [Everyone Group](https://apps.nextcloud.com/apps/group_everyone): The "Everyone Group" app adds a virtual Group Backend, always returning all users. This approach, however, has some drawbacks, e.g., that [newly added users can't see files shared with the Everyone group before the user was created](https://github.com/icewind1991/group_everyone/issues/16). In contrast to "Everyone Group", the "Auto Groups" app operates on real groups in your normal Group Backend. Additionally, it is possible to specify Override Groups which will prevent users from being added to the Auto Group(s).
-* [Default Group](https://apps.nextcloud.com/apps/defaultgroup): The "Default Group" app has actually been the base for "Auto Groups". However, there are a few distinctions, most notably that "Auto Groups" removes users from the Auto Groups in case they are added to one of the Override Groups later on. Futhermore, "Default Groups" has not been updated for some time and is officially not supporting NC13 and above. In contrast, "Auto Groups" features community-powered translations, automated tests and is not using the deprecated Hook mechanism anymore.
+* [Everyone Group](https://apps.nextcloud.com/apps/group_everyone): The "Everyone Group" app adds a virtual Group Backend, always returning all users. In contrast, "Auto Groups" operates on "real" groups in your normal Group Backend. Additionally, it is possible to specify Override Groups which will prevent users from being added to the Auto Group(s).
+* [Default Group](https://apps.nextcloud.com/apps/defaultgroup): "Auto Groups" is actually a modernized and maintaned fork of "Default Group", which seems to be abandoned since NC12 or so. In terms of functionality, they are almost identical. 
+
+In addition, I plan to add some more features over time, e.g., "Union Groups" - see the [Milestone Plans](https://github.com/stjosh/auto_groups/milestones) for more details.
 
 ## Issue Tracker / Contributions
 
