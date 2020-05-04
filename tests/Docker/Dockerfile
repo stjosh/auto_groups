@@ -22,4 +22,6 @@ RUN git submodule sync --recursive && git submodule update --init --force --recu
 
 # Setup Nextcloud
 RUN mkdir data
-RUN ./occ maintenance:install --verbose --database=sqlite --database-name=nextcloud --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password
+RUN ./occ maintenance:install --verbose --database=sqlite --database-name=nextcloud --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
+
+CMD php -S 0.0.0.0:8080
