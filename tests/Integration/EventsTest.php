@@ -30,6 +30,8 @@ use OCP\IGroupManager;
 use OCP\IConfig;
 use OCP\IUserSession;
 
+use OCP\AppFramework\OCS\OCSBadRequestException;
+
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
 
@@ -111,5 +113,15 @@ class EventsTest extends TestCase
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertNotContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
+    }
+
+    public function testBeforeGroupDeletionHook()
+    {
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+
+        $autogroup = $this->groupManager->search('autogroup1')[0];
+
+        $this->expectException(OCSBadRequestException::class);
+        $autogroup->delete();
     }
 }

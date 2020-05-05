@@ -15,7 +15,7 @@ Unit and Integration Tests are executed with PHP v7.3 and v7.4.
 * Install and enable the App
 * Go to "Admin -> Additional Settings" to configure the Auto Groups, Override Groups and further behavior.
 
-Note that this app requires Nextcloud 18 or later.
+Note that this app prevents group deletions for groups referenced as Auto Groups or Override Groups.
 
 ## Manual Testing
 

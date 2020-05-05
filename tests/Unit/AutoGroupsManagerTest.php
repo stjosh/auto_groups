@@ -28,11 +28,15 @@ use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
+use OCP\Group\Events\BeforeGroupDeletedEvent;
 
 use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\ILogger;
+use OCP\IL10N;
+
+use OCP\AppFramework\OCS\OCSBadRequestException;
 
 use OCP\IUser;
 use OCP\IGroup;
@@ -48,6 +52,7 @@ class AutoGroupsManagerTest extends TestCase
     private $eventDispatcher;
     private $config;
     private $logger;
+    private $il10n;
 
     protected function setUp(): void
     {
@@ -57,6 +62,7 @@ class AutoGroupsManagerTest extends TestCase
         $this->eventDispatcher = $this->createMock(IEventDispatcher::class);
         $this->config = $this->createMock(IConfig::class);
         $this->logger = $this->createMock(ILogger::class);
+        $this->il10n = $this->createMock(IL10N::class);
 
         $this->testUser = $this->createMock(IUser::class);
         $this->testUser->expects($this->any())
@@ -75,17 +81,18 @@ class AutoGroupsManagerTest extends TestCase
             )
             ->willReturnOnConsecutiveCalls($login_hook, json_encode($auto_groups), json_encode($override_groups));
 
-        return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
+        return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
     }
 
     private function initEventHandlerTests($auto_groups = [], $override_groups = [])
     {
-        $this->eventDispatcher->expects($this->exactly(3))
+        $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
-                [UserRemovedEvent::class, $this->callback('is_callable')]
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager($auto_groups, $override_groups);
@@ -94,12 +101,13 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testCreatedAddedRemovedHooksWithDefaultSettings()
     {
-        $this->eventDispatcher->expects($this->exactly(3))
+        $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
-                [UserRemovedEvent::class, $this->callback('is_callable')]
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager([], [], false, 1);
@@ -107,13 +115,14 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testAlsoLoginHookIfEnabled()
     {
-        $this->eventDispatcher->expects($this->exactly(4))
+        $this->eventDispatcher->expects($this->exactly(5))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
                 [UserRemovedEvent::class, $this->callback('is_callable')],
-                [PostLoginEvent::class, $this->callback('is_callable')]
+                [PostLoginEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager([], [], true, 1);
@@ -221,5 +230,39 @@ class AutoGroupsManagerTest extends TestCase
 
         $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
         $agm->addAndRemoveAutoGroups($event);
+    }
+
+    public function testGroupDeletionPrevented()
+    {
+        $groupMock = $this->createMock(IGroup::class);
+        $groupMock->expects($this->any())
+            ->method('getGID')
+            ->willReturn('autogroup2');
+
+        $event = $this->createMock(BeforeGroupDeletedEvent::class);
+        $event->expects($this->once())
+            ->method('getGroup')
+            ->willReturn($groupMock);
+    
+        $this->expectException(OCSBadRequestException::class);
+
+        $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
+        $agm->handleGroupDeletion($event);
+    }
+
+    public function testGroupDeletionPreventionNotNeeded()
+    {
+        $groupMock = $this->createMock(IGroup::class);
+        $groupMock->expects($this->any())
+            ->method('getGID')
+            ->willReturn('some other group');
+
+        $event = $this->createMock(BeforeGroupDeletedEvent::class);
+        $event->expects($this->once())
+            ->method('getGroup')
+            ->willReturn($groupMock);
+
+        $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
+        $agm->handleGroupDeletion($event);
     }
 }
