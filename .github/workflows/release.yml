@@ -22,9 +22,13 @@ jobs:
       - name: Clean up files
         run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
 
+    - name: Define Archive Name
+        uses: allenevans/set-env@v1.0.0
+        with:
+          ARCHIVE_NAME: ${{ env.APP_NAME }}.tar.gz # TODO ADD GITHUB_REF
+
       - name: Create Archive
-        # run: tar -zcvf ${{ env.APP_NAME }}_$GITHUB_REF.tar.gz ${{ env.APP_NAME }}/
-        run: tar -zcvf ${{ env.APP_NAME }}.tar.gz ${{ env.APP_NAME }}/ # TODO REMOVE
+        run: tar -zcvf ${{ env.ARCHIVE_NAME }} ${{ env.APP_NAME }}/
     
-      - name: List files
-        run: ls -la
+      - name: Create Archive Signature
+        run: echo ${{}} | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64
