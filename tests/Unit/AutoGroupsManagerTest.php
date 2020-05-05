@@ -249,4 +249,20 @@ class AutoGroupsManagerTest extends TestCase
         $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
         $agm->handleGroupDeletion($event);
     }
+
+    public function testGroupDeletionPreventionNotNeeded()
+    {
+        $groupMock = $this->createMock(IGroup::class);
+        $groupMock->expects($this->any())
+            ->method('getGID')
+            ->willReturn('some other group');
+
+        $event = $this->createMock(BeforeGroupDeletedEvent::class);
+        $event->expects($this->once())
+            ->method('getGroup')
+            ->willReturn($groupMock);
+
+        $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
+        $agm->handleGroupDeletion($event);
+    }
 }
