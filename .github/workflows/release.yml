@@ -31,4 +31,4 @@ jobs:
         run: tar -zcvf ${{ env.ARCHIVE_NAME }} ${{ env.APP_NAME }}/
     
       - name: Create Archive Signature
-        run: echo ${{}} | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64
+        run: echo ${{ secrets.AUTO_GROUPS_SIGNING_KEY }} | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64
