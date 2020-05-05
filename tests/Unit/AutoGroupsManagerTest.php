@@ -36,6 +36,8 @@ use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IL10N;
 
+use OCP\AppFramework\OCS\OCSBadRequestException;
+
 use OCP\IUser;
 use OCP\IGroup;
 
@@ -228,5 +230,24 @@ class AutoGroupsManagerTest extends TestCase
 
         $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
         $agm->addAndRemoveAutoGroups($event);
+    }
+
+    public function testGroupDeletionPrevented()
+    {
+        $groupMock = $this->createMock(IGroup::class);
+        $groupMock->expects($this->any())
+            ->method('getGID')
+            ->willReturn('autogroup2');
+
+        $event = $this->createMock(BeforeGroupDeletedEvent::class);
+        $event->expects($this->once())
+            ->method('getGroup')
+            ->willReturn($groupMock);
+    
+        $this->expectException(OCSBadRequestException::class);
+        $this->expectExceptionMessage('Group "autogroup2" is used in the AutoGroups App and cannot be deleted.');
+
+        $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
+        $agm->handleGroupDeletion($event);
     }
 }
