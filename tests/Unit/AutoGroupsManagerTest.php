@@ -33,6 +33,7 @@ use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\ILogger;
+use OCP\IL10N;
 
 use OCP\IUser;
 use OCP\IGroup;
@@ -48,6 +49,7 @@ class AutoGroupsManagerTest extends TestCase
     private $eventDispatcher;
     private $config;
     private $logger;
+    private $il10n;
 
     protected function setUp(): void
     {
@@ -57,6 +59,7 @@ class AutoGroupsManagerTest extends TestCase
         $this->eventDispatcher = $this->createMock(IEventDispatcher::class);
         $this->config = $this->createMock(IConfig::class);
         $this->logger = $this->createMock(ILogger::class);
+        $this->il10n = $this->createMock(IL10N::class);
 
         $this->testUser = $this->createMock(IUser::class);
         $this->testUser->expects($this->any())
@@ -75,7 +78,7 @@ class AutoGroupsManagerTest extends TestCase
             )
             ->willReturnOnConsecutiveCalls($login_hook, json_encode($auto_groups), json_encode($override_groups));
 
-        return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger);
+        return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
     }
 
     private function initEventHandlerTests($auto_groups = [], $override_groups = [])
