@@ -30,6 +30,8 @@ use OCP\IGroupManager;
 use OCP\IConfig;
 use OCP\IUserSession;
 
+use OCP\AppFramework\OCS\OCSBadRequestException;
+
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
 
