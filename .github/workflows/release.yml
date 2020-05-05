@@ -44,7 +44,8 @@ jobs:
 
       - name: Create Publish Payload
         # run: echo "{\"download\": \"${{ steps.upload-release-asset.outputs.browser_download_url }}\", \"signature\": \"$(cat signature.txt | tr -d '\n')\"}" > publish.txt
-        run: echo '{"download": "https://test.com/test.tar.gz", "signature": "${{ env.ARCHIVE_SIGNATURE }}"}' > publish.txt
+        # run: echo '{ "download": "https://test.com/test.tar.gz", "signature": "${{ env.ARCHIVE_SIGNATURE }}" }' > publish.txt
+        run: echo '{ "download": "https://test.com/test.tar.gz" }' > publish.txt
 
       - name: Display Publish Payload
         run: cat publish.txt
