@@ -43,7 +43,7 @@ jobs:
         run: echo ::set-env name=ARCHIVE_SIGNATURE::$(echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64 -A )
 
       - name: Create Publish Payload
-        run: echo "{ \"download\": \"https://test.com/test.tar.gz\" }" > publish.txt
+        run: "echo '{ \"download\": \"https://test.com/test.tar.gz\"}' > publish.txt"
 
       - name: Display Publish Payload
         run: cat publish.txt
