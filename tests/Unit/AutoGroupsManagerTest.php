@@ -28,6 +28,7 @@ use OCP\User\Events\UserCreatedEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
+use OCP\Group\Events\BeforeGroupDeletedEvent;
 
 use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -83,12 +84,13 @@ class AutoGroupsManagerTest extends TestCase
 
     private function initEventHandlerTests($auto_groups = [], $override_groups = [])
     {
-        $this->eventDispatcher->expects($this->exactly(3))
+        $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
-                [UserRemovedEvent::class, $this->callback('is_callable')]
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager($auto_groups, $override_groups);
@@ -97,12 +99,13 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testCreatedAddedRemovedHooksWithDefaultSettings()
     {
-        $this->eventDispatcher->expects($this->exactly(3))
+        $this->eventDispatcher->expects($this->exactly(4))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
-                [UserRemovedEvent::class, $this->callback('is_callable')]
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager([], [], false, 1);
@@ -110,13 +113,14 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testAlsoLoginHookIfEnabled()
     {
-        $this->eventDispatcher->expects($this->exactly(4))
+        $this->eventDispatcher->expects($this->exactly(5))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
                 [UserRemovedEvent::class, $this->callback('is_callable')],
-                [PostLoginEvent::class, $this->callback('is_callable')]
+                [PostLoginEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager([], [], true, 1);
