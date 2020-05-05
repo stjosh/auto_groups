@@ -29,10 +29,10 @@ jobs:
         run: tar -zcvf ${{ env.ARCHIVE_NAME }} ${{ env.APP_NAME }}/
     
       - name: Create Archive Signature
-        run: echo ::set-env name=SIGNATURE::$(echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64)
+        run: echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64 > signature.txt
 
       - name: Output Signature
-        run: echo $SIGNATURE
+        run: cat signature.txt
 
       - name: List files
         run: ls -la
