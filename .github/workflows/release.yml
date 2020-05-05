@@ -21,7 +21,7 @@ jobs:
         run: rm -rf .git composer.json screenshots tests .github .tx
 
       - name: Create Archive
-        run: tar -zcvf ${{ env.APP_NAME }}_${{ GITHUB_REF }}.tar.gz ${{ env.APP_NAME }}/
+        run: tar -zcvf ${{ env.APP_NAME }}_$GITHUB_REF.tar.gz ${{ env.APP_NAME }}/
     
       - name: List files
         run: ls -la
