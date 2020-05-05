@@ -16,7 +16,7 @@ env:
   TRAVIS: true
 
 jobs:
-  php:
+  test:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
 
@@ -33,7 +33,7 @@ jobs:
             server-versions: master
             experimental: true
   
-    name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
+    name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     steps:
       - name: Checkout Nextcloud Server

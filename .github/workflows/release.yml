@@ -1,0 +1,27 @@
+name: Build and Submit to App Store
+
+on:
+  pull_request: # TODO REMOVE
+  release:
+    types:
+      - published
+
+env:
+  APP_NAME: auto_groups
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout app
+        uses: actions/checkout@v2
+
+      - name: Clean up files
+        run: rm -rf .git composer.json screenshots tests .github .tx
+
+      - name: Create Archive
+        run: tar -zcvf ${{ env.APP_NAME }}_${{ GITHUB_REF }}.tar.gz ${{ env.APP_NAME }}/
+    
+      - name: List files
+        run: ls -la
