@@ -245,7 +245,6 @@ class AutoGroupsManagerTest extends TestCase
             ->willReturn($groupMock);
     
         $this->expectException(OCSBadRequestException::class);
-        $this->expectExceptionMessage('Group "autogroup2" is used in the AutoGroups App and cannot be deleted.');
 
         $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
         $agm->handleGroupDeletion($event);
