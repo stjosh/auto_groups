@@ -23,7 +23,8 @@ jobs:
         run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
 
       - name: Create Archive
-        run: tar -zcvf ${{ env.APP_NAME }}_$GITHUB_REF.tar.gz ${{ env.APP_NAME }}/
+        # run: tar -zcvf ${{ env.APP_NAME }}_$GITHUB_REF.tar.gz ${{ env.APP_NAME }}/
+        run: tar -zcvf ${{ env.APP_NAME }}.tar.gz ${{ env.APP_NAME }}/ # TODO REMOVE
     
       - name: List files
         run: ls -la
