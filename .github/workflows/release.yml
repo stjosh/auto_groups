@@ -28,16 +28,26 @@ jobs:
       - name: Create Archive
         run: tar -zcvf ${{ env.ARCHIVE_NAME }} ${{ env.APP_NAME }}/
 
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.ref }}/assets
-            asset_path: ./${{ env.ARCHIVE_NAME }}
-            asset_name: ${{ env.ARCHIVE_NAME }}
-            asset_content_type: application/tar+gzip
+      #- name: Upload Release Asset
+      #  id: upload-release-asset
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #      upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.ref }}/assets
+      #      asset_path: ./${{ env.ARCHIVE_NAME }}
+      #      asset_name: ${{ env.ARCHIVE_NAME }}
+      #      asset_content_type: application/tar+gzip
     
       - name: Create Archive Signature
         run: echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64 > signature.txt
+
+      - name: Create Publish Payload
+        # run: echo "{\"download\": \"${{ steps.upload-release-asset.outputs.browser_download_url }}\", \"signature\": \"$(cat signature.txt | tr -d '\n')\"}" > publish.txt
+        run: run: echo "{\"download\": \"https://test.com/test.tar.gz\", \"signature\": \"$(cat signature.txt | tr -d '\n')\"}" > publish.txt
+
+      - name: Display Publish Payload
+        run: cat publish.txt
+
+      #- name: Submit to Nextcloud App Store
+      #  run: curl -X POST https://apps.nextcloud.com/api/v1/apps/releases -H "Authorization: Token ${{ secrets.APP_STORE_API_TOKEN }}" -H "Content-Type: application/json" -d '{"download":"${{  }}", "signature": "65e613318107bceb131af5cf8b71e773b79e1a9476506f502c8e2017b52aba15"}'
