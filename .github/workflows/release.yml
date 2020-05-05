@@ -22,7 +22,7 @@ jobs:
       - name: Clean up files
         run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
 
-    - name: Define Archive Name
+      - name: Define Archive Name
         uses: allenevans/set-env@v1.0.0
         with:
           ARCHIVE_NAME: ${{ env.APP_NAME }}.tar.gz # TODO ADD GITHUB_REF
