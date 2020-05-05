@@ -27,12 +27,17 @@ jobs:
 
       - name: Create Archive
         run: tar -zcvf ${{ env.ARCHIVE_NAME }} ${{ env.APP_NAME }}/
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: https://uploads.github.com/repos/stjosh/${{ env.APP_NAME }}/releases/$GITHUB_REF/assets
+            asset_path: ./${{ env.ARCHIVE_NAME }}
+            asset_name: ${{ env.ARCHIVE_NAME }}
+            asset_content_type: application/tar+gzip
     
       - name: Create Archive Signature
         run: echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64 > signature.txt
-
-      - name: Output Signature
-        run: cat signature.txt
-
-      - name: List files
-        run: ls -la
