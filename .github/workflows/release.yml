@@ -16,9 +16,11 @@ jobs:
     steps:
       - name: Checkout app
         uses: actions/checkout@v2
+        with:
+          path: ${{ env.APP_NAME }}
 
       - name: Clean up files
-        run: rm -rf .git composer.json screenshots tests .github .tx
+        run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
 
       - name: Create Archive
         run: tar -zcvf ${{ env.APP_NAME }}_$GITHUB_REF.tar.gz ${{ env.APP_NAME }}/
