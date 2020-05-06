@@ -129,7 +129,7 @@ class AutoGroupsManager
 
         // Prevent deletion if group to delete is configured in AutoGroups
         if (in_array($groupNameToDelete, $allGroupNames)) {
-            throw new OCSBadRequestException($this->l->t('Group "%1$s" is used in the AutoGroups App and cannot be deleted.', [$groupNameToDelete]));
+            throw new OCSBadRequestException($this->l->t('Group "%1$s" is used in the Auto Groups App and cannot be deleted.', [$groupNameToDelete]));
         }
     }
 }
