@@ -17,6 +17,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: ${{ env.APP_NAME }}
+          
+      - name: Check version info in info.xml
+        run: grep "<version>$(echo ${{ github.ref }} | cut -c2-)</version>" ${{ env.APP_NAME }}/appinfo/info.xml
 
       - name: Clean up files
         run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
