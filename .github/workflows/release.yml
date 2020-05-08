@@ -26,7 +26,7 @@ jobs:
         run: echo ::set-env name=ARCHIVE_NAME::${{ env.APP_NAME }}-${{ steps.set-tag-name.outputs.TAG_NAME }}.tar.gz
         
       - name: Get Upload URL
-        run: echo ::set-env name=UPLOAD_URL::$(curl https://api.github.com/repos/${{ github.repository }}/releases | jq '.[] | select(.tag_name == "${{ steps.set-tag-name.outputs.TAG_NAME }}") | .upload_url')
+        run: echo ::set-env name=UPLOAD_URL::$(curl https://api.github.com/repos/${{ github.repository }}/releases | jq -r '.[] | select(.tag_name == "${{ steps.set-tag-name.outputs.TAG_NAME }}") | .upload_url')
           
       - name: Check version info in info.xml
         run: grep "<version>$(echo ${{ steps.set-tag-name.outputs.TAG_NAME }} | cut -c2-)</version>" ${{ env.APP_NAME }}/appinfo/info.xml
