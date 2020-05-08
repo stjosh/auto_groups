@@ -1,4 +1,5 @@
 { "translations": {
+    "Group \"%1$s\" is used in the Auto Groups App and cannot be deleted." : "Le groupe \"%1$s\" est utilisé pour l'application Auto Groups et ne peut pas être supprimé.",
     "Auto Groups" : "Groupes automatiques",
     "Automatically adds all users to one or multiple specified groups." : "Ajoute automatiquement tous les utilisateurs à un ou plusieurs groupes indiqués.",
     "Auto Groups:" : "Groupes automatiques :",
