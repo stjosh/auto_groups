@@ -40,7 +40,7 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.set-tag-name.outputs.TAG_NAME }}/assets
+            upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.set-tag-name.outputs.TAG_NAME }}/assets{?name,label}
             asset_path: ./${{ env.ARCHIVE_NAME }}
             asset_name: ${{ env.ARCHIVE_NAME }}
             asset_content_type: application/tar+gzip
