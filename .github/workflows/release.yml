@@ -18,14 +18,18 @@ jobs:
         with:
           path: ${{ env.APP_NAME }}
           
+      - name: Extract Tag Name
+        id: set-tag-name
+        run: echo ::set-output name=TAG_NAME::${GITHUB_REF##*/}
+        
+      - name: Define Archive Name
+        run: echo ::set-env name=ARCHIVE_NAME::${{ env.APP_NAME }}-${{ steps.set-tag-name.outputs.TAG_NAME }}.tar.gz
+          
       - name: Check version info in info.xml
-        run: grep "<version>$(echo ${{ github.ref }} | cut -c2-)</version>" ${{ env.APP_NAME }}/appinfo/info.xml
+        run: grep "<version>$(echo ${{ steps.set-tag-name.outputs.TAG_NAME }} | cut -c2-)</version>" ${{ env.APP_NAME }}/appinfo/info.xml
 
       - name: Clean up files
         run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
-
-      - name: Define Archive Name
-        run: echo ::set-env name=ARCHIVE_NAME::${{ env.APP_NAME }}-${{ github.ref }}.tar.gz
 
       - name: Create Archive
         run: tar -zcvf ${{ env.ARCHIVE_NAME }} ${{ env.APP_NAME }}/
@@ -36,7 +40,7 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.ref }}/assets
+            upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.set-tag-name.outputs.TAG_NAME }}/assets
             asset_path: ./${{ env.ARCHIVE_NAME }}
             asset_name: ${{ env.ARCHIVE_NAME }}
             asset_content_type: application/tar+gzip
