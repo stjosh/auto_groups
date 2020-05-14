@@ -1,6 +1,7 @@
 OC.L10N.register(
     "auto_groups",
     {
+    "Group \"%1$s\" is used in the Auto Groups App and cannot be deleted." : "הקבוצה „%1$s” משמשת את יישומון הקבוצות האוטומטיות ולא ניתן למחוק אותה.",
     "Auto Groups" : "קבוצות אוטומטיות",
     "Automatically adds all users to one or multiple specified groups." : "מוסיף את כל המשתמשים אוטומטית לקבוצה או מגוון קבוצות נבחרות.",
     "Auto Groups:" : "קבוצות אוטומטיות:",
