@@ -5,9 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
 
-- A Changelog [#27](https://github.com/stjosh/auto_groups/issues/27)
+## 1.1.1 - 2020-05-08
+### Changed
+- Translation Updates
+
+## 1.1.0 - 2020-05-08
+### Added
+- Prevent Group deletion [#28](https://github.com/stjosh/auto_groups/issues/28)
+- Automate release publishing [#9](https://github.com/stjosh/auto_groups/issues/9)
+- Added Changelog [#27](https://github.com/stjosh/auto_groups/issues/27)
+
+### Changed
+- Updated documentation
 
 ## 1.0.2 - 2020-04-23
 ### Fixed
