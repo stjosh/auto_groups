@@ -58,4 +58,4 @@ jobs:
         run: "echo '{ \"download\": \"${{ steps.upload-release-asset.outputs.browser_download_url }}\", \"signature\": \"${{ env.ARCHIVE_SIGNATURE }}\"}' > publish.json"
 
       - name: Submit to Nextcloud App Store
-        run: "curl -X POST https://apps.nextcloud.com/api/v1/apps/releases -H 'Authorization: Token ${{ secrets.APP_STORE_API_TOKEN }}' -H 'Content-Type: application/json' -d @publish.json"
+        run: "curl -f -X POST https://apps.nextcloud.com/api/v1/apps/releases -H 'Authorization: Token ${{ secrets.APP_STORE_API_TOKEN }}' -H 'Content-Type: application/json' -d @publish.json"
