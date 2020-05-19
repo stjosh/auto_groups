@@ -31,6 +31,9 @@ jobs:
       - name: Check version info in info.xml
         run: grep "<version>$(echo ${{ steps.set-tag-name.outputs.TAG_NAME }} | cut -c2-)</version>" ${{ env.APP_NAME }}/appinfo/info.xml
 
+      - name: Check for CHANGELOG entry
+        run: grep "## $(echo ${{ steps.set-tag-name.outputs.TAG_NAME }} | cut -c2-)" ${{ env.APP_NAME }}/CHANGELOG.md
+
       - name: Clean up files
         run: cd ${{ env.APP_NAME }} && rm -rf .git composer.json screenshots tests .github .tx && cd ..
 
