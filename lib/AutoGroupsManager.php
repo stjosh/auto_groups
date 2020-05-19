@@ -93,7 +93,7 @@ class AutoGroupsManager
         $userInOverrideGroups = array_intersect($overrideGroupNames, $userGroupNames);
         $add = empty($userInOverrideGroups);
 
-        // Add to / remove from admin groups
+        // Add to / remove from auto groups
         foreach ($groupNames as $groupName) {
             $groups = $this->groupManager->search($groupName);
             foreach ($groups as $group) {
