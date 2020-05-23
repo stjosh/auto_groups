@@ -6,6 +6,7 @@ OC.L10N.register(
     "Automatically adds all users to one or multiple specified groups." : "מוסיף את כל המשתמשים אוטומטית לקבוצה או מגוון קבוצות נבחרות.",
     "Auto Groups:" : "קבוצות אוטומטיות:",
     "Automatically add all users to these groups." : "להוסיף משתמשים אוטומטית לקבוצות אלו.",
-    "Override Groups:" : "דריסת קבוצות:"
+    "Override Groups:" : "דריסת קבוצות:",
+    "Check for correct Auto Group membership on every login." : "לבדוק את החברות הנכונה בקבוצות האוטומטיות עם כל כניסה למערכת."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
