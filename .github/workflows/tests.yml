@@ -103,5 +103,8 @@ jobs:
         run: phpunit -c tests/phpunit.xml
 
       - name: Codecov.io Upload
+        uses: codecov/codecov-action@v1
         working-directory: apps/${{ env.APP_NAME }}
-        run: bash <(curl -s https://codecov.io/bash) -f tests/coverage.xml -F ${{ matrix.server-versions }} 
+        with:
+          file: ./test/coverage.xml
+          flags: ${{ matrix.server-versions }} 
