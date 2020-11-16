@@ -7,6 +7,7 @@ Automatically add users to specified Auto Groups, except for those belonging to 
 | ----------------------- |:------------------------:|:-------------:|
 | [stable18](https://github.com/nextcloud/server/tree/stable18) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable18)](https://codecov.io/gh/stjosh/auto_groups) |
 | [stable19](https://github.com/nextcloud/server/tree/stable19) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable19)](https://codecov.io/gh/stjosh/auto_groups) |
+| [stable20](https://github.com/nextcloud/server/tree/stable20) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable20)](https://codecov.io/gh/stjosh/auto_groups) |
 | [master](https://github.com/nextcloud/server/tree/master) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=master)](https://codecov.io/gh/stjosh/auto_groups) |
 
 Unit and Integration Tests are executed with PHP v7.3 and v7.4.
