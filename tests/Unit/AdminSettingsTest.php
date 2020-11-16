@@ -101,10 +101,10 @@ class AdminSettingsTest extends TestCase
         $l = new Language();
         $_ = array('auto_groups' => 'autogroup1|autogroup2', 'override_groups' => 'override1|override2', 'login_hook' => 'true');
 
-		ob_start();
-	    include 'templates/admin.php';
-		$html = ob_get_contents();
-        @ob_end_clean();
+       ob_start();
+       include 'templates/admin.php';
+       $html = ob_get_contents();
+       @ob_end_clean();
         
         $this->assertIsString($html);
         $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
