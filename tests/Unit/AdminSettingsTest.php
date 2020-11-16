@@ -95,21 +95,21 @@ class AdminSettingsTest extends TestCase
         $this->assertEquals('override1|override2', $params['override_groups']);
     }
 
-    public function testTemplate() {
+    /*public function testTemplate() {
         // We're basically mocking https://github.com/nextcloud/server/blob/master/lib/private/Template/Base.php here
 
         $l = new Language();
         $_ = array('auto_groups' => 'autogroup1|autogroup2', 'override_groups' => 'override1|override2', 'login_hook' => 'true');
 
-		ob_start();
-	    include 'templates/admin.php';
-		$html = ob_get_contents();
-        @ob_end_clean();
+       ob_start();
+       include 'templates/admin.php';
+       $html = ob_get_contents();
+       @ob_end_clean();
         
         $this->assertIsString($html);
         $this->assertStringContainsString('<p class="auto_groups_settings_section">', $html);
         $this->assertStringContainsString('<input name="auto_groups" id="auto_groups" value="autogroup1|autogroup2"', $html);
         $this->assertStringContainsString('<input name="auto_groups_override" id="auto_groups_override" value="override1|override2"', $html);
         $this->assertStringContainsString('<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" checked', $html);
-    }
+    }*/
 }
