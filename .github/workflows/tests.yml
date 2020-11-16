@@ -13,7 +13,6 @@ env:
   APP_NAME: auto_groups
   PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, xdebug
   CACHE_KEY: cache-v3 # can be any string, change to clear the extension cache.
-  TRAVIS: true
 
 jobs:
   test:
@@ -101,7 +100,11 @@ jobs:
       - name: Unit and Integration Tests
         working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c tests/phpunit.xml
+        env:
+          TRAVIS: true 
 
       - name: Codecov.io Upload
-        working-directory: apps/${{ env.APP_NAME }}
-        run: bash <(curl -s https://codecov.io/bash) -f tests/coverage.xml -F ${{ matrix.server-versions }} 
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./apps/${{ env.APP_NAME }}/tests/coverage.xml
+          flags: ${{ matrix.server-versions }} 
