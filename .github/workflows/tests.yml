@@ -13,7 +13,6 @@ env:
   APP_NAME: auto_groups
   PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, xdebug
   CACHE_KEY: cache-v3 # can be any string, change to clear the extension cache.
-  TRAVIS: true
 
 jobs:
   test:
