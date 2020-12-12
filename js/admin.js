@@ -16,6 +16,7 @@ $(document).ready(function(){
   var $autoGroups = $('#auto_groups');
   var $overrideGroups = $('#auto_groups_override');
   var $loginHook = $('#auto_groups_login_hook');
+  var $creationOnly = $('#auto_groups_creation_only');
   
   OC.Settings.setupGroupsSelect($autoGroups, null, {excludeAdmins : true});
   $autoGroups.change(function(ev) {
@@ -34,7 +35,23 @@ $(document).ready(function(){
   $('#auto_groups_override .icon-info').tooltip({placement: 'right'});
 
   $loginHook.change(function(ev) {
+    if (this.checked) {
+      $creationOnly.removeAttr('checked').attr('disabled', 'disabled');
+      OCP.AppConfig.setValue('AutoGroups', 'creation_only', false);
+    } else {
+      $creationOnly.removeAttr('disabled');
+    }
     OCP.AppConfig.setValue('AutoGroups', 'login_hook', this.checked);
   });
+
+  $creationOnly.change(function(ev) {
+    if (this.checked) {
+      $loginHook.removeAttr('checked').attr('disabled', 'disabled');
+      OCP.AppConfig.setValue('AutoGroups', 'login_hook', false);
+    } else {
+      $loginHook.removeAttr('disabled');
+    }
+    OCP.AppConfig.setValue('AutoGroups', 'creation_only', this.checked);
+  })
 
 });

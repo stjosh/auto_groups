@@ -41,11 +41,13 @@ class Admin implements ISettings {
                 $autoGroups = json_decode( $this->config->getAppValue("AutoGroups", "auto_groups", '[]') );
                 $overrideGroups = json_decode( $this->config->getAppValue("AutoGroups", "override_groups", '[]') );
                 $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
+                $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only", 'false');
 
                 $parameters = [
                         'auto_groups' => implode('|', $autoGroups),
                         'override_groups' => implode('|', $overrideGroups),
                         'login_hook' => $loginHook,
+                        'creation_only' => $creationOnly
                 ];
 
                 return new TemplateResponse('auto_groups', 'admin', $parameters);
