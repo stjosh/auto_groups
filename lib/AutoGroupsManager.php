@@ -59,17 +59,21 @@ class AutoGroupsManager
         // The callback as a PHP callable
         $groupAssignmentCallback = [$this, 'addAndRemoveAutoGroups'];
 
-        // Get the loginHook config
+        // Get the loginHook & creationOnly configs
         $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
+        $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only", 'false');
 
         // Always add user to / remove user from auto groups on creation, group addition or group deletion
         $eventDispatcher->addListener(UserCreatedEvent::class, $groupAssignmentCallback);
-        $eventDispatcher->addListener(UserAddedEvent::class, $groupAssignmentCallback);
-        $eventDispatcher->addListener(UserRemovedEvent::class, $groupAssignmentCallback);
 
-        // If login hook is enabled, add user to / remove user from auto groups on every successful login
-        if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
-            $eventDispatcher->addListener(UserLoggedInEvent::class, $groupAssignmentCallback);
+        if (!filter_var($creationOnly, FILTER_VALIDATE_BOOLEAN)) {
+            $eventDispatcher->addListener(UserAddedEvent::class, $groupAssignmentCallback);
+            $eventDispatcher->addListener(UserRemovedEvent::class, $groupAssignmentCallback);
+
+            // If login hook is enabled, add user to / remove user from auto groups on every successful login
+            if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
+                $eventDispatcher->addListener(UserLoggedInEvent::class, $groupAssignmentCallback);
+            }
         }
 
         // Handle group deletion events
