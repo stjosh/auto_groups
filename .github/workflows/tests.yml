@@ -33,7 +33,7 @@ jobs:
             experimental: true
         exclude:
           - php-versions: '8.0'
-            database: sqlite
+            databases: sqlite
             server-versions: ['stable18', 'stable19', 'stable20']
             experimental: false
   
