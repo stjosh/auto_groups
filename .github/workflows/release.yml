@@ -23,10 +23,10 @@ jobs:
         run: echo ::set-output name=TAG_NAME::${GITHUB_REF##*/}
         
       - name: Define Archive Name
-        run: echo "name=ARCHIVE_NAME::${{ env.APP_NAME }}-${{ steps.set-tag-name.outputs.TAG_NAME }}.tar.gz" >> $GITHUB_ENV
+        run: echo "ARCHIVE_NAME=${{ env.APP_NAME }}-${{ steps.set-tag-name.outputs.TAG_NAME }}.tar.gz" >> $GITHUB_ENV
         
       - name: Get Upload URL
-        run: echo "name=UPLOAD_URL::$(curl https://api.github.com/repos/${{ github.repository }}/releases | jq -r '.[] | select(.tag_name == "${{ steps.set-tag-name.outputs.TAG_NAME }}") | .upload_url')" >> $GITHUB_ENV
+        run: echo "UPLOAD_URL=$(curl https://api.github.com/repos/${{ github.repository }}/releases | jq -r '.[] | select(.tag_name == "${{ steps.set-tag-name.outputs.TAG_NAME }}") | .upload_url')" >> $GITHUB_ENV
           
       - name: Check version info in info.xml
         run: grep "<version>$(echo ${{ steps.set-tag-name.outputs.TAG_NAME }} | cut -c2-)</version>" ${{ env.APP_NAME }}/appinfo/info.xml
@@ -52,7 +52,7 @@ jobs:
             asset_content_type: application/tar+gzip
     
       - name: Create Archive Signature
-        run: echo "name=ARCHIVE_SIGNATURE::$(echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64 -A )" >> $GITHUB_ENV
+        run: echo "ARCHIVE_SIGNATURE=$(echo "${{ secrets.AUTO_GROUPS_SIGNING_KEY }}" | openssl dgst -sha512 -sign /dev/stdin  ${{ env.ARCHIVE_NAME }}  | openssl base64 -A )" >> $GITHUB_ENV
 
       - name: Create Publish Payload
         run: "echo '{ \"download\": \"${{ steps.upload-release-asset.outputs.browser_download_url }}\", \"signature\": \"${{ env.ARCHIVE_SIGNATURE }}\"}' > publish.json"
