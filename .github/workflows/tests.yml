@@ -34,7 +34,15 @@ jobs:
         exclude:
           - php-versions: '8.0'
             databases: sqlite
-            server-versions: ['stable18', 'stable19', 'stable20']
+            server-versions: 'stable18'
+            experimental: false
+          - php-versions: '8.0'
+            databases: sqlite
+            server-versions: 'stable19'
+            experimental: false
+          - php-versions: '8.0'
+            databases: sqlite
+            server-versions: 'stable20'
             experimental: false
   
     name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
