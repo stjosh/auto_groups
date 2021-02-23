@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.2.1 - 2021-02-23
+### Changed
+- Update translations and ensure compatibility with latest Nextcloud versions
+
 ## 1.2.0 - 2020-05-19
 ### Changed
 - Move to UserLoggedInEvent for login checks, enabling compatibility with SAML login [#42](https://github.com/stjosh/auto_groups/issues/42)
