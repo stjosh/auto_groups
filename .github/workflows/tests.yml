@@ -11,7 +11,7 @@ on:
 
 env:
   APP_NAME: auto_groups
-  PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, xdebug
+  PHP_EXTENSIONS: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, xdebug, zip, gd
   CACHE_KEY: cache-v3 # can be any string, change to clear the extension cache.
 
 jobs:
@@ -22,12 +22,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3', '7.4']
+        php-versions: ['7.3', '7.4', '8.0']
         databases: ['sqlite']
-        server-versions: ['stable18', 'stable19', 'stable20']
+        server-versions: ['stable18', 'stable19', 'stable20', 'stable21']
         experimental: [false]
         include:
-          - php-versions: '7.4'
+          - php-versions: '8.0'
             databases: sqlite
             server-versions: master
             experimental: true
