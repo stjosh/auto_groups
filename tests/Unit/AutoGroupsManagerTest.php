@@ -111,7 +111,7 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], false, false, 1);
+        $agm = $this->createAutoGroupsManager([], [], false, false, 2);
     }
 
     public function testAlsoLoginHookIfEnabled()
@@ -126,7 +126,7 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], true, false, 1);
+        $agm = $this->createAutoGroupsManager([], [], true, false, 2);
     }
 
     public function testAddingToAutoGroups()
