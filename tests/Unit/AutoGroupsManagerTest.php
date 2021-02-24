@@ -131,10 +131,11 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testCreationOnlyMode()
     {
-        $this->eventDispatcher->expects($this->exactly(1))
+        $this->eventDispatcher->expects($this->exactly(2))
             ->method('addListener')
             ->withConsecutive(
-                [UserCreatedEvent::class, $this->callback('is_callable')]
+                [UserCreatedEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
         $agm = $this->createAutoGroupsManager([], [], true, true, 2);
