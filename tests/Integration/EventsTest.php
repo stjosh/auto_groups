@@ -78,6 +78,24 @@ class EventsTest extends TestCase
         $this->assertContains('autogroup1', $groups);
     }
 
+    public function testAddAndRemoveHooksNotExecutedInCreationOnlyMode()
+    {
+        $this->config->setAppValue("AutoGroups", "creation_only", 'true');
+
+        $testUser = $this->userManager->get('testuser');
+        $overridegroup = $this->groupManager->search('overridegroup1')[0];
+        $overridegroup->addUser($testUser);
+
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertContains('autogroup1', $groups);
+
+        $overridegroup->removeUser($testUser);
+        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $this->assertContains('autogroup1', $groups);
+
+        $this->config->setAppValue("AutoGroups", "creation_only", 'false');
+    }
+    
     public function testAddHook()
     {
         $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');

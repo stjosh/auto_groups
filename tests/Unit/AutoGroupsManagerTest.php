@@ -129,6 +129,17 @@ class AutoGroupsManagerTest extends TestCase
         $agm = $this->createAutoGroupsManager([], [], true, false, 2);
     }
 
+    public function testCreationOnlyMode()
+    {
+        $this->eventDispatcher->expects($this->exactly(1))
+            ->method('addListener')
+            ->withConsecutive(
+                [UserCreatedEvent::class, $this->callback('is_callable')]
+            );
+
+        $agm = $this->createAutoGroupsManager([], [], true, true, 2);
+    }
+
     public function testAddingToAutoGroups()
     {
         $event = $this->createMock(UserCreatedEvent::class);
