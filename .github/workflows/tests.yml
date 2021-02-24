@@ -119,6 +119,6 @@ jobs:
       - name: Codecov.io Upload
         uses: codecov/codecov-action@v1
         with:
-          working-directory: ./apps/${{ env.APP_NAME }}
+          root_dir: ./apps/${{ env.APP_NAME }}
           files: ./tests/coverage.xml
           flags: ${{ matrix.server-versions }}
