@@ -70,7 +70,7 @@ class AutoGroupsManagerTest extends TestCase
             ->willReturn('Test User');
     }
 
-    private function createAutoGroupsManager($auto_groups = [], $override_groups = [], $login_hook = false, $creation_only = false, $expectedNumberOfConfigCalls = 3)
+    private function createAutoGroupsManager($auto_groups = [], $override_groups = [], $login_hook = false, $creation_only = false, $expectedNumberOfConfigCalls = 4)
     {
         $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
             ->method('getAppValue')

@@ -74,7 +74,7 @@ class AdminSettingsTest extends TestCase
     }
 
     public function testForm() {
-        $this->config->expects($this->exactly(3))
+        $this->config->expects($this->exactly(4))
             ->method('getAppValue')
             ->withConsecutive(
                 ['AutoGroups', 'auto_groups', '[]'],
