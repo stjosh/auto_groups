@@ -28,6 +28,7 @@ style('auto_groups', 'admin');
 
 $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'checked' : '';
 $creation_only_checked = filter_var($_['creation_only'], FILTER_VALIDATE_BOOLEAN) ? 'checked' : '';
+$login_hook_disabled = $creation_only_checked ? 'disabled' : '';
 
 ?>
 
@@ -50,7 +51,7 @@ $creation_only_checked = filter_var($_['creation_only'], FILTER_VALIDATE_BOOLEAN
 	</p>
 
 	<p class="auto_groups_settings_section">
-		<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" <?= $login_hook_checked ?>>
+		<input name="auto_groups_login_hook" id="auto_groups_login_hook" type="checkbox" class="checkbox" <?= $login_hook_checked ?> <?= $login_hook_disabled ?>>
 		<label for="auto_groups_login_hook"><?php p($l->t('Check for correct Auto Group membership on every login.')); ?></label>
 		<br />
 		<em><?php p($l->t('Enable this setting to enforce proper Auto Group membership on every successful login. This is useful if either users are not created in Nextcloud (e.g., with external user backends) or to enforce correct group membership for all users when the Auto Groups / Override Groups have changed.')); ?></em>
