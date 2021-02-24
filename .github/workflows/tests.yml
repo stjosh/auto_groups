@@ -117,7 +117,5 @@ jobs:
           TRAVIS: true 
 
       - name: Codecov.io Upload
-        uses: codecov/codecov-action@v1
-        with:
-          file: ./apps/${{ env.APP_NAME }}/tests/coverage.xml
-          flags: ${{ matrix.server-versions }} 
+        working-directory: apps/${{ env.APP_NAME }}
+        run: bash <(curl -s https://codecov.io/bash) -F ${{ matrix.server-versions }} -f ./tests/coverage.xml

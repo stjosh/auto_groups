@@ -74,14 +74,15 @@ class AdminSettingsTest extends TestCase
     }
 
     public function testForm() {
-        $this->config->expects($this->exactly(3))
+        $this->config->expects($this->exactly(4))
             ->method('getAppValue')
             ->withConsecutive(
                 ['AutoGroups', 'auto_groups', '[]'],
                 ['AutoGroups', 'override_groups', '[]'],
-                ['AutoGroups', 'login_hook', 'false']
+                ['AutoGroups', 'login_hook', 'false'],
+                ['AutoGroups', 'creation_only', 'false']
             )
-            ->willReturnOnConsecutiveCalls(json_encode(['auto1', 'auto2']), json_encode(['override1', 'override2']), true);
+            ->willReturnOnConsecutiveCalls(json_encode(['auto1', 'auto2']), json_encode(['override1', 'override2']), true, true);
 
         $response = $this->adminSettings->getForm();
 
@@ -91,6 +92,7 @@ class AdminSettingsTest extends TestCase
         $params = $response->getParams();
         $this->assertIsArray($params);
         $this->assertEquals(true, $params['login_hook']);
+        $this->assertEquals(true, $params['creation_only']);
         $this->assertEquals('auto1|auto2', $params['auto_groups']);
         $this->assertEquals('override1|override2', $params['override_groups']);
     }

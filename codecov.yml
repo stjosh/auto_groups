@@ -1,0 +1,3 @@
+ignore:
+  - "appinfo/routes.php"
+  - "templates/admin.php"
