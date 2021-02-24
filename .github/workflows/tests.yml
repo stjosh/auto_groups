@@ -121,4 +121,4 @@ jobs:
         with:
           files: ./apps/${{ env.APP_NAME }}/tests/coverage.xml
           flags: ${{ matrix.server-versions }}
-          commit_parent: ${{ GITHUB_SHA }}
+          commit_parent: ${{ env.GITHUB_SHA }}
