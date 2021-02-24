@@ -122,4 +122,3 @@ jobs:
           directory: ./apps/${{ env.APP_NAME }}/tests/
           files: ./coverage.xml
           flags: ${{ matrix.server-versions }}
-          verbose: true
