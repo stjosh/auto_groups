@@ -61,6 +61,6 @@ $login_hook_disabled = $creation_only_checked ? 'disabled' : '';
 		<input name="auto_groups_creation_only" id="auto_groups_creation_only" type="checkbox" class="checkbox" <?= $creation_only_checked ?>>
 		<label for="auto_groups_creation_only"><?php p($l->t('Only check for Auto Group membership on user creation.')); ?></label>
 		<br />
-		<em><?php p($l->t('Enable this setting if you want to enforce the Auto Group membership only on user creation.')); ?></em>
+		<em><?php p($l->t('If checked, Auto Group membership will not be re-enforced on subsequent user modifications.')); ?></em>
 	</p>
 </div>
