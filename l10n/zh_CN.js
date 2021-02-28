@@ -11,6 +11,7 @@ OC.L10N.register(
     "Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership in the override groups is checked after each group modification." : "至少属于其中一个组的用户将从自动组中删除。如果用户在创建后被添加到这些组中的一个，情况也是如此，即在每次群组修改后检查覆盖组中的成员资格。",
     "Check for correct Auto Group membership on every login." : "每次登录时检查自动加入群组成员身份是否正确",
     "Enable this setting to enforce proper Auto Group membership on every successful login. This is useful if either users are not created in Nextcloud (e.g., with external user backends) or to enforce correct group membership for all users when the Auto Groups / Override Groups have changed." : "开启这个设置将每次成功登陆时强制加入指定组中。对于未在nextcloud中创建用户的（例如：外部存储用户）或者已经强制自动加入组/覆盖组的成员他们将会被修改。",
-    "Only check for Auto Group membership on user creation." : "只在创建用户时只检查 Auto Group 成员资格。"
+    "Only check for Auto Group membership on user creation." : "只在创建用户时只检查 Auto Group 成员资格。",
+    "If checked, Auto Group membership will not be re-enforced on subsequent user modifications." : "如选中此选项，则在后续用户修改时将不再重新强制执行 Auto Group 成员资格。"
 },
 "nplurals=1; plural=0;");
