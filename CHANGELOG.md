@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.3.1 - 2021-04-16
+### Fixed
+- Delay JS initialization in the admin settings to make sure that OC.Settings is defined before the script is executed
+
 ## 1.3.0 - 2021-02-27
 ### Changed
 - Add "creation only" mode which allows to opt-out of group membership enforcement on subsequent user modifications

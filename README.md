@@ -22,7 +22,7 @@ Note that this app prevents group deletions for groups referenced as Auto Groups
 
 ## Manual Testing
 
-To manually test the app, a . You need to have Docker installed and running to execute it. Simply go for
+To manually test the app, an automatic script is provided. You need to have Docker installed and running to execute it. Simply go for
 
 ```bash
 $ ./tests/Docker/run-docker-test-instance.sh
