@@ -34,7 +34,7 @@ In addition, I plan to add some more features over time, e.g., "Union Groups" - 
     <repository type="git">https://github.com/stjosh/auto_groups.git</repository>
     <screenshot>https://raw.githubusercontent.com/stjosh/auto_groups/master/screenshots/settings.jpg</screenshot>
     <dependencies>
-        <nextcloud min-version="18" max-version="22"/>
+        <nextcloud min-version="18" max-version="23"/>
     </dependencies>
     <settings>
         <admin>OCA\AutoGroups\Settings\Admin</admin>
