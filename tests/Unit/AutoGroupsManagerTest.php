@@ -145,7 +145,7 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], 'true', 'false', 'false', 2);
+        $agm = $this->createAutoGroupsManager([], [], 'true', 'false', 'false', 4);
     }
 
     public function testModificationOnlyMode()
@@ -158,7 +158,7 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], 'false', 'true', 'false', 2);
+        $agm = $this->createAutoGroupsManager([], [], 'false', 'true', 'false', 4);
     }
 
     public function testAddingToAutoGroups()
