@@ -150,7 +150,7 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testModificationOnlyMode()
     {
-        $this->eventDispatcher->expects($this->exactly(2))
+        $this->eventDispatcher->expects($this->exactly(3))
             ->method('addListener')
             ->withConsecutive(
                 [UserAddedEvent::class, $this->callback('is_callable')],
