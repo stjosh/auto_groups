@@ -120,11 +120,11 @@ class AutoGroupsManagerTest extends TestCase
         
         $this->config->expects($this->exactly(1))
             ->method('setAppValue')
-            ->with(['AutoGroups', 'modification_hook', $expectedModification]);
+            ->with('AutoGroups', 'modification_hook', $expectedModification);
 
         $this->config->expects($this->exactly(1))
             ->method('deleteAppValue')
-            ->with(['AutoGroups', 'creation_only']);
+            ->with('AutoGroups', 'creation_only');
 
         return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
     }
