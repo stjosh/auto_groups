@@ -40,14 +40,16 @@ class Admin implements ISettings {
         public function getForm() {
                 $autoGroups = json_decode( $this->config->getAppValue("AutoGroups", "auto_groups", '[]') );
                 $overrideGroups = json_decode( $this->config->getAppValue("AutoGroups", "override_groups", '[]') );
+                $creationHook = $this->config->getAppValue("AutoGroups", "creation_only", 'true');
+                $modificationHook = $this->config->getAppValue("AutoGroups", "modification_hook", 'true');
                 $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
-                $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only", 'false');
 
                 $parameters = [
                         'auto_groups' => implode('|', $autoGroups),
                         'override_groups' => implode('|', $overrideGroups),
                         'login_hook' => $loginHook,
-                        'creation_only' => $creationOnly
+                        'creation_hook' => $creationHook,
+                        'modification_hook' => $modificationHook
                 ];
 
                 return new TemplateResponse('auto_groups', 'admin', $parameters);
