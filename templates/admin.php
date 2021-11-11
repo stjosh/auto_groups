@@ -33,9 +33,9 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 ?>
 
 <div id="auto_groups_options" class="section">
-	<h2><?php p($l->t('Auto Groups:')); ?></h2>
+	<h2><?php p($l->t('Auto Groups')); ?></h2>
 	<p class="auto_groups_settings_section">
-		<label for="auto_groups"><?php p($l->t('Auto Groups:')); ?></label>
+		<label for="auto_groups"><?php p($l->t('Auto Groups')); ?>:</label>
 		<br />
 		<input name="auto_groups" id="auto_groups" value="<?php p($_['auto_groups']) ?>" style="width: 400px">
 		<br />

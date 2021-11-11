@@ -32,7 +32,7 @@ In addition, I plan to add some more features over time, e.g., "Union Groups" - 
     <website>https://github.com/stjosh/auto_groups</website>
     <bugs>https://github.com/stjosh/auto_groups/issues</bugs>
     <repository type="git">https://github.com/stjosh/auto_groups.git</repository>
-    <screenshot>https://raw.githubusercontent.com/stjosh/auto_groups/master/screenshots/settings.jpg</screenshot>
+    <screenshot>https://raw.githubusercontent.com/stjosh/auto_groups/master/screenshots/settings.png</screenshot>
     <dependencies>
         <nextcloud min-version="18" max-version="23"/>
     </dependencies>
