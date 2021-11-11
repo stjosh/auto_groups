@@ -107,6 +107,30 @@ class AutoGroupsManagerTest extends TestCase
         return $agm;
     }
 
+    private function configMigrationTestImpl($creationOnly, $expectedModification) {
+        $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
+            ->method('getAppValue')
+            ->withConsecutive(
+                ['AutoGroups', 'creation_only'],
+                ['AutoGroups', 'creation_hook', 'true'],
+                ['AutoGroups', 'modification_hook', 'true'],
+                ['AutoGroups', 'login_hook', 'false'],
+                ['AutoGroups', 'auto_groups', '[]'],
+                ['AutoGroups', 'override_groups', '[]']
+            )
+            ->willReturnOnConsecutiveCalls($creationOnly, 'true', 'true', 'false', '[]', '[]');
+        
+        $this->config->expects($this->exactly(1))
+            ->method('setAppValue')
+            ->with(['AutoGroups', 'modification_hook', $expectedModification]);
+
+        $this->config->expects($this->exactly(1))
+            ->method('deleteAppValue')
+            ->with(['AutoGroups', 'creation_only']);
+
+        return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
+    }
+
     public function testCreatedAddedRemovedHooksWithDefaultSettings()
     {
         $this->eventDispatcher->expects($this->exactly(4))
@@ -297,5 +321,15 @@ class AutoGroupsManagerTest extends TestCase
 
         $agm = $this->initEventHandlerTests(['autogroup1', 'autogroup2'], ['overridegroup1', 'overridegroup2']);
         $agm->handleGroupDeletion($event);
+    }
+
+    public function testConfigMigrationForCreationOnlyTrue()
+    {
+        $agm = $this->configMigrationTestImpl('true', 'false')
+    }
+
+    public function testConfigMigrationForCreationOnlyFalse()
+    {
+        $agm = $this->configMigrationTestImpl('false', 'true')
     }
 }
