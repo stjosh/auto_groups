@@ -325,11 +325,11 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testConfigMigrationForCreationOnlyTrue()
     {
-        $agm = $this->configMigrationTestImpl('true', 'false')
+        $agm = $this->configMigrationTestImpl('true', 'false');
     }
 
     public function testConfigMigrationForCreationOnlyFalse()
     {
-        $agm = $this->configMigrationTestImpl('false', 'true')
+        $agm = $this->configMigrationTestImpl('false', 'true');
     }
 }
