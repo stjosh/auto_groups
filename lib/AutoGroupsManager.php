@@ -56,24 +56,35 @@ class AutoGroupsManager
         $this->config = $config;
         $this->l = $l;
 
+        // Migrate old config if necessary
+        $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only");
+        if ($creationOnly !== '') {
+            $this->config->setAppValue("AutoGroups", "modification_hook", ($creationOnly === 'true' ? 'false' : 'true'));
+            $this->config->deleteAppValue("AutoGroups", "creation_only");
+        }
+
         // The callback as a PHP callable
         $groupAssignmentCallback = [$this, 'addAndRemoveAutoGroups'];
 
-        // Get the loginHook & creationOnly configs
+        // Get the hook configs
+        $creationHook = $this->config->getAppValue("AutoGroups", "creation_hook", 'true');
+        $modificationHook = $this->config->getAppValue("AutoGroups", "modification_hook", 'true');
         $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
-        $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only", 'false');
 
-        // Always add user to / remove user from auto groups on creation, group addition or group deletion
-        $eventDispatcher->addListener(UserCreatedEvent::class, $groupAssignmentCallback);
+        // If creation hook is enabled, add user to / remove user from auto groups on creation
+        if (filter_var($creationHook, FILTER_VALIDATE_BOOLEAN)) {
+            $eventDispatcher->addListener(UserCreatedEvent::class, $groupAssignmentCallback);
+        }
 
-        if (!filter_var($creationOnly, FILTER_VALIDATE_BOOLEAN)) {
+        // If modification hook is enabled, add user to / remove user from auto groups on every modification of user groups
+        if (filter_var($modificationHook, FILTER_VALIDATE_BOOLEAN)) {
             $eventDispatcher->addListener(UserAddedEvent::class, $groupAssignmentCallback);
             $eventDispatcher->addListener(UserRemovedEvent::class, $groupAssignmentCallback);
+        }
 
-            // If login hook is enabled, add user to / remove user from auto groups on every successful login
-            if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
-                $eventDispatcher->addListener(UserLoggedInEvent::class, $groupAssignmentCallback);
-            }
+        // If login hook is enabled, add user to / remove user from auto groups on every successful login
+         if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
+            $eventDispatcher->addListener(UserLoggedInEvent::class, $groupAssignmentCallback);
         }
 
         // Handle group deletion events

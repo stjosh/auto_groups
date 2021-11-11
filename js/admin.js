@@ -16,8 +16,9 @@ $(document).ready(function () {
   setTimeout(function () {
     var $autoGroups = $('#auto_groups');
     var $overrideGroups = $('#auto_groups_override');
+    var $creationHook = $('#auto_groups_creation_hook');
+    var $modificationHook = $('#auto_groups_modification_hook');
     var $loginHook = $('#auto_groups_login_hook');
-    var $creationOnly = $('#auto_groups_creation_only');
 
     OC.Settings.setupGroupsSelect($autoGroups, null, {
       excludeAdmins: true
@@ -26,7 +27,6 @@ $(document).ready(function () {
       var groups = ev.val || [];
       OCP.AppConfig.setValue('AutoGroups', 'auto_groups', JSON.stringify(groups));
     });
-
     $('#auto_groups .icon-info').tooltip({
       placement: 'right'
     });
@@ -38,30 +38,21 @@ $(document).ready(function () {
       var groups = ev.val || [];
       OCP.AppConfig.setValue('AutoGroups', 'override_groups', JSON.stringify(groups));
     });
-
     $('#auto_groups_override .icon-info').tooltip({
       placement: 'right'
     });
 
-    $loginHook.change(function (ev) {
-      if (this.checked) {
-        $creationOnly.removeAttr('checked').attr('disabled', 'disabled');
-        OCP.AppConfig.setValue('AutoGroups', 'creation_only', false);
-      } else {
-        $creationOnly.removeAttr('disabled');
-      }
-      OCP.AppConfig.setValue('AutoGroups', 'login_hook', this.checked);
+    $creationHook.change(function (ev) {
+      OCP.AppConfig.setValue('AutoGroups', 'creation_hook', this.checked);
     });
 
-    $creationOnly.change(function (ev) {
-      if (this.checked) {
-        $loginHook.removeAttr('checked').attr('disabled', 'disabled');
-        OCP.AppConfig.setValue('AutoGroups', 'login_hook', false);
-      } else {
-        $loginHook.removeAttr('disabled');
-      }
-      OCP.AppConfig.setValue('AutoGroups', 'creation_only', this.checked);
-    })
+    $modificationHook.change(function (ev) {
+      OCP.AppConfig.setValue('AutoGroups', 'modification_hook', this.checked);
+    });
+    
+    $loginHook.change(function (ev) {
+      OCP.AppConfig.setValue('AutoGroups', 'login_hook', this.checked);
+    });
   }, 0);
 
 });
