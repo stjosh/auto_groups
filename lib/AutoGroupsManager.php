@@ -58,7 +58,7 @@ class AutoGroupsManager
 
         // Migrate old config if necessary
         $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only");
-        if ($creationOnly != '') {
+        if ($creationOnly !== '') {
             $this->config->setAppValue("AutoGroups", "modification_hook", ($creationOnly === 'true' ? 'false' : 'true'));
             $this->config->deleteAppValue("AutoGroups", "creation_only");
         }
