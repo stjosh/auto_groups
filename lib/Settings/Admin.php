@@ -40,7 +40,7 @@ class Admin implements ISettings {
         public function getForm() {
                 $autoGroups = json_decode( $this->config->getAppValue("AutoGroups", "auto_groups", '[]') );
                 $overrideGroups = json_decode( $this->config->getAppValue("AutoGroups", "override_groups", '[]') );
-                $creationHook = $this->config->getAppValue("AutoGroups", "creation_only", 'true');
+                $creationHook = $this->config->getAppValue("AutoGroups", "creation_hook", 'true');
                 $modificationHook = $this->config->getAppValue("AutoGroups", "modification_hook", 'true');
                 $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
 

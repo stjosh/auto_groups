@@ -70,17 +70,24 @@ class AutoGroupsManagerTest extends TestCase
             ->willReturn('Test User');
     }
 
-    private function createAutoGroupsManager($auto_groups = [], $override_groups = [], $login_hook = false, $creation_only = false, $expectedNumberOfConfigCalls = 4)
+    private function createAutoGroupsManager($auto_groups = [], 
+                                             $override_groups = [],
+                                             $creation_hook='true', 
+                                             $modification_hook = 'true', 
+                                             $login_hook = 'false', 
+                                             $expectedNumberOfConfigCalls = 6)
     {
         $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
             ->method('getAppValue')
             ->withConsecutive(
+                ['AutoGroups', 'creation_only'],
+                ['AutoGroups', 'creation_hook', 'true'],
+                ['AutoGroups', 'modification_hook', 'true'],
                 ['AutoGroups', 'login_hook', 'false'],
-                ['AutoGroups', 'creation_only', 'false'],
                 ['AutoGroups', 'auto_groups', '[]'],
                 ['AutoGroups', 'override_groups', '[]']
             )
-            ->willReturnOnConsecutiveCalls($login_hook, $creation_only, json_encode($auto_groups), json_encode($override_groups));
+            ->willReturnOnConsecutiveCalls('', $creation_hook, $modification_hook, $login_hook, json_encode($auto_groups), json_encode($override_groups));
 
         return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
     }
@@ -111,7 +118,7 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], false, false, 2);
+        $agm = $this->createAutoGroupsManager([], [], 'true', 'true', 'false', 4);
     }
 
     public function testAlsoLoginHookIfEnabled()
@@ -126,7 +133,7 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], true, false, 2);
+        $agm = $this->createAutoGroupsManager([], [], 'true', 'true', 'true', 4);
     }
 
     public function testCreationOnlyMode()
@@ -138,7 +145,20 @@ class AutoGroupsManagerTest extends TestCase
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
-        $agm = $this->createAutoGroupsManager([], [], true, true, 2);
+        $agm = $this->createAutoGroupsManager([], [], 'true', 'false', 'false', 2);
+    }
+
+    public function testModificationOnlyMode()
+    {
+        $this->eventDispatcher->expects($this->exactly(2))
+            ->method('addListener')
+            ->withConsecutive(
+                [UserAddedEvent::class, $this->callback('is_callable')],
+                [UserRemovedEvent::class, $this->callback('is_callable')],
+                [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
+            );
+
+        $agm = $this->createAutoGroupsManager([], [], 'false', 'true', 'false', 2);
     }
 
     public function testAddingToAutoGroups()
