@@ -108,17 +108,15 @@ class AutoGroupsManagerTest extends TestCase
     }
 
     private function configMigrationTestImpl($creationOnly, $expectedModification) {
-        $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
+        $this->config->expects($this->exactly(4))
             ->method('getAppValue')
             ->withConsecutive(
                 ['AutoGroups', 'creation_only'],
                 ['AutoGroups', 'creation_hook', 'true'],
                 ['AutoGroups', 'modification_hook', 'true'],
                 ['AutoGroups', 'login_hook', 'false'],
-                ['AutoGroups', 'auto_groups', '[]'],
-                ['AutoGroups', 'override_groups', '[]']
             )
-            ->willReturnOnConsecutiveCalls($creationOnly, 'true', 'true', 'false', '[]', '[]');
+            ->willReturnOnConsecutiveCalls($creationOnly, 'true', 'true', 'false');
         
         $this->config->expects($this->exactly(1))
             ->method('setAppValue')
