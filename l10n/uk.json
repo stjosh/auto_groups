@@ -1,6 +1,5 @@
 { "translations": {
     "Auto Groups" : "Автоматичні групи",
-    "Auto Groups:" : "Автоматичні групи:",
     "Automatically add all users to these groups." : "Автоматично додавати користувачів до цих груп.",
     "Override Groups:" : "Не застосовувати до груп:",
     "Check for correct Auto Group membership on every login." : "Перевіряти правильність членства у автоматичних групах щоразу при вході."
