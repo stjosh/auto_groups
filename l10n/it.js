@@ -15,4 +15,4 @@ OC.L10N.register(
     "Check for correct Auto Group membership on every login." : "Controlla la corretta appartenenza ai gruppi automatici a ogni accesso.",
     "Enable this setting to enforce proper Auto Group membership on every successful login. This is useful if either users are not created in Nextcloud (e.g., with external user backends) or to enforce correct group membership for all users when the Auto Groups / Override Groups have changed." : "Attiva questa opzione per applicare l'appartenenza ai gruppi automatici ad ogni accesso riuscito. È utile se gli utenti non sono creati su Nextcloud (es. con backend di utenti esterni) o per applicare la giusta appartenenza al gruppo per tutti gli utenti quando vengono modificati i gruppi automatici / di sovrascrittura."
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
