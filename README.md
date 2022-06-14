@@ -13,7 +13,7 @@ Automatically add users to specified Auto Groups, except for those belonging to 
 | [stable24](https://github.com/nextcloud/server/tree/stable24) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable24)](https://codecov.io/gh/stjosh/auto_groups) |
 | [master](https://github.com/nextcloud/server/tree/master) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=master)](https://codecov.io/gh/stjosh/auto_groups) |
 
-Unit and Integration Tests are executed with PHP v7.3, v7.4 and v8.0 for NC21 and above.
+Unit and Integration Tests are executed with PHP v7.4 as well as v8.0 and v8.1 for NC21 and above.
 
 ## Usage
 
