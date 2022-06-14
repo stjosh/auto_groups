@@ -120,11 +120,6 @@ jobs:
       - name: Check Syntax
         working-directory: apps/${{ env.APP_NAME }}
         run: composer run lint
-        
-      - name: OCC App Check
-        run: |
-          ./occ app:check-code ${{ env.APP_NAME }} -c strong-comparison
-          ./occ app:check-code ${{ env.APP_NAME }} -c deprecation
 
       - name: Unit and Integration Tests
         working-directory: apps/${{ env.APP_NAME }}
