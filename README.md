@@ -18,7 +18,7 @@ Unit and Integration Tests are executed with PHP v7.4 as well as v8.0 and v8.1 f
 ## Usage
 
 * Install and enable the App
-* Go to "Admin -> Additional Settings" to configure the Auto Groups, Override Groups and further behavior.
+* Go to "Settings > Administration > Additional settings" to configure the Auto Groups, Override Groups and further behavior.
 
 Note that this app prevents group deletions for groups referenced as Auto Groups or Override Groups.
 
