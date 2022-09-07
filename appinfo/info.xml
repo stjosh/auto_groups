@@ -10,7 +10,7 @@ Optionally, the group assignment can be triggered on every successful login, whi
 
 ## Configuration
 
-- Go to "Admin Settings > Additional Settings"
+- Go to "Settings > Administration > Additional settings"
 - Configure the Auto Groups
 - If required, configure the Override Groups (e.g., for Service Accounts)
 - Optionally, enable the Login Hook, which will enforce correct group membership on every successful login
