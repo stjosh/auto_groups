@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.4.1 - 2021-11-18
+### Changed
+- Update path in admin settings [#62](https://github.com/stjosh/auto_groups/pull/62)
+
 ## 1.4.0 - 2021-11-18
 ### Changed
 - Refactor hooks to be non-exclusive and separate the "creation" from the "modification" hook [#57](https://github.com/stjosh/auto_groups/issues/57)
