@@ -59,9 +59,9 @@ $login_hook_checked = filter_var($_['login_hook'], FILTER_VALIDATE_BOOLEAN) ? 'c
 
 	<p class="auto_groups_settings_section">
 		<input name="auto_groups_modification_hook" id="auto_groups_modification_hook" type="checkbox" class="checkbox" <?= $modification_hook_checked ?>>
-		<label for="auto_groups_modification_hook"><?php p($l->t('Check Auto Group membership on user modification.')); ?></label>
+		<label for="auto_groups_modification_hook"><?php p($l->t('Check Auto Group membership on modification of a user\'s groups.')); ?></label>
 		<br />
-		<em><?php p($l->t('If checked, Auto Group membership will be re-enforced on every user modification.')); ?></em>
+		<em><?php p($l->t('If checked, Auto Group membership will be re-enforced for a user account every time it is added to or removed from a group.')); ?></em>
 	</p>
 
 	<p class="auto_groups_settings_section">
