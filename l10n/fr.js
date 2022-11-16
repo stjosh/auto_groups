@@ -5,7 +5,7 @@ OC.L10N.register(
     "Auto Groups" : "Groupes automatiques",
     "Automatically adds all users to one or multiple specified groups." : "Ajoute automatiquement tous les utilisateurs à un ou plusieurs groupes indiqués.",
     "Automatically add all users to these groups." : "Ajouter automatiquement tous les utilisateurs à ces groupes.",
-    "Override Groups:" : "Remplacer ces groupes :",
+    "Override Groups:" : "Remplacer ces groupes :",
     "Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership in the override groups is checked after each group modification." : "Les utilisateurs qui sont membres d'au moins un de ces groupes sont supprimés des groupes automatiques. C'est également le cas si l'utilisateur est ajouté à l'un de ces groupes après sa création, c'est-à-dire que l'appartenance aux groupes de substitution est vérifiée après chaque modification de groupe.",
     "Set Auto Group membership on user creation." : "Définir l’adhésion automatique au groupe lors de la création de l’utilisateur.",
     "If checked, Auto Group membership will be enforced on user creation." : "Si coché, l’adhésion automatique au groupe sera appliquée à la création de l’utilisateur.",
