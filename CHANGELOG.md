@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.5.0 - 2022-12-12
+### Changed
+- Fixed deprecation message [#61](https://github.com/stjosh/auto_groups/issues/61)
+- More precise description for the "Groups Modification"-Setting [#60](https://github.com/stjosh/auto_groups/issues/60)
+
 ## 1.4.1 - 2021-11-18
 ### Changed
 - Update path in admin settings [#62](https://github.com/stjosh/auto_groups/pull/62)
