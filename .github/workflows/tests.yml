@@ -56,6 +56,10 @@ jobs:
             databases: sqlite
             server-versions: 'stable23'
             experimental: false
+          - php-versions: '7.4'
+            databases: sqlite
+            server-versions: 'stable26'
+            experimental: false
   
     name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
