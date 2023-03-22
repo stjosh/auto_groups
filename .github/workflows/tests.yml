@@ -24,7 +24,7 @@ jobs:
       matrix:
         php-versions: ['7.4', '8.0', '8.1' ]
         databases: ['sqlite']
-        server-versions: ['stable19', 'stable20', 'stable21', 'stable22', 'stable23', 'stable24', 'stable25']
+        server-versions: ['stable20', 'stable21', 'stable22', 'stable23', 'stable24', 'stable25', 'stable26']
         experimental: [false]
         include:
           - php-versions: '8.1'
@@ -32,10 +32,6 @@ jobs:
             server-versions: master
             experimental: true
         exclude:
-          - php-versions: '8.0'
-            databases: sqlite
-            server-versions: 'stable19'
-            experimental: false
           - php-versions: '8.0'
             databases: sqlite
             server-versions: 'stable20'
