@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.5.2 - 2023-06-24
+### Changed
+- Compatibility with Nextcloud 27 [#67](https://github.com/stjosh/auto_groups/issues/67)
+
 ## 1.5.1 - 2023-01-16
 ### Fixed
 - Fix admin settings display issue in NC25 and Firefox [#65](https://github.com/stjosh/auto_groups/issues/65)
