@@ -22,31 +22,46 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.1', '8.2']
-        server-versions: ['stable21', 'stable22', 'stable23', 'stable24', 'stable25, 'stable26', 'stable27']
+        php-versions: ['7.4', '8.0', '8.1' ]
+        databases: ['sqlite']
+        server-versions: ['stable21', 'stable22', 'stable23', 'stable24', 'stable25', 'stable26', 'stable27']
         experimental: [false]
         include:
           - php-versions: '8.1'
+            databases: sqlite
             server-versions: master
             experimental: true
         exclude:
           - php-versions: '8.1'
+            databases: sqlite
+            server-versions: 'stable19'
+            experimental: false
+          - php-versions: '8.1'
+            databases: sqlite
+            server-versions: 'stable20'
+            experimental: false
+          - php-versions: '8.1'
+            databases: sqlite
             server-versions: 'stable21'
             experimental: false
           - php-versions: '8.1'
+            databases: sqlite
             server-versions: 'stable22'
             experimental: false
           - php-versions: '8.1'
+            databases: sqlite
             server-versions: 'stable23'
             experimental: false
           - php-versions: '7.4'
+            databases: sqlite
             server-versions: 'stable26'
             experimental: false
           - php-versions: '7.4'
+            databases: sqlite
             server-versions: 'stable27'
             experimental: false
   
-    name: test-php${{ matrix.php-versions }}-sqlite-${{ matrix.server-versions }}
+    name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     steps:
       - name: Checkout Nextcloud Server
@@ -88,7 +103,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: phpunit:9.5.28
+          tools: phpunit
           extensions: ${{ env.PHP_EXTENSIONS }}
           coverage: xdebug
       
@@ -101,7 +116,7 @@ jobs:
       - name: Set up Nextcloud
         run: |
           mkdir data
-          ./occ maintenance:install --verbose --database=sqlite --database-name=nextcloud --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password 
+          ./occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass password 
           ./occ app:enable ${{ env.APP_NAME }}
 
       - name: Check Syntax
