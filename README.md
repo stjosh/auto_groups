@@ -5,16 +5,16 @@ Automatically add users to specified Auto Groups, except for those belonging to 
 
 | Nextcloud Server Branch | Unit & Integration Tests | Code Coverage | 
 | ----------------------- |:------------------------:|:-------------:|
-| [stable19](https://github.com/nextcloud/server/tree/stable19) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable19)](https://codecov.io/gh/stjosh/auto_groups) |
-| [stable20](https://github.com/nextcloud/server/tree/stable20) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable20)](https://codecov.io/gh/stjosh/auto_groups) |
 | [stable21](https://github.com/nextcloud/server/tree/stable21) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable21)](https://codecov.io/gh/stjosh/auto_groups) |
 | [stable22](https://github.com/nextcloud/server/tree/stable22) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable22)](https://codecov.io/gh/stjosh/auto_groups) |
 | [stable23](https://github.com/nextcloud/server/tree/stable23) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable23)](https://codecov.io/gh/stjosh/auto_groups) |
 | [stable24](https://github.com/nextcloud/server/tree/stable24) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable24)](https://codecov.io/gh/stjosh/auto_groups) |
 | [stable25](https://github.com/nextcloud/server/tree/stable25) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable25)](https://codecov.io/gh/stjosh/auto_groups) |
+| [stable26](https://github.com/nextcloud/server/tree/stable26) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable26)](https://codecov.io/gh/stjosh/auto_groups) |
+| [stable27](https://github.com/nextcloud/server/tree/stable27) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=stable27)](https://codecov.io/gh/stjosh/auto_groups) |
 | [master](https://github.com/nextcloud/server/tree/master) | ![Unit and Integration Tests](https://github.com/stjosh/auto_groups/workflows/Unit%20and%20Integration%20Tests/badge.svg) | [![codecov](https://codecov.io/gh/stjosh/auto_groups/branch/master/graph/badge.svg?flag=master)](https://codecov.io/gh/stjosh/auto_groups) |
 
-Unit and Integration Tests are executed with PHP v7.4 as well as v8.0 and v8.1 for NC21 and above.
+Unit and Integration Tests are executed with PHP v7.4 as well as v8.0 and v8.1.
 
 ## Usage
 
