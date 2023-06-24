@@ -44,6 +44,14 @@ jobs:
             databases: sqlite
             server-versions: 'stable23'
             experimental: false
+          - php-versions: '7.4'
+            databases: sqlite
+            server-versions: 'stable26'
+            experimental: false
+          - php-versions: '7.4'
+            databases: sqlite
+            server-versions: 'stable27'
+            experimental: false
   
     name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
@@ -87,7 +95,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: phpunit
+          tools: phpunit:9.5.28
           extensions: ${{ env.PHP_EXTENSIONS }}
           coverage: xdebug
       
