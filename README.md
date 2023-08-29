@@ -31,7 +31,7 @@ To manually test the app, an automatic script is provided. You need to have Dock
 $ ./tests/Docker/run-docker-test-instance.sh
 ```
 
-and then access your test instance on http://localhost:8080. The `auto_groups` app is automatically available, but not activated - this need to be done manually.
+and then access your test instance on http://localhost:8080. The `auto_groups` app is automatically available, but not activated - this needs to be done manually.
 
 ## Comparison to similar Apps
 
