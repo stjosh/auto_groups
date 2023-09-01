@@ -83,7 +83,7 @@ class EventsTest extends TestCase
         $testUser = $this->userManager->get('testuser');
 
         $autogroup = $this->groupManager->search('autogroup1')[0];
-        $this->assert($autogroup->inGroup($testUser));
+        $this->assertTrue($autogroup->inGroup($testUser));
     }
     
     public function testAddHook()
@@ -100,7 +100,7 @@ class EventsTest extends TestCase
         
         $overridegroup->addUser($testUser);
 
-        $this->assert(!$autogroup->inGroup($testUser));
+        $this->assertNotTrue($autogroup->inGroup($testUser));
     }
 
     public function testRemoveHook()
@@ -118,7 +118,7 @@ class EventsTest extends TestCase
         
         $overridegroup->removeUser($testUser);
 
-        $this->assert($autogroup1->inGroup($testUser) && $autogroup2->inGroup($testUser));
+        $this->assertTrue($autogroup1->inGroup($testUser) && $autogroup2->inGroup($testUser));
     }
 
     public function testLoginHook()
@@ -137,7 +137,7 @@ class EventsTest extends TestCase
         $overridegroup->addUser($testUser);
         $this->userSession->login('testuser', 'testPassword');
 
-        $this->assert(!$autogroup1->inGroup($testUser) && !$autogroup2->inGroup($testUser));
+        $this->assertTrue(!$autogroup1->inGroup($testUser) && !$autogroup2->inGroup($testUser));
     }
 
     public function testAddAndRemoveHooksNotExecutedInCreationOnlyMode()
@@ -153,10 +153,10 @@ class EventsTest extends TestCase
         $autogroup = $this->groupManager->search('autogroup1')[0];
         
         $overridegroup->addUser($testUser);
-        $this->assert($autogroup->inGroup($testUser));
+        $this->assertTrue($autogroup->inGroup($testUser));
 
         $overridegroup->removeUser($testUser);
-        $this->assert($autogroup->inGroup($testUser));
+        $this->assertTrue($autogroup->inGroup($testUser));
     }
 
     public function testBeforeGroupDeletionHook()
