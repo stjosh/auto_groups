@@ -82,8 +82,8 @@ class EventsTest extends TestCase
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
 
-        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
-        $this->assertContains('autogroup1', $groups);
+        $autogroup = $this->groupManager->search('autogroup1')[0];
+        $this->assert($autogroup->inGroup($testUser));
     }
 
     public function testAddAndRemoveHooksNotExecutedInCreationOnlyMode()
