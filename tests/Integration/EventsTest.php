@@ -82,7 +82,7 @@ class EventsTest extends TestCase
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
 
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
         $this->assertContains('autogroup1', $groups);
     }
 
@@ -98,11 +98,11 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->addUser($testUser);
 
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
         $this->assertContains('autogroup1', $groups);
 
         $overridegroup->removeUser($testUser);
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
         $this->assertContains('autogroup1', $groups);
     }
     
@@ -134,7 +134,7 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->removeUser($testUser);
 
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
         $this->assertContains('autogroup1', $groups);
         $this->assertContains('autogroup2', $groups);
     }
@@ -152,7 +152,7 @@ class EventsTest extends TestCase
         $overridegroup->addUser($testUser);
         $this->userSession->login('testuser', 'testPassword');
 
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
         $this->assertNotContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
     }
