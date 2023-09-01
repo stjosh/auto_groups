@@ -71,11 +71,6 @@ class EventsTest extends TestCase
         $this->config->setAppValue("AutoGroups", "login_hook", 'true');
     }
 
-    private function clearCaches() {
-        $this->groupManager->clearBackends();
-        $this->groupManager->addBackend($this->backend);
-    }
-
     public function testCreateHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
@@ -87,7 +82,6 @@ class EventsTest extends TestCase
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
 
-        $this->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
     }
@@ -104,13 +98,10 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->addUser($testUser);
 
-        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
 
         $overridegroup->removeUser($testUser);
-        
-        $this->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
     }
@@ -127,8 +118,7 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->addUser($testUser);
 
-        $this->clearCaches();
-        $groups = array_keys($this->groupManager->getUserGroups($testUser));
+        $groups = array_keys($this->backend->getUserGroups($testUser->getUID()));
         $this->assertNotContains('autogroup1', $groups);
     }
 
@@ -144,7 +134,6 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->removeUser($testUser);
 
-        $this->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
         $this->assertContains('autogroup2', $groups);
@@ -163,7 +152,6 @@ class EventsTest extends TestCase
         $overridegroup->addUser($testUser);
         $this->userSession->login('testuser', 'testPassword');
 
-        $this->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertNotContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
