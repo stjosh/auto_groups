@@ -70,7 +70,11 @@ class EventsTest extends TestCase
     public function testCreateHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
-
+        $this->config->setAppValue("AutoGroups", "override_groups", '[]');
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "creation_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "modification_hook", 'true');
+        
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
 
@@ -80,7 +84,11 @@ class EventsTest extends TestCase
 
     public function testAddAndRemoveHooksNotExecutedInCreationOnlyMode()
     {
-        $this->config->setAppValue("AutoGroups", "creation_only", 'true');
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
+        $this->config->setAppValue("AutoGroups", "override_groups", '[]');
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "creation_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "modification_hook", 'false');
 
         $testUser = $this->userManager->get('testuser');
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
@@ -92,13 +100,15 @@ class EventsTest extends TestCase
         $overridegroup->removeUser($testUser);
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
-
-        $this->config->setAppValue("AutoGroups", "creation_only", 'false');
     }
     
     public function testAddHook()
     {
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1"]');
         $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "creation_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "modification_hook", 'true');
 
         $testUser = $this->userManager->get('testuser');
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
@@ -111,6 +121,10 @@ class EventsTest extends TestCase
     public function testRemoveHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+        $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "creation_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "modification_hook", 'true');
 
         $testUser = $this->userManager->get('testuser');
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
@@ -123,6 +137,12 @@ class EventsTest extends TestCase
 
     public function testLoginHook()
     {
+        $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+        $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "creation_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "modification_hook", 'true');
+        
         $testUser = $this->userManager->get('testuser');
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->addUser($testUser);
@@ -136,6 +156,10 @@ class EventsTest extends TestCase
     public function testBeforeGroupDeletionHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
+        $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
+        $this->config->setAppValue("AutoGroups", "login_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "creation_hook", 'true');
+        $this->config->setAppValue("AutoGroups", "modification_hook", 'true');
 
         $autogroup = $this->groupManager->search('autogroup1')[0];
 
