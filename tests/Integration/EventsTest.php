@@ -78,6 +78,7 @@ class EventsTest extends TestCase
         $this->userManager->createUser('testuser', 'testPassword');
         $testUser = $this->userManager->get('testuser');
 
+        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
     }
@@ -94,10 +95,13 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->addUser($testUser);
 
+        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
 
         $overridegroup->removeUser($testUser);
+        
+        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
     }
@@ -114,6 +118,7 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->addUser($testUser);
 
+        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertNotContains('autogroup1', $groups);
     }
@@ -130,6 +135,7 @@ class EventsTest extends TestCase
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $overridegroup->removeUser($testUser);
 
+        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertContains('autogroup1', $groups);
         $this->assertContains('autogroup2', $groups);
@@ -148,6 +154,7 @@ class EventsTest extends TestCase
         $overridegroup->addUser($testUser);
         $this->userSession->login('testuser', 'testPassword');
 
+        $this->groupManager->clearCaches();
         $groups = array_keys($this->groupManager->getUserGroups($testUser));
         $this->assertNotContains('autogroup1', $groups);
         $this->assertNotContains('autogroup2', $groups);
