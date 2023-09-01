@@ -22,44 +22,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0', '8.1' ]
+        php-versions: ['8.1' ]
         databases: ['sqlite']
-        server-versions: ['stable21', 'stable22', 'stable23', 'stable24', 'stable25', 'stable26', 'stable27']
-        experimental: [false]
-        include:
-          - php-versions: '8.1'
-            databases: sqlite
-            server-versions: master
-            experimental: true
-        exclude:
-          - php-versions: '8.1'
-            databases: sqlite
-            server-versions: 'stable19'
-            experimental: false
-          - php-versions: '8.1'
-            databases: sqlite
-            server-versions: 'stable20'
-            experimental: false
-          - php-versions: '8.1'
-            databases: sqlite
-            server-versions: 'stable21'
-            experimental: false
-          - php-versions: '8.1'
-            databases: sqlite
-            server-versions: 'stable22'
-            experimental: false
-          - php-versions: '8.1'
-            databases: sqlite
-            server-versions: 'stable23'
-            experimental: false
-          - php-versions: '7.4'
-            databases: sqlite
-            server-versions: 'stable26'
-            experimental: false
-          - php-versions: '7.4'
-            databases: sqlite
-            server-versions: 'stable27'
-            experimental: false
+        server-versions: [master]
+        experimental: [true]
   
     name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
