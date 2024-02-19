@@ -10,4 +10,4 @@ OC.L10N.register(
     "Check for correct Auto Group membership on every login." : "לבדוק את החברות הנכונה בקבוצות האוטומטיות עם כל כניסה למערכת.",
     "Enable this setting to enforce proper Auto Group membership on every successful login. This is useful if either users are not created in Nextcloud (e.g., with external user backends) or to enforce correct group membership for all users when the Auto Groups / Override Groups have changed." : "הפעל הגדרה זו כדי לאכוף חברות נכונה ל-Auto Group בכל כניסה מוצלחת. זה שימושי אם אחד המשתמשים לא נוצר ב- Nextcloud (למשל, עם backends  חיצוניים של משתמשים) או כדי לאכוף חברות קבוצה נכונה עבור כל המשתמשים כאשר ה-Auto Groups/Override Groups השתנו."
 },
-"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
+"nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
