@@ -25,7 +25,7 @@
 namespace OCA\AutoGroups\Tests\Unit;
 
 use OCP\User\Events\UserCreatedEvent;
-use OCP\User\Events\UserLoggedInEvent;
+use OCP\User\Events\PostLoginEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
 use OCP\Group\Events\BeforeGroupDeletedEvent;
@@ -151,7 +151,7 @@ class AutoGroupsManagerTest extends TestCase
                 [UserCreatedEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
                 [UserRemovedEvent::class, $this->callback('is_callable')],
-                [UserLoggedInEvent::class, $this->callback('is_callable')],
+                [PostLoginEvent::class, $this->callback('is_callable')],
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
