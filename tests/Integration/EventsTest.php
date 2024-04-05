@@ -114,7 +114,7 @@ class EventsTest extends TestCase
         $testUser = $this->userManager->get('testuser');
         $overridegroup = $this->groupManager->search('overridegroup1')[0];
         $autogroup1 = $this->groupManager->search('autogroup1')[0];
-        $autogroup2 = $this->groupManager->search('autogroup1')[0];
+        $autogroup2 = $this->groupManager->search('autogroup2')[0];
         
         $overridegroup->removeUser($testUser);
 
