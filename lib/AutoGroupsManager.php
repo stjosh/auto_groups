@@ -96,9 +96,6 @@ class AutoGroupsManager
      */
     public function addAndRemoveAutoGroups($event)
     {
-        // Notice message for Auto Group Hook Execution
-        $this->logger->debug('AutoGroups hook triggered for user ' . $user->getDisplayName());
-
         // Get configuration
         $groupNames = json_decode($this->config->getAppValue("AutoGroups", "auto_groups", '[]'));
         $overrideGroupNames = json_decode($this->config->getAppValue("AutoGroups", "override_groups", '[]'));
@@ -106,6 +103,9 @@ class AutoGroupsManager
         // Get user information
         $user = $event->getUser();
         $userGroupNames = array_keys($this->groupManager->getUserGroups($user));
+
+        // Notice message for Auto Group Hook Execution
+        $this->logger->debug('AutoGroups hook triggered for user ' . $user->getDisplayName());
 
         //Check if user belongs to any of the ignored groups
         $userInOverrideGroups = array_intersect($overrideGroupNames, $userGroupNames);
