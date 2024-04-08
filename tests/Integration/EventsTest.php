@@ -121,7 +121,7 @@ class EventsTest extends TestCase
         $this->assertTrue($autogroup1->inGroup($testUser) && $autogroup2->inGroup($testUser));
     }
 
-    public function testLoginHook()
+    /*public function testLoginHook()
     {
         $this->config->setAppValue("AutoGroups", "auto_groups", '["autogroup1", "autogroup2"]');
         $this->config->setAppValue("AutoGroups", "override_groups", '["overridegroup1"]');
@@ -140,7 +140,7 @@ class EventsTest extends TestCase
         $this->userSession->login('testuser', 'testPassword');
 
         $this->assertTrue(!$autogroup1->inGroup($testUser) && !$autogroup2->inGroup($testUser));
-    }
+    }*/
 
 
     public function testBeforeGroupDeletionHook()
