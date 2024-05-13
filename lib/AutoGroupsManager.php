@@ -26,7 +26,7 @@
 namespace OCA\AutoGroups;
 
 use OCP\User\Events\UserCreatedEvent;
-use OCP\User\Events\PostLoginEvent;
+use OCP\User\Events\UserLoggedInEvent;
 use OCP\User\Events\UserFirstTimeLoggedInEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
@@ -86,7 +86,7 @@ class AutoGroupsManager
 
         // If login hook is enabled, add user to / remove user from auto groups on every successful login
          if (filter_var($loginHook, FILTER_VALIDATE_BOOLEAN)) {
-            $eventDispatcher->addListener(PostLoginEvent::class, $groupAssignmentCallback);
+            $eventDispatcher->addListener(UserLoggedInEvent::class, $groupAssignmentCallback);
         }
 
         // Handle group deletion events
