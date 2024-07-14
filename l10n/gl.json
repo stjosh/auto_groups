@@ -6,7 +6,7 @@
     "Automatically add all users to these groups." : "Engade automaticamente todos os usuarios a estes grupos.",
     "Override Groups:" : "Grupos de substitución:",
     "Users which are member of at least one of these groups are removed from the auto groups. This is also the case if the user is added to one of these groups after creation, i.e., membership in the override groups is checked after each group modification." : "Os usuarios que son membros de polo menos un destes grupos son retirados dos grupos automáticos. Este é o caso tamén se o usuario se engade a un destes grupos após a creación, é dicir, a pertenza aos grupos de substitución compróbase após cada modificación do grupo.",
-    "Set Auto Group membership on user creation." : "Estabelecer a pertenza ao grupo automático na creación de usuarios.",
+    "Set Auto Group membership on user creation." : "Definir a pertenza ao grupo automático na creación de usuarios.",
     "If checked, Auto Group membership will be enforced on user creation." : "Se está marcada, a pertenza ao grupo automático aplicarase na creación do usuario.",
     "Check Auto Group membership on modification of a user's groups." : "Comprobe a pertenza ao grupo automático na modificación dos grupos dun usuario.",
     "If checked, Auto Group membership will be re-enforced for a user account every time it is added to or removed from a group." : "Se está marcada, a pertenza ao grupo automático volverase impor para unha conta de usuario cada vez que se engada ou retire dun grupo.",
