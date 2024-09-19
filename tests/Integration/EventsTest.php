@@ -35,6 +35,9 @@ use OCP\AppFramework\OCS\OCSBadRequestException;
 use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
 
+/**
+* @group DB
+*/
 class EventsTest extends TestCase
 {
     private $app;

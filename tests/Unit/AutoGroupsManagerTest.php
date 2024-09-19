@@ -25,6 +25,8 @@
 namespace OCA\AutoGroups\Tests\Unit;
 
 use OCP\User\Events\UserCreatedEvent;
+use OCP\User\Events\UserFirstTimeLoggedInEvent;
+use OCP\User\Events\UserLoggedInEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\Group\Events\UserAddedEvent;
 use OCP\Group\Events\UserRemovedEvent;
@@ -94,10 +96,11 @@ class AutoGroupsManagerTest extends TestCase
 
     private function initEventHandlerTests($auto_groups = [], $override_groups = [])
     {
-        $this->eventDispatcher->expects($this->exactly(4))
+        $this->eventDispatcher->expects($this->exactly(5))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserFirstTimeLoggedInEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
                 [UserRemovedEvent::class, $this->callback('is_callable')],
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
@@ -131,10 +134,11 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testCreatedAddedRemovedHooksWithDefaultSettings()
     {
-        $this->eventDispatcher->expects($this->exactly(4))
+        $this->eventDispatcher->expects($this->exactly(5))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserFirstTimeLoggedInEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
                 [UserRemovedEvent::class, $this->callback('is_callable')],
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
@@ -145,13 +149,15 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testAlsoLoginHookIfEnabled()
     {
-        $this->eventDispatcher->expects($this->exactly(5))
+        $this->eventDispatcher->expects($this->exactly(7))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserFirstTimeLoggedInEvent::class, $this->callback('is_callable')],
                 [UserAddedEvent::class, $this->callback('is_callable')],
                 [UserRemovedEvent::class, $this->callback('is_callable')],
                 [PostLoginEvent::class, $this->callback('is_callable')],
+                [UserLoggedInEvent::class, $this->callback('is_callable')],
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 
@@ -160,10 +166,11 @@ class AutoGroupsManagerTest extends TestCase
 
     public function testCreationOnlyMode()
     {
-        $this->eventDispatcher->expects($this->exactly(2))
+        $this->eventDispatcher->expects($this->exactly(3))
             ->method('addListener')
             ->withConsecutive(
                 [UserCreatedEvent::class, $this->callback('is_callable')],
+                [UserFirstTimeLoggedInEvent::class, $this->callback('is_callable')],
                 [BeforeGroupDeletedEvent::class, $this->callback('is_callable')]
             );
 

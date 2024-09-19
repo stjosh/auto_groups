@@ -31,6 +31,9 @@ use Test\TestCase;
 use OCA\AutoGroups\AppInfo\Application;
 use OCA\AutoGroups\Settings\Admin;
 
+/**
+* @group DB
+*/
 class AdminSettingsTest extends TestCase
 {
 
