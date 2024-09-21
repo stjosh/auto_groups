@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Use PSR Logger Interface (#79)
+- Compatibility up to NC31
+
 ## 1.6.0 - 2024-09-21
 ### Changed
 - Support SAML Logins (#77) - shout out to @elainabialkowski
