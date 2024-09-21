@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Compatibility up to Nextcloud 30, drop versions 22-25
+
 ## 1.5.3 - 2024-04-04
 ### Changed
-- Compatibility with Nextcloud 27 [#71](https://github.com/stjosh/auto_groups/issues/72)
+- Compatibility with Nextcloud 28 [#71](https://github.com/stjosh/auto_groups/issues/72)
 
 ## 1.5.2 - 2023-06-24
 ### Changed
