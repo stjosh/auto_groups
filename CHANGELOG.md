@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+
+## 1.6.0 - 2024-09-21
+- Support SAML Logins (#77) - shout out to @elainabialkowski
 - Compatibility up to Nextcloud 30, drop versions 22-25
 
 ## 1.5.3 - 2024-04-04
