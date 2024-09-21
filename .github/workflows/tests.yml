@@ -32,11 +32,11 @@ jobs:
             server-versions: master
             experimental: true
         exclude:
-          - php-versions: '8.2'
+          - php-versions: '8.3'
             databases: sqlite
             server-versions: 'stable26'
             experimental: false
-          - php-versions: '8.2'
+          - php-versions: '8.3'
             databases: sqlite
             server-versions: 'stable27'
             experimental: false
