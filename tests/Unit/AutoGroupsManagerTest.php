@@ -35,7 +35,6 @@ use OCP\Group\Events\BeforeGroupDeletedEvent;
 use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use OCP\ILogger;
 use OCP\IL10N;
 
 use OCP\AppFramework\OCS\OCSBadRequestException;
@@ -44,6 +43,8 @@ use OCP\IUser;
 use OCP\IGroup;
 
 use OCA\AutoGroups\AutoGroupsManager;
+
+use Psr\Log\LoggerInterface;
 
 use Test\TestCase;
 
@@ -63,7 +64,7 @@ class AutoGroupsManagerTest extends TestCase
         $this->groupManager = $this->createMock(IGroupManager::class);
         $this->eventDispatcher = $this->createMock(IEventDispatcher::class);
         $this->config = $this->createMock(IConfig::class);
-        $this->logger = $this->createMock(ILogger::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
         $this->il10n = $this->createMock(IL10N::class);
 
         $this->testUser = $this->createMock(IUser::class);
