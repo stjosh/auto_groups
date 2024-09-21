@@ -36,10 +36,11 @@ use OCP\Group\Events\BeforeGroupDeletedEvent;
 use OCP\IGroupManager;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use OCP\ILogger;
 use OCP\IL10N;
 
 use OCP\AppFramework\OCS\OCSBadRequestException;
+
+use Psr\Log\LoggerInterface;
 
 class AutoGroupsManager
 {
@@ -51,7 +52,7 @@ class AutoGroupsManager
     /**
      * Listener manager constructor.
      */
-    public function __construct(IGroupManager $groupManager, IEventDispatcher $eventDispatcher, IConfig $config, ILogger $logger, IL10N $l)
+    public function __construct(IGroupManager $groupManager, IEventDispatcher $eventDispatcher, IConfig $config, LoggerInterface $logger, IL10N $l)
     {
         $this->groupManager = $groupManager;
         $this->logger = $logger;
