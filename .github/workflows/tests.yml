@@ -22,9 +22,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.2', '8.3' ]
+        php-versions: ['8.2', '8.3']
         databases: ['sqlite']
-        server-versions: ['stable26', 'stable27', 'stable28', 'stable29', 'stable30']
+        server-versions:
+          ['stable27', 'stable28', 'stable29', 'stable30', 'stable31']
         experimental: [false]
         include:
           - php-versions: '8.3'
@@ -34,13 +35,9 @@ jobs:
         exclude:
           - php-versions: '8.3'
             databases: sqlite
-            server-versions: 'stable26'
-            experimental: false
-          - php-versions: '8.3'
-            databases: sqlite
             server-versions: 'stable27'
             experimental: false
-  
+
     name: test-php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
     steps:
@@ -71,7 +68,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.PHP_EXTENSIONS }}
           key: ${{ env.CACHE_KEY }}
-        
+
       - name: Cache extensions
         uses: actions/cache@v3
         with:
@@ -86,7 +83,7 @@ jobs:
           tools: phpunit:9.6.9
           extensions: ${{ env.PHP_EXTENSIONS }}
           coverage: xdebug
-      
+
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
@@ -107,7 +104,7 @@ jobs:
         working-directory: apps/${{ env.APP_NAME }}
         run: phpunit -c tests/phpunit.xml
         env:
-          TRAVIS: true 
+          TRAVIS: true
 
       - name: Codecov.io Upload
         working-directory: apps/${{ env.APP_NAME }}
