@@ -20,7 +20,7 @@ jobs:
           
       - name: Extract Tag Name
         id: set-tag-name
-        run: echo ::set-output name=TAG_NAME::${GITHUB_REF##*/}
+        run: echo "TAG_NAME=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
         
       - name: Define Archive Name
         run: echo "ARCHIVE_NAME=${{ env.APP_NAME }}-${{ steps.set-tag-name.outputs.TAG_NAME }}.tar.gz" >> $GITHUB_ENV
