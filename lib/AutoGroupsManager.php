@@ -65,7 +65,7 @@ class AutoGroupsManager
             $this->config->setAppValue("auto_groups", "modification_hook", ($creationOnly === 'true' ? 'false' : 'true'));
             $this->config->deleteAppValue("auto_groups", "creation_only");
         }
-        $oldCreationHook = $this->config->getAppValue("AutoGroups", "creation_hook");
+        /*$oldCreationHook = $this->config->getAppValue("AutoGroups", "creation_hook");
         if ($oldCreationHook !== '') {
             $this->config->setAppValue("auto_groups", "creation_hook", $oldCreationHook);
             $this->config->deleteAppValue("AutoGroups", "creation_hook");
@@ -88,7 +88,7 @@ class AutoGroupsManager
         $oldOverrideGroups = $this->config->getAppValue("AutoGroups", "override_groups");
         if ($oldOverrideGroups !== '') {
             $this->config->setAppValue("auto_groups", "override_groups", $oldOverrideGroups);
-            $this->config->deleteAppValue("AutoGroups", "override_groups");
+            $this->config->deleteAppValue("AutoGroups", "override_groups");*/
         }
 
         // The callback as a PHP callable
