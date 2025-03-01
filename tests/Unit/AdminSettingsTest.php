@@ -32,21 +32,25 @@ use OCA\AutoGroups\Settings\Admin;
 use Test\TestCase;
 
 // Mock Functions
-function script($script, $scope) {
-    print('<SCRIPT>'.$script.'</SCRIPT><SCOPE>'.$scope.'</SCOPE>');
+function script($script, $scope)
+{
+    print ('<SCRIPT>' . $script . '</SCRIPT><SCOPE>' . $scope . '</SCOPE>');
 }
 
-function style($style, $scope) {
-    print('<STYLE>'.$script.'</STYLE><SCOPE>'.$scope.'</SCOPE>');
+function style($style, $scope)
+{
+    print ('<STYLE>' . $script . '</STYLE><SCOPE>' . $scope . '</SCOPE>');
 }
 
-function p($string) {
-    print($string);
+function p($string)
+{
+    print ($string);
 }
 
 class Language
 {
-    public function t($string) {
+    public function t($string)
+    {
         return $string;
     }
 }
@@ -65,23 +69,26 @@ class AdminSettingsTest extends TestCase
         $this->adminSettings = new Admin($this->config);
     }
 
-    public function testSection() {
+    public function testSection()
+    {
         $this->assertEquals('additional', $this->adminSettings->getSection());
     }
 
-    public function testPriority() {
+    public function testPriority()
+    {
         $this->assertEquals(100, $this->adminSettings->getPriority());
     }
 
-    public function testForm() {
+    public function testForm()
+    {
         $this->config->expects($this->exactly(5))
             ->method('getAppValue')
             ->withConsecutive(
-                ['AutoGroups', 'auto_groups', '[]'],
-                ['AutoGroups', 'override_groups', '[]'],
-                ['AutoGroups', 'creation_hook', 'true'],
-                ['AutoGroups', 'modification_hook', 'true'],
-                ['AutoGroups', 'login_hook', 'false']
+                ['auto_groups', 'auto_groups', '[]'],
+                ['auto_groups', 'override_groups', '[]'],
+                ['auto_groups', 'creation_hook', 'true'],
+                ['auto_groups', 'modification_hook', 'true'],
+                ['auto_groups', 'login_hook', 'false']
             )
             ->willReturnOnConsecutiveCalls(json_encode(['auto1', 'auto2']), json_encode(['override1', 'override2']), true, true);
 

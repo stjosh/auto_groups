@@ -28,21 +28,24 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\Settings\ISettings;
 
-class Admin implements ISettings {
+class Admin implements ISettings
+{
 
         /** @var IConfig */
         private $config;
 
-        public function __construct(IConfig $config) {
+        public function __construct(IConfig $config)
+        {
                 $this->config = $config;
         }
 
-        public function getForm() {
-                $autoGroups = json_decode( $this->config->getAppValue("AutoGroups", "auto_groups", '[]') );
-                $overrideGroups = json_decode( $this->config->getAppValue("AutoGroups", "override_groups", '[]') );
-                $creationHook = $this->config->getAppValue("AutoGroups", "creation_hook", 'true');
-                $modificationHook = $this->config->getAppValue("AutoGroups", "modification_hook", 'true');
-                $loginHook = $this->config->getAppValue("AutoGroups", "login_hook", 'false');
+        public function getForm()
+        {
+                $autoGroups = json_decode($this->config->getAppValue("auto_groups", "auto_groups", '[]'));
+                $overrideGroups = json_decode($this->config->getAppValue("auto_groups", "override_groups", '[]'));
+                $creationHook = $this->config->getAppValue("auto_groups", "creation_hook", 'true');
+                $modificationHook = $this->config->getAppValue("auto_groups", "modification_hook", 'true');
+                $loginHook = $this->config->getAppValue("auto_groups", "login_hook", 'false');
 
                 $parameters = [
                         'auto_groups' => implode('|', $autoGroups),
@@ -57,8 +60,9 @@ class Admin implements ISettings {
 
         /**
          * @return string the section ID
-         */ 
-        public function getSection() {
+         */
+        public function getSection()
+        {
                 return 'additional';
         }
 
@@ -67,7 +71,8 @@ class Admin implements ISettings {
          * the admin section. The forms are arranged in ascending order of the
          * priority values. It is required to return a value between 0 and 100.
          */
-        public function getPriority() {
+        public function getPriority()
+        {
                 return 100;
         }
 
