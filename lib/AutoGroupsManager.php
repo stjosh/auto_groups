@@ -88,8 +88,8 @@ class AutoGroupsManager
         $oldOverrideGroups = $this->config->getAppValue("AutoGroups", "override_groups");
         if ($oldOverrideGroups !== '') {
             $this->config->setAppValue("auto_groups", "override_groups", $oldOverrideGroups);
-            $this->config->deleteAppValue("AutoGroups", "override_groups");*/
-        }
+            $this->config->deleteAppValue("AutoGroups", "override_groups");
+        }*/
 
         // The callback as a PHP callable
         $groupAssignmentCallback = [$this, 'addAndRemoveAutoGroups'];
