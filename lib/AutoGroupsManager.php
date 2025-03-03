@@ -67,6 +67,8 @@ class AutoGroupsManager
         }
         $oldCreationHook = $this->config->getAppValue("AutoGroups", "creation_hook");
         if ($oldCreationHook !== '') {
+            $this->logger->info('Migrating legacy AutoGroups settings to correct App ID (GitHub issue #82)...');
+
             $this->config->setAppValue("auto_groups", "creation_hook", $oldCreationHook);
             $this->config->deleteAppValue("AutoGroups", "creation_hook");
 
