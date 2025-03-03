@@ -60,36 +60,40 @@ class AutoGroupsManager
         $this->l = $l;
 
         // Migrate old config if necessary
-        $creationOnly = $this->config->getAppValue("auto_groups", "creation_only");
+        $creationOnly = $this->config->getAppValue("AutoGroups", "creation_only");
         if ($creationOnly !== '') {
             $this->config->setAppValue("auto_groups", "modification_hook", ($creationOnly === 'true' ? 'false' : 'true'));
-            $this->config->deleteAppValue("auto_groups", "creation_only");
+            $this->config->deleteAppValue("AutoGroups", "creation_only");
         }
-        /*$oldCreationHook = $this->config->getAppValue("AutoGroups", "creation_hook");
+        $oldCreationHook = $this->config->getAppValue("AutoGroups", "creation_hook");
         if ($oldCreationHook !== '') {
             $this->config->setAppValue("auto_groups", "creation_hook", $oldCreationHook);
             $this->config->deleteAppValue("AutoGroups", "creation_hook");
+
+            $oldModificationHook = $this->config->getAppValue("AutoGroups", "modification_hook");
+            if ($oldModificationHook !== '') {
+                $this->config->setAppValue("auto_groups", "modification_hook", $oldModificationHook);
+                $this->config->deleteAppValue("AutoGroups", "modification_hook");
+            }
+
+            $oldLoginHook = $this->config->getAppValue("AutoGroups", "login_hook");
+            if ($oldLoginHook !== '') {
+                $this->config->setAppValue("auto_groups", "login_hook", $oldLoginHook);
+                $this->config->deleteAppValue("AutoGroups", "login_hook");
+            }
+
+            $oldAutoGroups = $this->config->getAppValue("AutoGroups", "auto_groups");
+            if ($oldAutoGroups !== '') {
+                $this->config->setAppValue("auto_groups", "auto_groups", $oldAutoGroups);
+                $this->config->deleteAppValue("AutoGroups", "auto_groups");
+            }
+
+            $oldOverrideGroups = $this->config->getAppValue("AutoGroups", "override_groups");
+            if ($oldOverrideGroups !== '') {
+                $this->config->setAppValue("auto_groups", "override_groups", $oldOverrideGroups);
+                $this->config->deleteAppValue("AutoGroups", "override_groups");
+            }
         }
-        $oldModificationHook = $this->config->getAppValue("AutoGroups", "modification_hook");
-        if ($oldModificationHook !== '') {
-            $this->config->setAppValue("auto_groups", "modification_hook", $oldModificationHook);
-            $this->config->deleteAppValue("AutoGroups", "modification_hook");
-        }
-        $oldLoginHook = $this->config->getAppValue("AutoGroups", "login_hook");
-        if ($oldLoginHook !== '') {
-            $this->config->setAppValue("auto_groups", "login_hook", $oldLoginHook);
-            $this->config->deleteAppValue("AutoGroups", "login_hook");
-        }
-        $oldAutoGroups = $this->config->getAppValue("AutoGroups", "auto_groups");
-        if ($oldAutoGroups !== '') {
-            $this->config->setAppValue("auto_groups", "auto_groups", $oldAutoGroups);
-            $this->config->deleteAppValue("AutoGroups", "auto_groups");
-        }
-        $oldOverrideGroups = $this->config->getAppValue("AutoGroups", "override_groups");
-        if ($oldOverrideGroups !== '') {
-            $this->config->setAppValue("auto_groups", "override_groups", $oldOverrideGroups);
-            $this->config->deleteAppValue("AutoGroups", "override_groups");
-        }*/
 
         // The callback as a PHP callable
         $groupAssignmentCallback = [$this, 'addAndRemoveAutoGroups'];

@@ -84,14 +84,15 @@ class AutoGroupsManagerTest extends TestCase
         $this->config->expects($this->exactly($expectedNumberOfConfigCalls))
             ->method('getAppValue')
             ->withConsecutive(
-                ['auto_groups', 'creation_only'],
+                ['AutoGroups', 'creation_only'],
+                ['AutoGroups', 'creation_hook'],
                 ['auto_groups', 'creation_hook', 'true'],
                 ['auto_groups', 'modification_hook', 'true'],
                 ['auto_groups', 'login_hook', 'false'],
                 ['auto_groups', 'auto_groups', '[]'],
                 ['auto_groups', 'override_groups', '[]']
             )
-            ->willReturnOnConsecutiveCalls('', $creation_hook, $modification_hook, $login_hook, json_encode($auto_groups), json_encode($override_groups));
+            ->willReturnOnConsecutiveCalls('', '', $creation_hook, $modification_hook, $login_hook, json_encode($auto_groups), json_encode($override_groups));
 
         return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
     }
@@ -117,7 +118,7 @@ class AutoGroupsManagerTest extends TestCase
         $this->config->expects($this->exactly(4))
             ->method('getAppValue')
             ->withConsecutive(
-                ['auto_groups', 'creation_only'],
+                ['AutoGroups', 'creation_only'],
                 ['auto_groups', 'creation_hook', 'true'],
                 ['auto_groups', 'modification_hook', 'true'],
                 ['auto_groups', 'login_hook', 'false'],
@@ -130,7 +131,7 @@ class AutoGroupsManagerTest extends TestCase
 
         $this->config->expects($this->exactly(1))
             ->method('deleteAppValue')
-            ->with('auto_groups', 'creation_only');
+            ->with('AutoGroups', 'creation_only');
 
         return new AutoGroupsManager($this->groupManager, $this->eventDispatcher, $this->config, $this->logger, $this->il10n);
     }
